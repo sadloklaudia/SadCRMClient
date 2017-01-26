@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +37,7 @@ import com.sad.sadcrm.hibernate.HibernateUtil;
 import com.sad.sadcrm.hibernate.UserDAO;
 import com.sad.sadcrm.model.Address;
 import com.sad.sadcrm.model.Client;
-import com.sad.sadcrm.model.ClientCnst;
+import com.sad.sadcrm.model.ClientConstants;
 import com.sad.sadcrm.model.User;
 import com.sad.sadcrm.model.UserTypeCnst;
 
@@ -2919,7 +2918,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
 
                 String out = ClientDAO.insertClient(client);
-                if (out.equals(ClientCnst.OK)) {
+                if (out.equals(ClientConstants.OK)) {
                     JOptionPane.showMessageDialog(this,
                             "Nowy klient został dodany.",
                             "Dodawania klienta",
@@ -3382,7 +3381,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             String s = txtReceip.getText();
 
             String send = MailUtil.sendMail(s, txtMailSubject.getText(), txtMailContent.getText());
-            if (send.equalsIgnoreCase(ClientCnst.OK)) {
+            if (send.equalsIgnoreCase(ClientConstants.OK)) {
                 JOptionPane.showMessageDialog(this,
                         "Wiadmość została wysłana",
                         "Wysylanie maila",
@@ -3687,7 +3686,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 newUserLocal.setCreated(txtAddUserdate.getText());
 
                 String out = UserDAO.insertUser(newUserLocal);
-                if (out.equalsIgnoreCase(ClientCnst.OK)) {
+                if (out.equalsIgnoreCase(ClientConstants.OK)) {
                     JOptionPane.showMessageDialog(this,
                             "Nowy użytkownik został dodany.",
                             "Dodawania użytkownika",

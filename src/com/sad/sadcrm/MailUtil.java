@@ -1,32 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sad.sadcrm;
 
-import com.sad.sadcrm.model.ClientCnst;
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import com.sad.sadcrm.model.ClientConstants;
+
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
-/**
- *
- * @author dstachyra
- */
 public class MailUtil {
-    /*
-     Wysłanie maila
-     */
+    private final static String username = "sadcrm@gmail.com";
+    private final static String password = "aplikacja";
 
     public static String sendMail(String recipients, String subject, String content) {
-        final String username = "sadcrm@gmail.com";
-        final String password = "aplikacja";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -35,7 +20,7 @@ public class MailUtil {
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
@@ -45,15 +30,15 @@ public class MailUtil {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("sadcrm@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-            
+
             message.setSubject(subject);
             message.setText(content);
 
             Transport.send(message);
 
-            return ClientCnst.OK;
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            return ClientConstants.OK;
+        } catch (MessagingException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }

@@ -1,41 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sad.sadcrm.hibernate;
 
-import com.sad.sadcrm.model.Address;
 import com.sad.sadcrm.model.Client;
-import com.sad.sadcrm.model.ClientCnst;
+import com.sad.sadcrm.model.ClientConstants;
 import com.sad.sadcrm.model.User;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-/**
- *
- * @author dstachyra
- */
-public class ClientDAO {
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
+public class ClientDAO {
     public static String insertClient(Client client) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
 
             session.beginTransaction();
-
-            Serializable s = session.save(client);
+            session.save(client);
             session.getTransaction().commit();
 
-            return ClientCnst.OK;
+            return ClientConstants.OK;
         } catch (HibernateException he) {
             he.printStackTrace();
             return he.getCause().getMessage();
@@ -97,7 +84,7 @@ public class ClientDAO {
 
             session.close();
 
-            return ClientCnst.OK;
+            return ClientConstants.OK;
         } catch (HibernateException he) {
             he.printStackTrace();
             return he.getCause().getMessage();
@@ -181,28 +168,28 @@ public class ClientDAO {
         return query.list();
     }
 
-    public static List<Client> phonesFromDate(int days) {       
+    public static List<Client> phonesFromDate(int days) {
         Date today = new Date();
         Calendar cal = new GregorianCalendar();
         cal.setTime(today);
         cal.add(Calendar.DAY_OF_MONTH, -days);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sdf.format(cal.getTime());
-        
-        System.out.println("*** DATE > "+date);
-        
+
+        System.out.println("*** DATE > " + date);
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Client where teldate > :date");
         query.setParameter("date", date);
 
         return query.list();
     }
-    
-    public static List<Client> sellChanceClients() {        
+
+    public static List<Client> sellChanceClients() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where sellChance is not null");        
+        Query query = session.createQuery("from Client where sellChance is not null");
         return query.list();
-    }    
- 
+    }
+
 
 }
