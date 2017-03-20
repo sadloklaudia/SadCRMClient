@@ -1,32 +1,27 @@
 package com.sad.sadcrm.hibernate;
 
+import com.sad.sadcrm.Parameters;
 import com.sad.sadcrm.model.ClientConstants;
 import com.sad.sadcrm.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.List;
 
+import static com.sad.sadcrm.HttpJson.post;
+
 public class UserDAO {
     public static User login(String login, String password) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        session.beginTransaction();
-
-        Query query = session.createQuery("from User where login = :login AND password = :password ");
-        query.setParameter("login", login);
-        query.setParameter("password", password);
-
-        List<User> list = query.list();
-
-        session.close();
-        if (list.size() != 1) {
-            return null;
+        JSONObject jsonUser = post("/user/login", new Parameters(login, password));
+        try {
+            return User.createFromJson(jsonUser.getJSONObject("user"));
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
-
-        return list.get(0);
     }
 
     public static String insertUser(User user) {

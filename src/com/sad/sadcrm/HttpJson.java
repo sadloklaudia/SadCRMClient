@@ -10,22 +10,37 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpJson {
+    final static String BASE_URL = "http://localhost/SadCRM";
+
     public static void main(String[] args) throws JSONException {
-        String result = postHTML("http://localhost/SadCRM/address/create",
+        String result = postHTML("/address/create",
                 new Parameters("daniel", "daniel")
                         .add("street", "Jakas tam")
                         .add("number", "jakis tam"));
         System.out.println(result);
     }
 
-    public static JSONObject get(String urlToRead) throws JSONException {
+    public static JSONObject get(String urlToRead) {
         String result = getHTML(urlToRead);
-        return new JSONObject(result);
+        try {
+            return new JSONObject(result);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public static JSONObject post(String urlToRead, Parameters parameters) {
+        String result = postHTML(urlToRead, parameters);
+        try {
+            return new JSONObject(result);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     private static String getHTML(String urlToRead) {
         try {
-            URL url = new URL(urlToRead);
+            URL url = new URL(BASE_URL + urlToRead);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -35,22 +50,11 @@ public class HttpJson {
         }
     }
 
-    private static String getStringFromInputStream(InputStream inputStream) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String result = "";
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result += line;
-            }
-            return result;
-        }
-    }
-
     public static String postHTML(String urlToRead, Parameters parameters) {
         try {
             byte[] postData = parameters.getParamString().getBytes(UTF_8);
             int postDataLength = postData.length;
-            URL url = new URL(urlToRead);
+            URL url = new URL(BASE_URL + urlToRead);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setInstanceFollowRedirects(false);
@@ -66,6 +70,17 @@ public class HttpJson {
             return getStringFromInputStream(connection.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static String getStringFromInputStream(InputStream inputStream) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String result = "";
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result += line;
+            }
+            return result;
         }
     }
 }

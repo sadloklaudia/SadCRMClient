@@ -3119,37 +3119,37 @@ public class SadCRMForm extends javax.swing.JFrame {
         if (!txtSearchSurname.getText().equals("") && !txtSearchPesel.getText().equals("")) {
             // szukanie po peselu i nazwisku  
             if (myContacts) {
-                searchResults = ClientDAO.searchClientsBySurnameAndPeselAndUser(loggedUser, txtSearchSurname.getText(), txtSearchPesel.getText());
+                searchResults = ClientDAO.searchByUserSurnameAndPesel(loggedUser, txtSearchSurname.getText(), txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else if (mail) {
-                searchResults = ClientDAO.searchClientsBySurnameAndPeselAndMail(txtSearchSurname.getText(), txtSearchPesel.getText());
+                searchResults = ClientDAO.searchBySurnameAndPeselAndHasMail(txtSearchSurname.getText(), txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else {
-                searchResults = ClientDAO.searchClientsBySurnameAndPesel(txtSearchSurname.getText(), txtSearchPesel.getText());
+                searchResults = ClientDAO.searchBySurnameAndPesel(txtSearchSurname.getText(), txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else if (txtSearchSurname.getText().equals("") && !txtSearchPesel.getText().equals("")) {
             // szukanie po peselu
             if (myContacts) {
-                searchResults = ClientDAO.searchClientsByPeselAndUser(loggedUser, txtSearchPesel.getText());
+                searchResults = ClientDAO.searchByUserAndPesel(loggedUser, txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else if (mail) {
-                searchResults = ClientDAO.searchClientsByPeselAndMail(txtSearchPesel.getText());
+                searchResults = ClientDAO.searchByPeselAndHasMail(txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else {
-                searchResults = ClientDAO.searchClientsByPesel(txtSearchPesel.getText());
+                searchResults = ClientDAO.searchByPesel(txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else if (!txtSearchSurname.getText().equals("") && txtSearchPesel.getText().equals("")) {
             // szukanie po nazwisku
             if (myContacts) {
-                searchResults = ClientDAO.searchClientsBySurname(loggedUser, txtClientSurname.getText());
+                searchResults = ClientDAO.searchByUserAndSurname(loggedUser, txtClientSurname.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else if (mail) {
-                searchResults = ClientDAO.searchClientsBySurnameAndMail(txtClientSurname.getText());
+                searchResults = ClientDAO.searchBySurnameAndHasMail(txtClientSurname.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             } else {
-                searchResults = ClientDAO.searchClientsBySurname(txtSearchSurname.getText());
+                searchResults = ClientDAO.searchBySurname(txtSearchSurname.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else {
@@ -3643,15 +3643,15 @@ public class SadCRMForm extends javax.swing.JFrame {
         List<Client> searchResults = null;
         if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             // search by user and pesel
-            searchResults = ClientDAO.searchClientsBySurnameAndPesel(txtManagerSearchSurname.getText(), txtManagerSearchPesel.getText());
+            searchResults = ClientDAO.searchBySurnameAndPesel(txtManagerSearchSurname.getText(), txtManagerSearchPesel.getText());
             TableUtil.displayClients(searchResults, tableClientsForManager);
         } else if (txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             // search by pesel
-            searchResults = ClientDAO.searchClientsByPesel(txtManagerSearchPesel.getText());
+            searchResults = ClientDAO.searchByPesel(txtManagerSearchPesel.getText());
             TableUtil.displayClients(searchResults, tableClientsForManager);
         } else if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             //search by surname
-            searchResults = ClientDAO.searchClientsBySurname(txtManagerSearchSurname.getText());
+            searchResults = ClientDAO.searchBySurname(txtManagerSearchSurname.getText());
             TableUtil.displayClients(searchResults, tableClientsForManager);
         }
     }//GEN-LAST:event_managerSearchButtonActionPerformed

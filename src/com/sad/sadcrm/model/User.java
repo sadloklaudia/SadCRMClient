@@ -1,5 +1,8 @@
 package com.sad.sadcrm.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class User implements java.io.Serializable {
     private int id;
     private String name;
@@ -85,5 +88,17 @@ public class User implements java.io.Serializable {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public static User createFromJson(JSONObject user) throws JSONException {
+        return new User(
+                user.getInt("id"),
+                user.getString("name"),
+                user.getString("surname"),
+                user.getString("type"),
+                user.getString("login"),
+                user.getString("password"),
+                user.getString("created")
+        );
     }
 }

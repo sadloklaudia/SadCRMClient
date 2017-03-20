@@ -6,10 +6,10 @@ import static com.sad.sadcrm.HttpJson.postHTML;
 
 public class AddressDAO {
     public static void insert(Address address) {
-        postHTML("http://localhost/SadCRM/address/create", address.asParameters());
+        postHTML("/address/create", address.asParameters());
     }
 
     public static void update(Address address) {
-        postHTML("http://localhost/SadCRM/address/update", address.asParameters());
+        postHTML("/address/update", address.asParameters());
     }
 }
