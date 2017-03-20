@@ -81,11 +81,6 @@ public class UserDAO {
         Query query = session.createQuery("from User where id=:id");
         query.setParameter("id", id);
 
-        List list = query.list();
-        if (list.size() == 0) {
-            // nie powinno sie nidgy wydazyc
-            return null;
-        }
         return (User) query.list().get(0);
     }
 
