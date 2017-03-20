@@ -7,26 +7,23 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static com.sad.sadcrm.HttpJson.postHTML;
+import static java.util.Calendar.DAY_OF_MONTH;
+
 public class ClientDAO {
-    public static String insertClient(Client client) {
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+    public static String insert(Client client) {
+        return postHTML("http://localhost/SadCRM/address/create", client.asParameters());
+    }
 
-            session.beginTransaction();
-            session.save(client);
-            session.getTransaction().commit();
-
-            return ClientConstants.OK;
-        } catch (HibernateException he) {
-            he.printStackTrace();
-            return he.getCause().getMessage();
-        }
+    public static String update(Client client) {
+        return postHTML("http://localhost/SadCRM/address/update", client.asParameters());
     }
 
     public static List<Client> searchClients() {
@@ -71,24 +68,6 @@ public class ClientDAO {
             return null;
         }
         return (Client) query.list().get(0);
-    }
-
-    public static String updateClient(Client client) {
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-
-            session.beginTransaction();
-
-            session.update(client);
-            session.getTransaction().commit();
-
-            session.close();
-
-            return ClientConstants.OK;
-        } catch (HibernateException he) {
-            he.printStackTrace();
-            return he.getCause().getMessage();
-        }
     }
 
     public static List<Client> findClientsByUser(User user) {
@@ -169,12 +148,11 @@ public class ClientDAO {
     }
 
     public static List<Client> phonesFromDate(int days) {
-        Date today = new Date();
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(today);
-        cal.add(Calendar.DAY_OF_MONTH, -days);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = sdf.format(cal.getTime());
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        calendar.add(DAY_OF_MONTH, -days);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = format.format(calendar.getTime());
 
         System.out.println("*** DATE > " + date);
 

@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import static javax.swing.SwingConstants.HORIZONTAL;
 
 public class SadCRMForm extends javax.swing.JFrame {
@@ -737,11 +739,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         editClientButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
         editClientButton.setText("Edytuj");
-        editClientButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edytujKlientaAction(evt);
-            }
-        });
+        editClientButton.addActionListener(this::edytujKlientaAction);
 
         try {
             txtClientPostalCode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-###")));
@@ -1021,19 +1019,11 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         txtDetailsClientButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/About.gif"))); // NOI18N
         txtDetailsClientButton.setText("Szczegóły");
-        txtDetailsClientButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                szczegolyKlientaAction(evt);
-            }
-        });
+        txtDetailsClientButton.addActionListener(this::szczegolyKlientaAction);
 
         txtSendMultipleMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/E-mail.gif"))); // NOI18N
         txtSendMultipleMail.setText("Wyślij wiadomość do zanaczonych kontaktów");
-        txtSendMultipleMail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wyslijMailDoWszystkichAction(evt);
-            }
-        });
+        txtSendMultipleMail.addActionListener(this::wyslijMailDoWszystkichAction);
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -1224,33 +1214,17 @@ public class SadCRMForm extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
         jLabel23.setText("Hasło");
 
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
-            }
-        });
+        txtLogin.addActionListener(this::txtLoginActionPerformed);
 
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Blue key.gif"))); // NOI18N
         loginButton.setText("Zaloguj");
-        loginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logowanieAction(evt);
-            }
-        });
+        loginButton.addActionListener(this::logowanieAction);
 
         canelLoginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
         canelLoginButton.setText("Wyjście");
-        canelLoginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wyjscieAction(evt);
-            }
-        });
+        canelLoginButton.addActionListener(this::wyjscieAction);
 
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
+        txtPassword.addActionListener(this::txtPasswordActionPerformed);
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -1307,11 +1281,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         dataExpButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Upload.gif"))); // NOI18N
         dataExpButton1.setText("Eksport danych");
-        dataExpButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dataExpButton1ActionPerformed(evt);
-            }
-        });
+        dataExpButton1.addActionListener(this::dataExpButton1ActionPerformed);
 
         javax.swing.GroupLayout topPanel1Layout = new javax.swing.GroupLayout(topPanel1);
         topPanel1.setLayout(topPanel1Layout);
@@ -1337,43 +1307,23 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         addUserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Create.gif"))); // NOI18N
         addUserButton.setText("Dodaj użytkownika");
-        addUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addUserButtonActionPerformed(evt);
-            }
-        });
+        addUserButton.addActionListener(this::addUserButtonActionPerformed);
 
         searchUserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Find.gif"))); // NOI18N
         searchUserButton.setText("Wyszukiwanie");
-        searchUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchUserButtonActionPerformed(evt);
-            }
-        });
+        searchUserButton.addActionListener(this::searchUserButtonActionPerformed);
 
         myAdminPanelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Info.gif"))); // NOI18N
         myAdminPanelButton.setText("Mój panel");
-        myAdminPanelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myAdminPanelButtonActionPerformed(evt);
-            }
-        });
+        myAdminPanelButton.addActionListener(this::myAdminPanelButtonActionPerformed);
 
         logoutAdminButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
         logoutAdminButton.setText("Wylogowanie");
-        logoutAdminButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutAdminButtonActionPerformed(evt);
-            }
-        });
+        logoutAdminButton.addActionListener(this::logoutAdminButtonActionPerformed);
 
         exitAdminButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Turn off.gif"))); // NOI18N
         exitAdminButton.setText("Wyjście");
-        exitAdminButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitAdminButtonActionPerformed(evt);
-            }
-        });
+        exitAdminButton.addActionListener(this::exitAdminButtonActionPerformed);
 
         javax.swing.GroupLayout leftPanel1Layout = new javax.swing.GroupLayout(leftPanel1);
         leftPanel1.setLayout(leftPanel1Layout);
@@ -1428,11 +1378,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         changeAdminPassButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
         changeAdminPassButton.setText("Zmiana hasła");
-        changeAdminPassButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeAdminPassButtonActionPerformed(evt);
-            }
-        });
+        changeAdminPassButton.addActionListener(this::changeAdminPassButtonActionPerformed);
 
         javax.swing.GroupLayout mainAdminPanelLayout = new javax.swing.GroupLayout(mainAdminPanel);
         mainAdminPanel.setLayout(mainAdminPanelLayout);
@@ -1506,19 +1452,11 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         saveUserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Save.gif"))); // NOI18N
         saveUserButton.setText("Zapisz");
-        saveUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveUserButtonActionPerformed(evt);
-            }
-        });
+        saveUserButton.addActionListener(this::saveUserButtonActionPerformed);
 
         cancelUserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
         cancelUserButton.setText("Anuluj");
-        cancelUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelUserButtonActionPerformed(evt);
-            }
-        });
+        cancelUserButton.addActionListener(this::cancelUserButtonActionPerformed);
 
         jLabel58.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
         jLabel58.setText("Powtórz hasło*:");
@@ -1618,19 +1556,11 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         adminSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Search.gif"))); // NOI18N
         adminSearchButton.setText("Szukaj");
-        adminSearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminSearchButtonActionPerformed(evt);
-            }
-        });
+        adminSearchButton.addActionListener(this::adminSearchButtonActionPerformed);
 
         adminResetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Refresh.gif"))); // NOI18N
         adminResetButton.setText("Reset");
-        adminResetButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminResetButtonActionPerformed(evt);
-            }
-        });
+        adminResetButton.addActionListener(this::adminResetButtonActionPerformed);
 
         tableUsers.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
@@ -1656,11 +1586,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         adminDetailsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
         adminDetailsButton.setText("Edycja");
-        adminDetailsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminDetailsButtonActionPerformed(evt);
-            }
-        });
+        adminDetailsButton.addActionListener(this::adminDetailsButtonActionPerformed);
 
         javax.swing.GroupLayout searchUserPanelLayout = new javax.swing.GroupLayout(searchUserPanel);
         searchUserPanel.setLayout(searchUserPanelLayout);
@@ -1753,19 +1679,11 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         reportsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/3d bar chart.gif"))); // NOI18N
         reportsButton.setText("Raporty");
-        reportsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reportsButtonActionPerformed(evt);
-            }
-        });
+        reportsButton.addActionListener(this::reportsButtonActionPerformed);
 
         dataExpButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Upload.gif"))); // NOI18N
         dataExpButton2.setText("Eksport danych");
-        dataExpButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dataExpButton2ActionPerformed(evt);
-            }
-        });
+        dataExpButton2.addActionListener(this::dataExpButton2ActionPerformed);
 
         javax.swing.GroupLayout topManagerPanelLayout = new javax.swing.GroupLayout(topManagerPanel);
         topManagerPanel.setLayout(topManagerPanelLayout);
@@ -1795,35 +1713,19 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         searchClientByManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Find.gif"))); // NOI18N
         searchClientByManagerButton.setText("Wyszukiwanie");
-        searchClientByManagerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchClientByManagerButtonActionPerformed(evt);
-            }
-        });
+        searchClientByManagerButton.addActionListener(this::searchClientByManagerButtonActionPerformed);
 
         myManagerPanelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Info.gif"))); // NOI18N
         myManagerPanelButton.setText("Mój panel");
-        myManagerPanelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myManagerPanelButtonActionPerformed(evt);
-            }
-        });
+        myManagerPanelButton.addActionListener(this::myManagerPanelButtonActionPerformed);
 
         logoutManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
         logoutManagerButton.setText("Wylogowanie");
-        logoutManagerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutManagerButtonActionPerformed(evt);
-            }
-        });
+        logoutManagerButton.addActionListener(this::logoutManagerButtonActionPerformed);
 
         exitManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Turn off.gif"))); // NOI18N
         exitManagerButton.setText("Wyjście");
-        exitManagerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitManagerButtonActionPerformed(evt);
-            }
-        });
+        exitManagerButton.addActionListener(this::exitManagerButtonActionPerformed);
 
         javax.swing.GroupLayout leftManagerPanelLayout = new javax.swing.GroupLayout(leftManagerPanel);
         leftManagerPanel.setLayout(leftManagerPanelLayout);
@@ -1875,11 +1777,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         changeManagerPassButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
         changeManagerPassButton.setText("Zmiana hasła");
-        changeManagerPassButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeManagerPassButtonActionPerformed(evt);
-            }
-        });
+        changeManagerPassButton.addActionListener(this::changeManagerPassButtonActionPerformed);
 
         javax.swing.GroupLayout mainManagerPanelLayout = new javax.swing.GroupLayout(mainManagerPanel);
         mainManagerPanel.setLayout(mainManagerPanelLayout);
@@ -2363,11 +2261,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Report.gif"))); // NOI18N
         jButton4.setText("Generuj");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jLabel60.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
         jLabel60.setText("Telefony z: ");
@@ -2379,11 +2273,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Report.gif"))); // NOI18N
         jButton5.setText("Generuj");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jLabel61.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
         jLabel61.setText("Raport pracownika:");
@@ -2713,9 +2603,9 @@ public class SadCRMForm extends javax.swing.JFrame {
                 client.setMail(txtClientMail.getText());
                 client.setDescription(txtClientDesc.getText());
                 if (txtClientVip.isSelected()) {
-                    client.setVip('T');
+                    client.setVip(true);
                 } else {
-                    client.setVip('F');
+                    client.setVip(false);
                 }
                 client.setCreated(txtClientCreateDate.getText());
                 client.setUser(loggedUser);
@@ -2725,7 +2615,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 address.setNumber(txtClientNumber.getText());
                 address.setCity(txtCLientCity.getText());
                 address.setPostCode(txtClientPostalCode.getText());
-                AddressDAO.insertAddress(address);
+                AddressDAO.insert(address);
 
                 client.setAddress(address);
 
@@ -2735,7 +2625,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                     client.setSellChance(cboxChanse.getSelectedItem().toString());
                 }
 
-                String out = ClientDAO.insertClient(client);
+                String out = ClientDAO.insert(client);
                 if (out.equals(ClientConstants.OK)) {
                     JOptionPane.showMessageDialog(this,
                             "Nowy klient został dodany.",
@@ -2797,11 +2687,11 @@ public class SadCRMForm extends javax.swing.JFrame {
                 selectedClient.setDescription(txtClientDesc.getText());
                 isEdited = true;
             }
-            if (selectedClient.getVip() == 'F' && txtClientVip.isSelected()) {
-                selectedClient.setVip('T');
+            if (!selectedClient.getVip() && txtClientVip.isSelected()) {
+                selectedClient.setVip(true);
                 isEdited = true;
-            } else if (selectedClient.getVip() == 'T' && !txtClientVip.isSelected()) {
-                selectedClient.setVip('F');
+            } else if (selectedClient.getVip() && !txtClientVip.isSelected()) {
+                selectedClient.setVip(false);
                 isEdited = true;
             }
 
@@ -2867,14 +2757,14 @@ public class SadCRMForm extends javax.swing.JFrame {
             if (isAddressEdited) {
                 if (validateClient()) {
                     selectedClient.setModified(now());
-                    AddressDAO.updateAddress(address);
-                    ClientDAO.updateClient(selectedClient);
+                    AddressDAO.update(address);
+                    ClientDAO.update(selectedClient);
                     processSearchPanel();
                 }
             } else if (isEdited) {
                 if (validateClient()) {
                     selectedClient.setModified(now());
-                    String out = ClientDAO.updateClient(selectedClient);
+                    String out = ClientDAO.update(selectedClient);
                     if (out.contains("Duplicate entry")) {
                         JOptionPane.showMessageDialog(this,
                                 "Pesel już istnieje",
@@ -3011,7 +2901,7 @@ public class SadCRMForm extends javax.swing.JFrame {
      * @return
      */
     private boolean validateClient() {
-        Map<String, String> fieldsMap = new HashMap<String, String>();
+        Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(txtCLientCity.getText(), "Wprowadź miasto");
         fieldsMap.put(txtClientNumber.getText(), "Wprowadź nr budynku");
         fieldsMap.put(txtClientStreet.getText(), "Wprowadź ulicę");
@@ -3049,7 +2939,7 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private boolean validateClientForManager() {
-        Map<String, String> fieldsMap = new HashMap<String, String>();
+        Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(editCLientCity.getText(), "Wprowadź miasto");
         fieldsMap.put(editClientNumber.getText(), "Wprowadź nr budynku");
         fieldsMap.put(editClientStreet.getText(), "Wprowadź ulicę");
@@ -3188,7 +3078,7 @@ public class SadCRMForm extends javax.swing.JFrame {
      */
     private void wyslijjednegoMailaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijjednegoMailaAction
         // Walidatcja pól wysyłania maila + wysyłka
-        Map<String, String> fieldsMap = new HashMap<String, String>();
+        Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(txtMailContent.getText(), "Wprowadź treść maila");
         fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
         fieldsMap.put(txtReceip.getText(), "Wprowadź odbiorców");
@@ -3355,7 +3245,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                     if (mail) {
                         // wysyłanie maila                        
                         int[] rows = tableClients.getSelectedRows();
-                        List<String> receipents = new ArrayList<String>();
+                        List<String> receipents = new ArrayList<>();
                         String receipts = "";
                         for (int i = 0; i < rows.length; i++) {
                             receipts = receipts + tableClients.getValueAt(i, 4) + "\n";
@@ -3391,10 +3281,10 @@ public class SadCRMForm extends javax.swing.JFrame {
     private void wyslijMailDoWszystkichAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijMailDoWszystkichAction
         // wysyłanie maila                        
         int[] rows = tableClients.getSelectedRows();
-        List<String> receipents = new ArrayList<String>();
+        List<String> receipents = new ArrayList<>();
         String receipts = "";
-        for (int i = 0; i < rows.length; i++) {
-            receipts = receipts + tableClients.getValueAt(rows[i], 4) + ",";
+        for (int row : rows) {
+            receipts = receipts + tableClients.getValueAt(row, 4) + ",";
         }
 
         if (receipts.endsWith(",")) {
@@ -3841,11 +3731,11 @@ public class SadCRMForm extends javax.swing.JFrame {
             selectedClient.setDescription(editClientDesc.getText());
             isEdited = true;
         }
-        if (selectedClient.getVip() == 'F' && editClientVip.isSelected()) {
-            selectedClient.setVip('T');
+        if (!selectedClient.getVip() && editClientVip.isSelected()) {
+            selectedClient.setVip(true);
             isEdited = true;
-        } else if (selectedClient.getVip() == 'T' && !editClientVip.isSelected()) {
-            selectedClient.setVip('F');
+        } else if (selectedClient.getVip() && !editClientVip.isSelected()) {
+            selectedClient.setVip(false);
             isEdited = true;
         }
 
@@ -3926,14 +3816,14 @@ public class SadCRMForm extends javax.swing.JFrame {
         if (isAddressEdited) {
             if (validateClientForManager()) {
                 selectedClient.setModified(now());
-                AddressDAO.updateAddress(address);
-                ClientDAO.updateClient(selectedClient);
+                AddressDAO.update(address);
+                ClientDAO.update(selectedClient);
                 processSearchClientsForManager();
             }
         } else if (isEdited) {
             if (validateClientForManager()) {
                 selectedClient.setModified(now());
-                String out = ClientDAO.updateClient(selectedClient);
+                String out = ClientDAO.update(selectedClient);
                 if (out.contains("Duplicate entry")) {
                     JOptionPane.showMessageDialog(this,
                             "Pesel już istnieje",
@@ -4132,11 +4022,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             editClientPhone2.setText(selectedClient.getPhone2());
             editClientMail.setText(selectedClient.getMail());
             editClientDesc.setText(selectedClient.getDescription());
-            if (selectedClient.getVip() == 'T') {
-                editClientVip.setSelected(true);
-            } else {
-                editClientVip.setSelected(false);
-            }
+            editClientVip.setSelected(selectedClient.getVip());
             editClientCreateDate.setText(selectedClient.getCreated());
             editClientModification.setText(selectedClient.getModified());
             if (selectedClient.getTel().equalsIgnoreCase("T")) {
@@ -4189,7 +4075,7 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private boolean validateUser() {
-        Map<String, String> fieldsMap = new HashMap<String, String>();
+        Map<String, String> fieldsMap = new HashMap<>();
 
         fieldsMap.put(txtAddUserPassword2.getText(), "Powtóż hasło użytkownika");
         fieldsMap.put(txtAddUserPassword1.getText(), "Wprowadź hasło użytkownika");
@@ -4274,11 +4160,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             txtClientMail.setEnabled(false);
             txtClientDesc.setText(selectedClient.getDescription());
             txtClientDesc.setEnabled(false);
-            if (selectedClient.getVip() == 'T') {
-                txtClientVip.setSelected(true);
-            } else {
-                txtClientVip.setSelected(false);
-            }
+            txtClientVip.setSelected(selectedClient.getVip());
             txtClientVip.setEnabled(false);
             txtClientCreateDate.setText(selectedClient.getCreated());
             txtClientModification.setText(selectedClient.getModified());
@@ -4402,23 +4284,13 @@ public class SadCRMForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SadCRMForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SadCRMForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SadCRMForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SadCRMForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
+            getLogger(SadCRMForm.class.getName()).log(SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SadCRMForm().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new SadCRMForm().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

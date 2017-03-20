@@ -1,5 +1,9 @@
 package com.sad.sadcrm.model;
 
+import com.sad.sadcrm.Parameters;
+
+import static com.sad.sadcrm.Parameters.getParameters;
+
 public class Client implements java.io.Serializable {
     private int idClient;
     private Address address;
@@ -11,7 +15,7 @@ public class Client implements java.io.Serializable {
     private String phone2;
     private String mail;
     private String description;
-    private char vip;
+    private boolean vip;
     private String created;
     private String products;
     private String sellChance;
@@ -47,7 +51,7 @@ public class Client implements java.io.Serializable {
     }
 
 
-    public Client(int idClient, Address address, User user, String name, String surname, String pesel, char vip, String created) {
+    public Client(int idClient, Address address, User user, String name, String surname, String pesel, boolean vip, String created) {
         this.idClient = idClient;
         this.address = address;
         this.user = user;
@@ -58,7 +62,7 @@ public class Client implements java.io.Serializable {
         this.created = created;
     }
 
-    public Client(int idClient, Address address, User user, String name, String surname, String pesel, String phone1, String phone2, String mail, String description, char vip, String created, String products, String sellChance) {
+    public Client(int idClient, Address address, User user, String name, String surname, String pesel, String phone1, String phone2, String mail, String description, boolean vip, String created, String products, String sellChance) {
         this.idClient = idClient;
         this.address = address;
         this.user = user;
@@ -155,11 +159,11 @@ public class Client implements java.io.Serializable {
         this.description = description;
     }
 
-    public char getVip() {
+    public boolean getVip() {
         return this.vip;
     }
 
-    public void setVip(char vip) {
+    public void setVip(boolean vip) {
         this.vip = vip;
     }
 
@@ -187,7 +191,26 @@ public class Client implements java.io.Serializable {
         this.sellChance = sellChance;
     }
 
-
+    public Parameters asParameters() {
+        return getParameters()
+                .add("idClient", idClient + "")
+                .add("address_id", address.getId() + "")
+                .add("user_id", user.getId() + "")
+                .add("name", name)
+                .add("surname", surname)
+                .add("pesel", pesel)
+                .add("phone1", phone1)
+                .add("phone2", phone2)
+                .add("mail", mail)
+                .add("description", description)
+                .add("vip", vip ? "1" : "0")
+                .add("created", created)
+                .add("products", products)
+                .add("sellChance", sellChance)
+                .add("modified", modified)
+                .add("tel", tel)
+                .add("telDate", telDate);
+    }
 }
 
 

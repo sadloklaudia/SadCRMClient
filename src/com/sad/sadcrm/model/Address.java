@@ -1,5 +1,9 @@
 package com.sad.sadcrm.model;
 
+import com.sad.sadcrm.Parameters;
+
+import static com.sad.sadcrm.Parameters.getParameters;
+
 public class Address implements java.io.Serializable {
     private int id;
     private String street;
@@ -56,5 +60,14 @@ public class Address implements java.io.Serializable {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public Parameters asParameters() {
+        return getParameters()
+                .add("id", id + "")
+                .add("street", street)
+                .add("number", number)
+                .add("city", city)
+                .add("postCode", postCode);
     }
 }
