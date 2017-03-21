@@ -8,7 +8,7 @@ import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 
 public class Encryption {
-    public final static String KEY = "76a5ba50d31d31299308167974dd0ce9";
+    public final static String KEY = "9308167974dd0ce9";
 
     public static String decrypt(String input) {
         return decrypt(input, KEY);
