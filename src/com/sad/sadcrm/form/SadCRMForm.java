@@ -4,7 +4,10 @@ import com.sad.sadcrm.*;
 import com.sad.sadcrm.hibernate.AddressDAO;
 import com.sad.sadcrm.hibernate.ClientDAO;
 import com.sad.sadcrm.hibernate.UserDAO;
-import com.sad.sadcrm.model.*;
+import com.sad.sadcrm.model.Address;
+import com.sad.sadcrm.model.Client;
+import com.sad.sadcrm.model.ClientConstants;
+import com.sad.sadcrm.model.User;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -18,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+import static com.sad.sadcrm.model.UserTypeConstants.ADMIN;
+import static com.sad.sadcrm.model.UserTypeConstants.MANAGER;
 import static java.awt.Color.lightGray;
 import static java.awt.EventQueue.invokeLater;
 import static java.util.logging.Level.SEVERE;
@@ -210,7 +215,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         jLabel23 = new JLabel();
         txtLogin = new JTextField();
         loginButton = new JButton();
-        canelLoginButton = new JButton();
         txtPassword = new JPasswordField();
         adminPanel = new JPanel();
         topPanel1 = new JPanel();
@@ -1228,10 +1232,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         loginButton.setText("Zaloguj");
         loginButton.addActionListener(this::logowanieAction);
 
-        canelLoginButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
-        canelLoginButton.setText("Wyjście");
-        canelLoginButton.addActionListener(this::wyjscieAction);
-
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
@@ -1253,8 +1253,6 @@ public class SadCRMForm extends javax.swing.JFrame {
                                         .addComponent(jLabel21)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPanelLayout.createSequentialGroup()
                                                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(canelLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(141, 141, 141)))
                                 .addGap(57, 57, 57))
         );
@@ -1273,8 +1271,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(loginButton)
-                                        .addComponent(canelLoginButton))
+                                        .addComponent(loginButton))
                                 .addGap(158, 158, 158))
         );
 
@@ -2463,34 +2460,21 @@ public class SadCRMForm extends javax.swing.JFrame {
     private void processLoginAction() {
         leftPanel.setVisible(true);
         topPanel.setVisible(true);
-        loggedUser = UserDAO.login(txtLogin.getText(), txtPassword.getText());
-        if (loggedUser == null) {
-            showMessageDialog(this,
-                    "Błąd logowania.\nSprawdź użytkownika i hasło",
-                    "Błąd logowania",
-                    ERROR_MESSAGE);
-        } else {
-            if (loggedUser.getType() == null || loggedUser.getType().equalsIgnoreCase("")) {
-                // zalogowano jako uzytkownik
-                processUserPanel();
-            } else if (loggedUser.getType().equalsIgnoreCase(UserTypeConstants.ADMIN)) {
-                // zalogowano jako adamin
+        try {
+            loggedUser = UserDAO.login(txtLogin.getText(), txtPassword.getText());
+
+            if (loggedUser.getType().equalsIgnoreCase(ADMIN)) {
                 processAdminPanel();
-            } else if (loggedUser.getType().equalsIgnoreCase(UserTypeConstants.MANAGER)) {
-                // zalogowano jako manager
+            } else if (loggedUser.getType().equalsIgnoreCase(MANAGER)) {
                 processManagerPanel();
             } else {
-                // zalogowano jako uzytkownik
                 processUserPanel();
             }
+        } catch (UserLoginException exception) {
+            showMessageDialog(this, exception.getMessage(), "Błąd logowania", ERROR_MESSAGE);
         }
     }
 
-    /**
-     * Wyłączenie panelu dodawania klienta.
-     *
-     * @param evt
-     */
     private void dodajKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajKlientaAction
         // Dodawanie klienta
         saveClientButton.setEnabled(true);
@@ -3277,8 +3261,8 @@ public class SadCRMForm extends javax.swing.JFrame {
      * @param evt
      */
     private void wylogujUserAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wylogujUserAction
-        int n = JOptionPane.showOptionDialog(this,
-                "Czy napewno chcesz wyjść z programu?",
+        int n = showOptionDialog(this,
+                "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
                 0, INFORMATION_MESSAGE, null, options, null);
 
@@ -3429,9 +3413,8 @@ public class SadCRMForm extends javax.swing.JFrame {
     }//GEN-LAST:event_saveUserButtonActionPerformed
 
     private void logoutAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutAdminButtonActionPerformed
-        // WYLOGOWANIE ADMINA
-        int n = JOptionPane.showOptionDialog(this,
-                "Czy napewno chcesz wyjść z programu?",
+        int n = showOptionDialog(this,
+                "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
                 0, INFORMATION_MESSAGE, null, options, null);
 
@@ -3583,9 +3566,8 @@ public class SadCRMForm extends javax.swing.JFrame {
     }//GEN-LAST:event_myManagerPanelButtonActionPerformed
 
     private void logoutManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutManagerButtonActionPerformed
-        // WYLOGOWANIE ADMINA
-        int n = JOptionPane.showOptionDialog(this,
-                "Czy napewno chcesz wyjść z programu?",
+        int n = showOptionDialog(this,
+                "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
                 0, INFORMATION_MESSAGE, null, options, null);
 
@@ -3603,7 +3585,7 @@ public class SadCRMForm extends javax.swing.JFrame {
 
     private void exitCommonAction() {
         // wyjście             
-        int n = JOptionPane.showOptionDialog(this,
+        int n = showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
                 0, INFORMATION_MESSAGE, null, options, null);
@@ -4263,7 +4245,6 @@ public class SadCRMForm extends javax.swing.JFrame {
     private JButton cancelClientButton;
     private JButton cancelClientByManagerButton;
     private JButton cancelUserButton;
-    private JButton canelLoginButton;
     private JCheckBox cbCreditCard;
     private JCheckBox cbCurrenctCredit;
     private JCheckBox cbCurrencyAcc;
