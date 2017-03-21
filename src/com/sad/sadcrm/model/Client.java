@@ -5,7 +5,7 @@ import com.sad.sadcrm.Parameters;
 import static com.sad.sadcrm.Parameters.getCredentials;
 
 public class Client implements java.io.Serializable {
-    private int idClient;
+    private int id;
     private Address address;
     private User user;
     private String name;
@@ -51,8 +51,8 @@ public class Client implements java.io.Serializable {
     }
 
 
-    public Client(int idClient, Address address, User user, String name, String surname, String pesel, boolean vip, String created) {
-        this.idClient = idClient;
+    public Client(int id, Address address, User user, String name, String surname, String pesel, boolean vip, String created) {
+        this.id = id;
         this.address = address;
         this.user = user;
         this.name = name;
@@ -62,8 +62,8 @@ public class Client implements java.io.Serializable {
         this.created = created;
     }
 
-    public Client(int idClient, Address address, User user, String name, String surname, String pesel, String phone1, String phone2, String mail, String description, boolean vip, String created, String products, String sellChance) {
-        this.idClient = idClient;
+    public Client(int id, Address address, User user, String name, String surname, String pesel, String phone1, String phone2, String mail, String description, boolean vip, String created, String products, String sellChance) {
+        this.id = id;
         this.address = address;
         this.user = user;
         this.name = name;
@@ -79,12 +79,12 @@ public class Client implements java.io.Serializable {
         this.sellChance = sellChance;
     }
 
-    public int getIdClient() {
-        return this.idClient;
+    public int getId() {
+        return this.id;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Address getAddress() {
@@ -193,7 +193,7 @@ public class Client implements java.io.Serializable {
 
     public Parameters asParameters() {
         return getCredentials()
-                .add("idClient", idClient + "")
+                .add("id", id + "")
                 .add("address_id", address.getId() + "")
                 .add("user_id", user.getId() + "")
                 .add("name", name)

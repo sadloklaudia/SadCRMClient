@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.sad.sadcrm.model.Client" table="clients">
+
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="address" class="com.sad.sadcrm.model.Address" fetch="select">
+            <column name="address_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="com.sad.sadcrm.model.User" fetch="select">
+            <column name="user_id" not-null="true" />
+        </many-to-one>
+
+        <property name="vip" column="vip" type="boolean"/>
+
+        <property name="name" column="name" type="string"/>
+        <property name="surname" column="surname" type="string"/>
+        <property name="pesel" column="pesel" type="string"/>
+        <property name="phone1" column="phone1" type="string"/>
+        <property name="phone2" column="phone2" type="string"/>
+        <property name="mail" column="mail" type="string"/>
+        <property name="description" column="description" type="string"/>
+        <property name="created" column="created" type="timestamp"/>
+        <property name="products" column="products" type="string"/>
+        <property name="sellChance" column="sellChance" type="string"/>
+        <property name="modified" column="modified" type="timestamp"/>
+        <property name="tel" column="tel" type="string"/>
+        <property name="telDate" column="telDate" type="timestamp"/>
+    </class>
+</hibernate-mapping>

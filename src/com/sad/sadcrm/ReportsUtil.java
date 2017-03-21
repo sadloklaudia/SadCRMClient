@@ -145,7 +145,7 @@ public class ReportsUtil {
         int i = 1;
         for (Client c : clients) {
             HSSFRow row = sheet.createRow(i);
-            row.createCell(0).setCellValue(c.getIdClient());
+            row.createCell(0).setCellValue(c.getId());
             row.createCell(1).setCellValue(c.getName());
             row.createCell(2).setCellValue(c.getSurname());
             row.createCell(3).setCellValue(c.getPesel());

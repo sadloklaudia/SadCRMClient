@@ -88,7 +88,7 @@ public class TableUtil {
 
     private static Object[] getColumnsForClient(Client client) {
         return new Object[]{
-                client.getIdClient(),
+                client.getId(),
                 client.getName(),
                 client.getSurname(),
                 client.getPesel(),
