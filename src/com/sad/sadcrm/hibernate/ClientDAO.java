@@ -37,7 +37,7 @@ public class ClientDAO {
 
     public static Client getClientById(Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where idClient=:id");
+        Query query = session.createQuery("from Client where id=:id");
         query.setParameter("id", id);
         return (Client) query.list().get(0);
     }
@@ -89,8 +89,8 @@ public class ClientDAO {
 
     public static List<Client> searchByUser(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= :creatorId");
-        query.setParameter("creatorId", user.getId());
+        Query query = session.createQuery("from Client where user_id= :user_id");
+        query.setParameter("user_id", user.getId());
         return query.list();
     }
 
@@ -105,8 +105,8 @@ public class ClientDAO {
 
     public static List<Client> searchByUserAndPesel(User user, String pesel) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= :creatorId and pesel = :pesel");
-        query.setParameter("creatorId", user.getId());
+        Query query = session.createQuery("from Client where user_id= :user_id and pesel = :pesel");
+        query.setParameter("user_id", user.getId());
         query.setParameter("pesel", pesel);
 
         return query.list();
@@ -114,8 +114,8 @@ public class ClientDAO {
 
     public static List<Client> searchByUserSurnameAndPesel(User user, String surname, String pesel) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= :creatorId and surname=:surname and pesel = :pesel");
-        query.setParameter("creatorId", user.getId());
+        Query query = session.createQuery("from Client where user_id= :user_id and surname=:surname and pesel = :pesel");
+        query.setParameter("user_id", user.getId());
         query.setParameter("surname", surname);
         query.setParameter("pesel", pesel);
 
@@ -124,8 +124,8 @@ public class ClientDAO {
 
     public static List<Client> searchByUserAndSurname(User user, String surname) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= :creatorId and surname = :surname");
-        query.setParameter("creatorId", user.getId());
+        Query query = session.createQuery("from Client where user_id= :user_id and surname = :surname");
+        query.setParameter("user_id", user.getId());
         query.setParameter("surname", surname);
 
         return query.list();
