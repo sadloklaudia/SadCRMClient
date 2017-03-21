@@ -859,9 +859,9 @@ public class SadCRMForm extends javax.swing.JFrame {
                                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        addClientPanelLayout.linkSize(HORIZONTAL, new java.awt.Component[]{txtClientCreateDate, txtClientName, txtClientPesel, txtClientPhone1, txtClientPhone2, txtClientSurname});
+        addClientPanelLayout.linkSize(HORIZONTAL, txtClientCreateDate, txtClientName, txtClientPesel, txtClientPhone1, txtClientPhone2, txtClientSurname);
 
-        addClientPanelLayout.linkSize(HORIZONTAL, new java.awt.Component[]{txtCLientCity, txtClientNumber, txtClientPostalCode});
+        addClientPanelLayout.linkSize(HORIZONTAL, txtCLientCity, txtClientNumber, txtClientPostalCode);
 
         addClientPanelLayout.setVerticalGroup(
                 addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
