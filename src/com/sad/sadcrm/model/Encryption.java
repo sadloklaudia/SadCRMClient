@@ -8,6 +8,16 @@ import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 
 public class Encryption {
+    public final static String KEY = "76a5ba50d31d31299308167974dd0ce9";
+
+    public static String decrypt(String input) {
+        return decrypt(input, KEY);
+    }
+
+    public static String encrypt(String input) {
+        return encrypt(input, KEY);
+    }
+
     public static String encrypt(String input, String key) {
         try {
             SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "AES");
@@ -30,12 +40,5 @@ public class Encryption {
         } catch (Exception exception) {
             throw new RuntimeException("Decryption failed", exception);
         }
-    }
-
-    public static void main(String[] args) {
-        String key = "1234567891234567";
-        String data = "example";
-        System.out.println(Encryption.decrypt(Encryption.encrypt(data, key), key));
-        System.out.println(Encryption.encrypt(data, key));
     }
 }

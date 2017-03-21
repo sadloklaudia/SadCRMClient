@@ -1,5 +1,6 @@
 package com.sad.sadcrm;
 
+import com.sad.sadcrm.model.Encryption;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +60,9 @@ public class HttpJson {
 
     public static String postHTML(String urlToRead, Parameters parameters) {
         try {
-            byte[] postData = parameters.getParamString().getBytes(UTF_8);
+            String paramString = parameters.getParamString();
+            paramString = Encryption.decrypt(paramString);
+            byte[] postData = paramString.getBytes(UTF_8);
             int postDataLength = postData.length;
             URL url = new URL(BASE_URL + urlToRead);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -74,7 +77,9 @@ public class HttpJson {
             try (OutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
                 outputStream.write(postData);
             }
-            return getStringFromInputStream(connection.getInputStream());
+            String result = getStringFromInputStream(connection.getInputStream());
+            result = Encryption.decrypt(result);
+            return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
