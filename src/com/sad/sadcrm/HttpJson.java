@@ -1,6 +1,5 @@
 package com.sad.sadcrm;
 
-import com.sad.sadcrm.model.Encryption;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +10,7 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpJson {
-    private final static String BASE_URL = "http://localhost/SadCRM";
+    private final static String BASE_URL = "http://sadcrm.pe.hu/SadCRM";
 
     public static JSONObject get(String urlToRead, Parameters parameters) throws HttpJsonException {
         String result = getHTML(urlToRead, parameters);
@@ -78,7 +77,7 @@ public class HttpJson {
                 outputStream.write(postData);
             }
             String result = getStringFromInputStream(connection.getInputStream());
-          //  result = Encryption.decrypt(result);
+            //  result = Encryption.decrypt(result);
             return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
