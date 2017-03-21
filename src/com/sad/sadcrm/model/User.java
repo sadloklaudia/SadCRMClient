@@ -97,7 +97,7 @@ public class User implements java.io.Serializable {
                 user.getString("surname"),
                 user.getString("type"),
                 user.getString("login"),
-                user.getString("password"),
+                "",
                 user.getString("created")
         );
     }
