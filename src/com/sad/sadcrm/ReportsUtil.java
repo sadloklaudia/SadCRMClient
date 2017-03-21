@@ -77,7 +77,7 @@ public class ReportsUtil {
                     fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
                 }
 
-                List<Client> allClients = ClientDAO.findClientsByUser(user);
+                List<Client> allClients = ClientDAO.searchByUser(user);
                 HSSFWorkbook hwb = createWorkbookForAllClients(allClients);
 
                 FileOutputStream fileOutput = new FileOutputStream(fileToSave);
@@ -105,7 +105,7 @@ public class ReportsUtil {
                 }
 
                 String n = now.substring(0, 11);
-                HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.findTodays(n));
+                HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.searchByCreateDate(n));
 
                 FileOutputStream fileOutput = new FileOutputStream(fileToSave);
                 hwb.write(fileOutput);
@@ -264,7 +264,7 @@ public class ReportsUtil {
                         Columns.column("Opiekun", "owner", DataTypes.stringType())
                 ).groupBy(sellChanceGroup)
                 .pageFooter(Components.pageXofY())
-                .setDataSource(createDataSourceForSellChance(ClientDAO.sellChanceClients()));
+                .setDataSource(createDataSourceForSellChance(ClientDAO.searchHasSellChance()));
 
         try {
             //show the report
@@ -304,7 +304,7 @@ public class ReportsUtil {
                         Columns.column("Data telefonu", "tel", DataTypes.stringType())
                 ).groupBy(itemGroup)
                 .pageFooter(Components.pageXofY())
-                .setDataSource(createUserReport(ClientDAO.findClientsByUser(user)));
+                .setDataSource(createUserReport(ClientDAO.searchByUser(user)));
 
         try {
             showTheReport(report);

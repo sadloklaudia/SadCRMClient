@@ -1,9 +1,6 @@
 package com.sad.sadcrm.form;
 
-import com.sad.sadcrm.MailUtil;
-import com.sad.sadcrm.ReportsUtil;
-import com.sad.sadcrm.TableUtil;
-import com.sad.sadcrm.ValidationUtil;
+import com.sad.sadcrm.*;
 import com.sad.sadcrm.hibernate.AddressDAO;
 import com.sad.sadcrm.hibernate.ClientDAO;
 import com.sad.sadcrm.hibernate.UserDAO;
@@ -21,6 +18,7 @@ import java.util.List;
 
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import static javax.swing.JOptionPane.*;
 import static javax.swing.SwingConstants.HORIZONTAL;
 
 public class SadCRMForm extends javax.swing.JFrame {
@@ -2457,10 +2455,10 @@ public class SadCRMForm extends javax.swing.JFrame {
         topPanel.setVisible(true);
         loggedUser = UserDAO.login(txtLogin.getText(), txtPassword.getText());
         if (loggedUser == null) {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Błąd logowania.\nSprawdź użytkownika i hasło",
                     "Błąd logowania",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         } else {
             if (loggedUser.getType() == null || loggedUser.getType().equalsIgnoreCase("")) {
                 // zalogowano jako uzytkownik
@@ -2602,11 +2600,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 client.setPhone2(txtClientPhone2.getText());
                 client.setMail(txtClientMail.getText());
                 client.setDescription(txtClientDesc.getText());
-                if (txtClientVip.isSelected()) {
-                    client.setVip(true);
-                } else {
-                    client.setVip(false);
-                }
+                client.setVip(txtClientVip.isSelected());
                 client.setCreated(txtClientCreateDate.getText());
                 client.setUser(loggedUser);
 
@@ -2625,33 +2619,20 @@ public class SadCRMForm extends javax.swing.JFrame {
                     client.setSellChance(cboxChanse.getSelectedItem().toString());
                 }
 
-                String out = ClientDAO.insert(client);
-                if (out.equals(ClientConstants.OK)) {
-                    JOptionPane.showMessageDialog(this,
-                            "Nowy klient został dodany.",
-                            "Dodawania klienta",
-                            JOptionPane.INFORMATION_MESSAGE);
-
+                try {
+                    ClientDAO.insert(client);
                     processUserPanel();
-                } else {
-                    if (out.contains("Duplicate entry")) {
-                        JOptionPane.showMessageDialog(this,
-                                "Pesel już istnieje",
-                                "Błąd dodawania klienta",
-                                JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this,
-                                "Błąd dodawania klienta.\nSkontaktuj się z administratorem.",
-                                "Błąd dodawania klienta",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-
+                } catch (ClientInsertException exception) {
+                    showMessageDialog(this,
+                            exception.getMessage(),
+                            "Dodawania klienta",
+                            INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
+                showMessageDialog(this,
                         "Błąd dodawania klienta.\nSkontaktuj się z administratorem.",
                         "Błąd dodawania klienta",
-                        JOptionPane.ERROR_MESSAGE);
+                        ERROR_MESSAGE);
             }
         } else {
             // edycja klienta
@@ -2764,27 +2745,20 @@ public class SadCRMForm extends javax.swing.JFrame {
             } else if (isEdited) {
                 if (validateClient()) {
                     selectedClient.setModified(now());
-                    String out = ClientDAO.update(selectedClient);
-                    if (out.contains("Duplicate entry")) {
-                        JOptionPane.showMessageDialog(this,
-                                "Pesel już istnieje",
-                                "Błąd dodawania klienta",
-                                JOptionPane.ERROR_MESSAGE);
-                    } else {
+                    try {
+                        ClientDAO.update(selectedClient);
                         processSearchPanel();
+                    } catch (ClientUpdateException exception) {
+                        showMessageDialog(this, exception.getMessage(), "Błąd dodawania klienta", ERROR_MESSAGE);
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Błąd dodawania klienta.\nSkontaktuj się z administratorem.",
-                            "Błąd dodawania klienta",
-                            JOptionPane.ERROR_MESSAGE);
+                            "Błąd dodawania klienta", ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
-                        "Nic nie edytowano.",
-                        "Edycja klienta",
-                        JOptionPane.INFORMATION_MESSAGE);
+                showMessageDialog(this, "Nic nie edytowano.",
+                        "Edycja klienta", INFORMATION_MESSAGE);
                 processSearchPanel();
             }
         }
@@ -2915,25 +2889,25 @@ public class SadCRMForm extends javax.swing.JFrame {
                 if (ValidationUtil.validatePostalCode(txtClientPostalCode.getText())) {
                     return true;
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Błedny kod pocztowy",
                             "Błąd dodawania klienta",
-                            JOptionPane.ERROR_MESSAGE);
+                            ERROR_MESSAGE);
                     return false;
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
+                showMessageDialog(this,
                         "Błedny nr pesel",
                         "Błąd dodawania klienta",
-                        JOptionPane.ERROR_MESSAGE);
+                        ERROR_MESSAGE);
 
                 return false;
             }
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     result,
                     "Błąd dodawania klienta",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
             return false;
         }
     }
@@ -2953,25 +2927,25 @@ public class SadCRMForm extends javax.swing.JFrame {
                 if (ValidationUtil.validatePostalCode(editClientPostalCode.getText())) {
                     return true;
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Błedny kod pocztowy",
                             "Błąd dodawania klienta",
-                            JOptionPane.ERROR_MESSAGE);
+                            ERROR_MESSAGE);
                     return false;
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
+                showMessageDialog(this,
                         "Błedny nr pesel",
                         "Błąd dodawania klienta",
-                        JOptionPane.ERROR_MESSAGE);
+                        ERROR_MESSAGE);
 
                 return false;
             }
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     result,
                     "Błąd dodawania klienta",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
             return false;
         }
     }
@@ -3012,7 +2986,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             tableClients.setRowSelectionAllowed(true);
             tableClients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            List<Client> clients = ClientDAO.findClientsByUser(loggedUser);
+            List<Client> clients = ClientDAO.searchByUser(loggedUser);
             TableUtil.displayClients(clients, tableClients);
         } else if (mail) {
             txtSendMultipleMail.setVisible(true);
@@ -3020,7 +2994,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             tableClients.setRowSelectionAllowed(true);
             tableClients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-            List<Client> clients = ClientDAO.findClientsWithMails();
+            List<Client> clients = ClientDAO.searchHasMail();
             TableUtil.displayClients(clients, tableClients);
         } else {
             txtSendMultipleMail.setVisible(false);
@@ -3079,34 +3053,28 @@ public class SadCRMForm extends javax.swing.JFrame {
     private void wyslijjednegoMailaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijjednegoMailaAction
         // Walidatcja pól wysyłania maila + wysyłka
         Map<String, String> fieldsMap = new HashMap<>();
-        fieldsMap.put(txtMailContent.getText(), "Wprowadź treść maila");
-        fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
         fieldsMap.put(txtReceip.getText(), "Wprowadź odbiorców");
+        fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
+        fieldsMap.put(txtMailContent.getText(), "Wprowadź treść maila");
 
         String result = ValidationUtil.validateNotNull(fieldsMap);
         if (result == null) {
-
             String recipients = txtReceip.getText();
 
-            String send = MailUtil.sendMail(recipients, txtMailSubject.getText(), txtMailContent.getText());
-            if (send.equalsIgnoreCase(ClientConstants.OK)) {
-                JOptionPane.showMessageDialog(this,
-                        "Wiadmość została wysłana",
-                        "Wysylanie maila",
-                        JOptionPane.INFORMATION_MESSAGE);
+            try {
+                MailUtil.sendMail(recipients, txtMailSubject.getText(), txtMailContent.getText());
+                showMessageDialog(this, "Wiadmość została wysłana", "Wysylanie maila", INFORMATION_MESSAGE);
 
                 if (mail) {
                     processSearchPanel();
                 } else {
                     processUserPanel();
                 }
-
+            } catch (SendMailException exception) {
+                showMessageDialog(this, exception.getMessage(), "Błąd wysyłania maila", ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this,
-                    result,
-                    "Błąd wysyłania maila",
-                    JOptionPane.ERROR_MESSAGE);
+            showMessageDialog(this, result, "Błąd wysyłania maila", ERROR_MESSAGE);
         }
     }//GEN-LAST:event_wyslijjednegoMailaAction
 
@@ -3153,10 +3121,10 @@ public class SadCRMForm extends javax.swing.JFrame {
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wprowadź kryteria wyszukiwania",
                     "Błąd wyszukiwania",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }//GEN-LAST:event_szukajKlientaAction
 
@@ -3171,10 +3139,10 @@ public class SadCRMForm extends javax.swing.JFrame {
             List<Client> clients = ClientDAO.searchClients();
             TableUtil.displayClients(clients, tableClients);
         } else if (mail) {
-            List<Client> clients = ClientDAO.findClientsWithMails();
+            List<Client> clients = ClientDAO.searchHasMail();
             TableUtil.displayClients(clients, tableClients);
         } else {
-            List<Client> clients = ClientDAO.findClientsByUser(loggedUser);
+            List<Client> clients = ClientDAO.searchByUser(loggedUser);
             TableUtil.displayClients(clients, tableClients);
         }
     }//GEN-LAST:event_resetPolSzukaniaKlientaAction
@@ -3189,10 +3157,10 @@ public class SadCRMForm extends javax.swing.JFrame {
         if (tableClients.getSelectedRowCount() == 1) {
             editClientAction(tableClients.getSelectedRow());
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz klienta",
                     "Zaznacz wiersz",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }//GEN-LAST:event_szczegolyKlientaAction
 
@@ -3302,7 +3270,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
-                0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                0, INFORMATION_MESSAGE, null, options, null);
 
         if (n == 0) {
             loggedUser = null;
@@ -3344,10 +3312,10 @@ public class SadCRMForm extends javax.swing.JFrame {
             searchResults = UserDAO.searchUsersByName(txtAdminSearchName.getText());
             TableUtil.displayUsers(searchResults, tableUsers);
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wprowadź kryteria wyszukiwania",
                     "Błąd wyszukiwania",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }//GEN-LAST:event_adminSearchButtonActionPerformed
 
@@ -3395,17 +3363,17 @@ public class SadCRMForm extends javax.swing.JFrame {
 
                 String out = UserDAO.insertUser(newUserLocal);
                 if (out.equalsIgnoreCase(ClientConstants.OK)) {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Nowy użytkownik został dodany.",
                             "Dodawania użytkownika",
-                            JOptionPane.INFORMATION_MESSAGE);
+                            INFORMATION_MESSAGE);
 
                     processAdminPanel();
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Podany login juz istnieje.",
                             "Dodawania klienta",
-                            JOptionPane.ERROR_MESSAGE);
+                            ERROR_MESSAGE);
                 }
             }
         } else {
@@ -3437,10 +3405,10 @@ public class SadCRMForm extends javax.swing.JFrame {
                 selectedUser.setCreated(now());
                 String out = UserDAO.updateUser(selectedUser);
                 if (out.contains("Duplicate entry")) {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Taki login już istnieje",
                             "Błąd dodawania użytkownika",
-                            JOptionPane.ERROR_MESSAGE);
+                            ERROR_MESSAGE);
                 } else {
                     processAdminSearch();
                 }
@@ -3455,7 +3423,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
-                0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                0, INFORMATION_MESSAGE, null, options, null);
 
         if (n == 0) {
             loggedUser = null;
@@ -3493,10 +3461,10 @@ public class SadCRMForm extends javax.swing.JFrame {
         if (tableUsers.getSelectedRowCount() == 1) {
             editUserAction(tableUsers.getSelectedRow());
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz użytkownika",
                     "Zaznacz wiersz",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }//GEN-LAST:event_adminDetailsButtonActionPerformed
 
@@ -3553,23 +3521,23 @@ public class SadCRMForm extends javax.swing.JFrame {
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
         if (!ValidationUtil.validatePassword(txtChangePass1.getText())) {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Hasło powinno mieć co najmniej 4 znaki, nie więcej niż 10 znaków. ",
                     "Zmiana hasła",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         } else if (!txtChangePass1.getText().equalsIgnoreCase(txtChangePass2.getText())) {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Hasła muszą być takie same. ",
                     "Zmiana hasła",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         } else {
             loggedUser.setPassword(txtChangePass1.getText());
             UserDAO.updateUser(loggedUser);
 
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Hasła zostało zmienione. ",
                     "Zmiana hasła",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    INFORMATION_MESSAGE);
 
             jDialog1.setVisible(false);
             jDialog1.dispose();
@@ -3609,7 +3577,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
-                0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                0, INFORMATION_MESSAGE, null, options, null);
 
         if (n == 0) {
             loggedUser = null;
@@ -3628,7 +3596,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
-                0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                0, INFORMATION_MESSAGE, null, options, null);
 
         if (n == 0) {
             System.exit(1);
@@ -3688,10 +3656,10 @@ public class SadCRMForm extends javax.swing.JFrame {
         if (tableClientsForManager.getSelectedRowCount() == 1) {
             editClientForManager(tableClientsForManager.getSelectedRow());
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz klienta",
                     "Zaznacz wiersz",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }//GEN-LAST:event_managerEditButtonActionPerformed
 
@@ -3823,27 +3791,17 @@ public class SadCRMForm extends javax.swing.JFrame {
         } else if (isEdited) {
             if (validateClientForManager()) {
                 selectedClient.setModified(now());
-                String out = ClientDAO.update(selectedClient);
-                if (out.contains("Duplicate entry")) {
-                    JOptionPane.showMessageDialog(this,
-                            "Pesel już istnieje",
-                            "Błąd dodawania klienta",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
+                try {
+                    ClientDAO.update(selectedClient);
                     processSearchClientsForManager();
+                } catch (ClientUpdateException exception) {
+                    showMessageDialog(this, exception.getMessage(), "Błąd dodawania klienta", ERROR_MESSAGE);
                 }
-
             } else {
-                JOptionPane.showMessageDialog(this,
-                        "Błąd dodawania klienta.\nSkontaktuj się z administratorem.",
-                        "Błąd dodawania klienta",
-                        JOptionPane.ERROR_MESSAGE);
+                showMessageDialog(this, "Błąd dodawania klienta.\nSkontaktuj się z administratorem.", "Błąd dodawania klienta", ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Nic nie edytowano.",
-                    "Edycja klienta",
-                    JOptionPane.INFORMATION_MESSAGE);
+            showMessageDialog(this, "Nic nie edytowano.", "Edycja klienta", INFORMATION_MESSAGE);
             processSearchClientsForManager();
         }
 
@@ -3874,10 +3832,10 @@ public class SadCRMForm extends javax.swing.JFrame {
             jDialog2.setVisible(false);
             jDialog2.setAlwaysOnTop(false);
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz pracownika",
                     "Zaznacz wiersz",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }
 
@@ -3901,10 +3859,10 @@ public class SadCRMForm extends javax.swing.JFrame {
             jDialog2.setVisible(false);
             jDialog2.setAlwaysOnTop(false);
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz pracownika",
                     "Zaznacz wiersz",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
     }
 
@@ -3984,10 +3942,10 @@ public class SadCRMForm extends javax.swing.JFrame {
             ReportsUtil util = new ReportsUtil();
             util.createUserReport(newUser);
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     "Wybierz pracownika",
                     "Błąd",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -4089,27 +4047,27 @@ public class SadCRMForm extends javax.swing.JFrame {
                 if (ValidationUtil.validateNotEqual(txtAddUserPassword2.getText(), txtAddUserPassword1.getText())) {
                     return true;
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    showMessageDialog(this,
                             "Hasła muszę być takie same",
                             "Błąd dodawania użytkownika",
-                            JOptionPane.ERROR_MESSAGE);
+                            ERROR_MESSAGE);
 
                     return false;
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
+                showMessageDialog(this,
                         "Hasła musi posiadadać od 4 do 10 znaków.",
                         "Błąd dodawania użytkownika",
-                        JOptionPane.ERROR_MESSAGE);
+                        ERROR_MESSAGE);
 
                 return false;
             }
 
         } else {
-            JOptionPane.showMessageDialog(this,
+            showMessageDialog(this,
                     result,
                     "Błąd dodawania użytkownika",
-                    JOptionPane.ERROR_MESSAGE);
+                    ERROR_MESSAGE);
 
             return false;
         }

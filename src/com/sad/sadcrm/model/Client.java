@@ -2,7 +2,7 @@ package com.sad.sadcrm.model;
 
 import com.sad.sadcrm.Parameters;
 
-import static com.sad.sadcrm.Parameters.getParameters;
+import static com.sad.sadcrm.Parameters.getCredentials;
 
 public class Client implements java.io.Serializable {
     private int idClient;
@@ -192,7 +192,7 @@ public class Client implements java.io.Serializable {
     }
 
     public Parameters asParameters() {
-        return getParameters()
+        return getCredentials()
                 .add("idClient", idClient + "")
                 .add("address_id", address.getId() + "")
                 .add("user_id", user.getId() + "")

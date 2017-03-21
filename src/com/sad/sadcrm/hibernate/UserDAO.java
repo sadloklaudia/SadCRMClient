@@ -1,6 +1,8 @@
 package com.sad.sadcrm.hibernate;
 
+import com.sad.sadcrm.HttpJsonException;
 import com.sad.sadcrm.Parameters;
+import com.sad.sadcrm.UserLoginException;
 import com.sad.sadcrm.model.ClientConstants;
 import com.sad.sadcrm.model.User;
 import org.hibernate.HibernateException;
@@ -16,11 +18,13 @@ import static com.sad.sadcrm.HttpJson.post;
 
 public class UserDAO {
     public static User login(String login, String password) {
-        JSONObject jsonUser = post("/user/login", new Parameters(login, password));
         try {
+            JSONObject jsonUser = post("/user/login", new Parameters(login, password));
             return User.createFromJson(jsonUser.getJSONObject("user"));
         } catch (JSONException exception) {
             throw new RuntimeException(exception);
+        } catch (HttpJsonException exception) {
+            throw new UserLoginException(exception);
         }
     }
 

@@ -10,37 +10,44 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpJson {
-    final static String BASE_URL = "http://localhost/SadCRM";
+    private final static String BASE_URL = "http://localhost/SadCRM";
 
-    public static void main(String[] args) throws JSONException {
-        String result = postHTML("/address/create",
-                new Parameters("daniel", "daniel")
-                        .add("street", "Jakas tam")
-                        .add("number", "jakis tam"));
-        System.out.println(result);
-    }
+    public static JSONObject get(String urlToRead, Parameters parameters) throws HttpJsonException {
+        String result = getHTML(urlToRead, parameters);
 
-    public static JSONObject get(String urlToRead) {
-        String result = getHTML(urlToRead);
         try {
-            return new JSONObject(result);
-        } catch (JSONException exception) {
-            throw new RuntimeException(exception);
+            JSONObject jsonObject = new JSONObject(result);
+            throwOnSuccessFalse(jsonObject);
+            return jsonObject;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static JSONObject post(String urlToRead, Parameters parameters) {
+    public static JSONObject post(String urlToRead, Parameters parameters) throws HttpJsonException {
         String result = postHTML(urlToRead, parameters);
         try {
-            return new JSONObject(result);
+            JSONObject jsonObject = new JSONObject(result);
+            throwOnSuccessFalse(jsonObject);
+            return jsonObject;
+        } catch (JSONException e) {
+            throw new RuntimeException(e.getMessage() + "\n" + result);
+        }
+    }
+
+    private static void throwOnSuccessFalse(JSONObject jsonObject) throws HttpJsonException {
+        try {
+            if (!jsonObject.getBoolean("success")) {
+                throw new HttpJsonException(jsonObject.getString("message"));
+            }
         } catch (JSONException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    private static String getHTML(String urlToRead) {
+    private static String getHTML(String urlToRead, Parameters parameters) {
         try {
-            URL url = new URL(BASE_URL + urlToRead);
+            URL url = new URL(BASE_URL + urlToRead + "?" + parameters.getParamString());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -64,8 +71,8 @@ public class HttpJson {
             connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
             connection.setUseCaches(false);
 
-            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-                wr.write(postData);
+            try (OutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+                outputStream.write(postData);
             }
             return getStringFromInputStream(connection.getInputStream());
         } catch (IOException e) {
