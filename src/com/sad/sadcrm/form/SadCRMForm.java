@@ -4221,7 +4221,6 @@ public class SadCRMForm extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             for (LookAndFeelInfo info : getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     setLookAndFeel(info.getClassName());
                 }

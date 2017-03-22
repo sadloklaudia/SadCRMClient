@@ -96,7 +96,7 @@ public class ClientDAO {
 
     public static List<Client> searchBySurnameAndPesel(String surname, String pesel) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where surname=:surname and pesel = :pesel");
+        Query query = session.createQuery("from Client where surname = :surname and pesel = :pesel");
         query.setParameter("surname", surname);
         query.setParameter("pesel", pesel);
 
@@ -133,7 +133,7 @@ public class ClientDAO {
 
     public static List<Client> searchBySurnameAndPeselAndHasMail(String surname, String pesel) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= mail!=:mail and surname=:surname and pesel = :pesel");
+        Query query = session.createQuery("from Client where mail!=:mail and surname=:surname and pesel = :pesel");
         query.setParameter("mail", "");
         query.setParameter("surname", surname);
         query.setParameter("pesel", pesel);
@@ -152,7 +152,7 @@ public class ClientDAO {
 
     public static List<Client> searchBySurnameAndHasMail(String surname) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= mail!=:mail and surname = :surname");
+        Query query = session.createQuery("from Client where mail!=:mail and surname = :surname");
         query.setParameter("mail", "");
         query.setParameter("surname", surname);
 

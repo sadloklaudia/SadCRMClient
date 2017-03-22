@@ -10,7 +10,7 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpJson {
-    private final static String BASE_URL = "http://sadcrm.pe.hu/SadCRM";
+    private final static String BASE_URL = "http://localhost/SadCRM";
 
     public static JSONObject get(String urlToRead, Parameters parameters) throws HttpJsonException {
         String result = getHTML(urlToRead, parameters);
@@ -80,7 +80,8 @@ public class HttpJson {
             //  result = Encryption.decrypt(result);
             return result;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
