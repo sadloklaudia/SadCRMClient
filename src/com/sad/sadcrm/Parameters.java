@@ -3,13 +3,11 @@ package com.sad.sadcrm;
 import static java.lang.String.format;
 
 public class Parameters {
+    private static String username;
+    private static String password;
     private String paramString;
 
-    private Parameters() {
-        paramString = "";
-    }
-
-    public Parameters(String login, String password) {
+    private Parameters(String login, String password) {
         paramString = format("credentials[login]=%s&credentials[password]=%s", login, password);
     }
 
@@ -22,11 +20,12 @@ public class Parameters {
         return paramString;
     }
 
-    public static Parameters getParameters() {
-        return new Parameters();
+    public static void useCredentials(String login, String password) {
+        Parameters.username = login;
+        Parameters.password = password;
     }
 
     public static Parameters getCredentials() {
-        return new Parameters("daniel", "daniel");
+        return new Parameters(username, password);
     }
 }

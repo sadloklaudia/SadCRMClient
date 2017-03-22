@@ -15,11 +15,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.sad.sadcrm.HttpJson.post;
+import static com.sad.sadcrm.Parameters.getCredentials;
 
 public class UserDAO {
     public static User login(String login, String password) {
         try {
-            JSONObject jsonUser = post("/user/login", new Parameters(login, password));
+            Parameters.useCredentials(login, password);
+            JSONObject jsonUser = post("/user/login", getCredentials());
             return User.createFromJson(jsonUser.getJSONObject("user"));
         } catch (JSONException exception) {
             throw new RuntimeException(exception);
