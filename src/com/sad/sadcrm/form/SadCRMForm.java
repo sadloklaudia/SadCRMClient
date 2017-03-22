@@ -4228,6 +4228,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             getLogger(SadCRMForm.class.getName()).log(SEVERE, null, ex);
         }
+        Thread.setDefaultUncaughtExceptionHandler((t, exception) -> {
+            showMessageDialog(null, exception.getMessage());
+        });
         invokeLater(() -> new SadCRMForm().setVisible(true));
     }
 
