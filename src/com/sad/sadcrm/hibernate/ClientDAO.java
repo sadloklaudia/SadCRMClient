@@ -140,7 +140,7 @@ public class ClientDAO {
             JSONObject object = HttpJson.get("/client", parameters);
             return Client.createFromJson(object.getJSONObject("client"));
         } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch user", e);
+            throw new RuntimeException("Could not fetch client", e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -156,7 +156,8 @@ public class ClientDAO {
             }
             return users;
         } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch user", e);
+            e.printStackTrace();
+            throw new RuntimeException("Could not fetch clients", e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

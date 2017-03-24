@@ -93,7 +93,7 @@ public class UserDAO {
             }
             return users;
         } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch user", e);
+            throw new RuntimeException("Could not fetch users", e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
