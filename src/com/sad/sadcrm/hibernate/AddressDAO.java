@@ -14,10 +14,10 @@ public class AddressDAO {
         try {
             JSONObject result = post("/address/create", address.asParameters());
             address.setId(result.getInt("id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (HttpJsonException e) {
-            e.printStackTrace();
+        } catch (JSONException exception) {
+            throw new RuntimeException("Missing \"id\" key", exception);
+        } catch (HttpJsonException exception) {
+            throw new RuntimeException("Couldn't insert Address", exception);
         }
     }
 
