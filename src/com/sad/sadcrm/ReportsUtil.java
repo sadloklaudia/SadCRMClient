@@ -32,6 +32,8 @@ import java.util.List;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.grp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.datatype.DataTypes.booleanType;
+import static net.sf.dynamicreports.report.builder.datatype.DataTypes.stringType;
 
 public class ReportsUtil {
     private static JFileChooser fileChooser = new JFileChooser();
@@ -110,11 +112,7 @@ public class ReportsUtil {
                 FileOutputStream fileOutput = new FileOutputStream(fileToSave);
                 hwb.write(fileOutput);
                 fileOutput.close();
-                JOptionPane.showMessageDialog(null,
-                        "Raport został wygenerowany.",
-                        "Raport",
-                        JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Report generated!");
+                JOptionPane.showMessageDialog(null, "Raport został wygenerowany.", "Raport", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -212,11 +210,11 @@ public class ReportsUtil {
                         .setHorizontalAlignment(HorizontalAlignment.LEFT)
                         .setStyle(boldCenteredStyle))
                 .columns(
-                        Columns.column("Klient", "client", DataTypes.stringType()),
-                        Columns.column("VIP", "vip", DataTypes.booleanType()),
-                        Columns.column("Szansa sprzedaży", "chance", DataTypes.stringType()),
-                        Columns.column("Data kontaktu", "contactDate", DataTypes.stringType()),
-                        Columns.column("Opiekun", "owner", DataTypes.stringType())
+                        Columns.column("Klient", "client", stringType()),
+                        Columns.column("VIP", "vip", booleanType()),
+                        Columns.column("Szansa sprzedaży", "chance", stringType()),
+                        Columns.column("Data kontaktu", "contactDate", stringType()),
+                        Columns.column("Opiekun", "owner", stringType())
                 ).groupBy(ownerGroup)
                 .pageFooter(Components.pageXofY())
                 .setDataSource(createDataSourceForTelephones(ClientDAO.phonesFromDate(day)));
@@ -256,18 +254,17 @@ public class ReportsUtil {
                         .setHorizontalAlignment(HorizontalAlignment.LEFT)
                         .setStyle(boldCenteredStyle))
                 .columns(
-                        Columns.column("Klient", "client", DataTypes.stringType()),
-                        Columns.column("VIP", "vip", DataTypes.booleanType()),
-                        Columns.column("Szansa sprzedaży", "chance", DataTypes.stringType()),
-                        Columns.column("Telefon 1", "tel1", DataTypes.stringType()),
-                        Columns.column("Telefon 2", "tel2", DataTypes.stringType()),
-                        Columns.column("Opiekun", "owner", DataTypes.stringType())
+                        Columns.column("Klient", "client", stringType()),
+                        Columns.column("VIP", "vip", booleanType()),
+                        Columns.column("Szansa sprzedaży", "chance", stringType()),
+                        Columns.column("Telefon 1", "tel1", stringType()),
+                        Columns.column("Telefon 2", "tel2", stringType()),
+                        Columns.column("Opiekun", "owner", stringType())
                 ).groupBy(sellChanceGroup)
                 .pageFooter(Components.pageXofY())
                 .setDataSource(createDataSourceForSellChance(ClientDAO.searchHasSellChance()));
 
         try {
-            //show the report
             showTheReport(report);
         } catch (DRException e) {
             e.printStackTrace();
@@ -295,13 +292,13 @@ public class ReportsUtil {
                 .highlightDetailEvenRows()
                 .title(Components.text("Raport użytkownika " + user.getName() + " " + user.getSurname() + "\n").setStyle(boldCenteredStyle))
                 .columns(
-                        Columns.column("Klient", "client", DataTypes.stringType()),
+                        Columns.column("Klient", "client", stringType()),
                         Columns.column("VIP", "vip", DataTypes.characterType()),
-                        Columns.column("Szansa sprzedaży", "chance", DataTypes.stringType()),
-                        Columns.column("Produkty", "products", DataTypes.stringType()),
-                        Columns.column("Pesel", "pesel", DataTypes.stringType()),
-                        Columns.column("Mail", "mail", DataTypes.stringType()),
-                        Columns.column("Data telefonu", "tel", DataTypes.stringType())
+                        Columns.column("Szansa sprzedaży", "chance", stringType()),
+                        Columns.column("Produkty", "products", stringType()),
+                        Columns.column("Pesel", "pesel", stringType()),
+                        Columns.column("Mail", "mail", stringType()),
+                        Columns.column("Data telefonu", "tel", stringType())
                 ).groupBy(itemGroup)
                 .pageFooter(Components.pageXofY())
                 .setDataSource(createUserReport(ClientDAO.searchByUser(user)));
@@ -334,9 +331,18 @@ public class ReportsUtil {
     private static JRDataSource createUserReport(List<Client> clients) {
         DRDataSource dataSource = new DRDataSource("owner", "client", "vip", "chance", "products", "pesel", "mail", "tel");
         for (Client c : clients) {
-            dataSource.add(c.getUser().getName() + " " + c.getUser().getSurname(), c.getName() + " " + c.getSurname(), c.getVip(), c.getSellChance(), c.getProducts(), c.getPesel(), c.getMail(), c.getTelDate());
+            User user = c.getUser();
+            dataSource.add(
+                    user.getName() + " " + user.getSurname(),
+                    c.getName() + " " + c.getSurname(),
+                    c.getVip(),
+                    c.getSellChance(),
+                    c.getProducts(),
+                    c.getPesel(),
+                    c.getMail(),
+                    c.getTelDate()
+            );
         }
-
         return dataSource;
     }
 

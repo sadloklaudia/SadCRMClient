@@ -44,7 +44,7 @@ public class ClientDAO {
 
     public static List<Client> searchByCreateDate(String date) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where creaded like :date");
+        Query query = session.createQuery("from Client where created like :date");
         query.setParameter("date", date);
         return query.list();
     }
