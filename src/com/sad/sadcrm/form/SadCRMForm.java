@@ -3529,9 +3529,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             UserDAO.updateUser(loggedUser);
 
             showMessageDialog(this,
-                    "Hasła zostało zmienione. ",
-                    "Zmiana hasła",
-                    INFORMATION_MESSAGE);
+                    "Hasła zostało zmienione. ", "Zmiana hasła", INFORMATION_MESSAGE);
 
             jDialog1.setVisible(false);
             jDialog1.dispose();
