@@ -1,12 +1,13 @@
 package com.sad.sadcrm.form;
 
 import com.sad.sadcrm.*;
-import com.sad.sadcrm.hibernate.AddressDAO;
-import com.sad.sadcrm.hibernate.ClientDAO;
-import com.sad.sadcrm.hibernate.UserDAO;
+import com.sad.sadcrm.hibernate.*;
+import com.sad.sadcrm.hibernate.exception.ClientInsertException;
+import com.sad.sadcrm.hibernate.exception.ClientUpdateException;
+import com.sad.sadcrm.hibernate.exception.UserInsertException;
+import com.sad.sadcrm.hibernate.exception.UserUpdateException;
 import com.sad.sadcrm.model.Address;
 import com.sad.sadcrm.model.Client;
-import com.sad.sadcrm.model.ClientConstants;
 import com.sad.sadcrm.model.User;
 
 import javax.swing.*;
@@ -3355,19 +3356,14 @@ public class SadCRMForm extends javax.swing.JFrame {
                 newUserLocal.setType(txtAddUsertype.getSelectedItem().toString());
                 newUserLocal.setCreated(txtAddUserdate.getText());
 
-                String out = UserDAO.insertUser(newUserLocal);
-                if (out.equalsIgnoreCase(ClientConstants.OK)) {
+                try {
+                    UserDAO.insertUser(newUserLocal);
                     showMessageDialog(this,
-                            "Nowy użytkownik został dodany.",
-                            "Dodawania użytkownika",
-                            INFORMATION_MESSAGE);
+                            "Nowy użytkownik został dodany.", "Dodawania użytkownika", INFORMATION_MESSAGE);
 
                     processAdminPanel();
-                } else {
-                    showMessageDialog(this,
-                            "Podany login juz istnieje.",
-                            "Dodawania klienta",
-                            ERROR_MESSAGE);
+                } catch (UserInsertException ex) {
+                    showMessageDialog(this, ex.getMessage(), "Dodawania klienta", ERROR_MESSAGE);
                 }
             }
         } else {
@@ -3397,16 +3393,12 @@ public class SadCRMForm extends javax.swing.JFrame {
 
             if (isEdited && validateUser()) {
                 selectedUser.setCreated(now());
-                String out = UserDAO.updateUser(selectedUser);
-                if (out.contains("Duplicate entry")) {
-                    showMessageDialog(this,
-                            "Taki login już istnieje",
-                            "Błąd dodawania użytkownika",
-                            ERROR_MESSAGE);
-                } else {
+                try {
+                    UserDAO.updateUser(selectedUser);
                     processAdminSearch();
+                } catch (UserUpdateException exception) {
+                    showMessageDialog(this, "Taki login już istnieje", "Błąd dodawania użytkownika", ERROR_MESSAGE);
                 }
-
             }
         }
 

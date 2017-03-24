@@ -1,7 +1,10 @@
 package com.sad.sadcrm.model;
 
+import com.sad.sadcrm.Parameters;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.sad.sadcrm.Parameters.getCredentials;
 
 public class User implements java.io.Serializable {
     private int id;
@@ -100,5 +103,16 @@ public class User implements java.io.Serializable {
                 "",
                 user.getString("created")
         );
+    }
+
+    public Parameters asParameters() {
+        return getCredentials()
+                .add("id", id + "")
+                .add("name", name)
+                .add("surname", surname)
+                .add("type", type)
+                .add("login", login)
+                .add("password", password)
+                .add("created", created);
     }
 }

@@ -1,8 +1,8 @@
 package com.sad.sadcrm.hibernate;
 
-import com.sad.sadcrm.ClientInsertException;
-import com.sad.sadcrm.ClientUpdateException;
 import com.sad.sadcrm.HttpJsonException;
+import com.sad.sadcrm.hibernate.exception.ClientInsertException;
+import com.sad.sadcrm.hibernate.exception.ClientUpdateException;
 import com.sad.sadcrm.model.Client;
 import com.sad.sadcrm.model.User;
 import org.hibernate.Query;
@@ -59,7 +59,7 @@ public class ClientDAO {
         System.out.println("*** DATE > " + date);
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where teldate > :date");
+        Query query = session.createQuery("from Client where telDate > :date");
         query.setParameter("date", date);
 
         return query.list();
@@ -89,7 +89,7 @@ public class ClientDAO {
 
     public static List<Client> searchByUser(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Client where user_id= :user_id");
+        Query query = session.createQuery("from Client where user_id = :user_id");
         query.setParameter("user_id", user.getId());
         return query.list();
     }
