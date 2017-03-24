@@ -1,6 +1,7 @@
 package com.sad.sadcrm.model;
 
 import com.sad.sadcrm.Parameters;
+import org.json.JSONObject;
 
 import static com.sad.sadcrm.Parameters.getCredentials;
 
@@ -210,6 +211,10 @@ public class Client implements java.io.Serializable {
                 .add("modified", modified)
                 .add("tel", tel)
                 .add("telDate", telDate);
+    }
+
+    public static Client createFromJson(JSONObject jsonObject) {
+        return null;
     }
 }
 

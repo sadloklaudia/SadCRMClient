@@ -75,7 +75,7 @@ public class UserDAO {
     private static User fetchUserById(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/user", parameters);
-            return User.createFromJson(object);
+            return User.createFromJson(object.getJSONObject("user"));
         } catch (HttpJsonException e) {
             throw new RuntimeException("Could not fetch user", e);
         } catch (JSONException e) {
