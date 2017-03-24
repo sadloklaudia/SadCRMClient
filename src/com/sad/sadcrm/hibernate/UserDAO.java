@@ -3,15 +3,14 @@ package com.sad.sadcrm.hibernate;
 import com.sad.sadcrm.HttpJsonException;
 import com.sad.sadcrm.Parameters;
 import com.sad.sadcrm.UserLoginException;
-import com.sad.sadcrm.model.ClientConstants;
+import com.sad.sadcrm.hibernate.exception.UserInsertException;
+import com.sad.sadcrm.hibernate.exception.UserUpdateException;
 import com.sad.sadcrm.model.User;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.List;
 
 import static com.sad.sadcrm.HttpJson.post;
@@ -30,18 +29,19 @@ public class UserDAO {
         }
     }
 
-    public static String insertUser(User user) {
+    public static void insertUser(User user) {
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            post("/user/create", user.asParameters());
+        } catch (HttpJsonException exception) {
+            throw new UserInsertException(exception);
+        }
+    }
 
-            session.beginTransaction();
-
-            Serializable s = session.save(user);
-            session.getTransaction().commit();
-
-            return ClientConstants.OK;
-        } catch (HibernateException hibernateException) {
-            return hibernateException.getCause().getMessage();
+    public static void updateUser(User user) {
+        try {
+            post("/user/update", user.asParameters());
+        } catch (HttpJsonException exception) {
+            throw new UserUpdateException(exception);
         }
     }
 
@@ -85,21 +85,4 @@ public class UserDAO {
         return (User) query.list().get(0);
     }
 
-    public static String updateUser(User user) {
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-
-            session.beginTransaction();
-
-            session.update(user);
-            session.getTransaction().commit();
-
-            session.close();
-
-            return ClientConstants.OK;
-        } catch (HibernateException he) {
-            he.printStackTrace();
-            return he.getCause().getMessage();
-        }
-    }
 }
