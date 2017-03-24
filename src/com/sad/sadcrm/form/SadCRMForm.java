@@ -1,7 +1,9 @@
 package com.sad.sadcrm.form;
 
 import com.sad.sadcrm.*;
-import com.sad.sadcrm.hibernate.*;
+import com.sad.sadcrm.hibernate.AddressDAO;
+import com.sad.sadcrm.hibernate.ClientDAO;
+import com.sad.sadcrm.hibernate.UserDAO;
 import com.sad.sadcrm.hibernate.exception.ClientInsertException;
 import com.sad.sadcrm.hibernate.exception.ClientUpdateException;
 import com.sad.sadcrm.hibernate.exception.UserInsertException;
@@ -2456,9 +2458,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         pack();
     }
 
-    private void logowanieAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logowanieAction
+    private void logowanieAction(ActionEvent evt) {
         processLoginAction();
-    }//GEN-LAST:event_logowanieAction
+    }
 
     private void processLoginAction() {
         leftPanel.setVisible(true);
@@ -2478,8 +2480,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         }
     }
 
-    private void dodajKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajKlientaAction
-        // Dodawanie klienta
+    private void dodajKlientaAction(ActionEvent evt) {
         saveClientButton.setEnabled(true);
         editClientButton.setVisible(false);
         selectedClient = null;
@@ -2488,11 +2489,8 @@ public class SadCRMForm extends javax.swing.JFrame {
         clearClientsFields();
 
         addClientAction();
-    }//GEN-LAST:event_dodajKlientaAction
+    }
 
-    /*
-     Czyści pola klienta
-     */
     private void clearClientsFields() {
         txtClientName.setText("");
         txtClientSurname.setText("");
@@ -2542,11 +2540,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtClientModification.setEnabled(false);
         txtClientTel.setEnabled(true);
         txtClientTelDate.setEnabled(false);
-
     }
 
     private void clearUserFields() {
-        // clear
         txtAddUserLogin.setText("");
         txtAddUserName.setText("");
         txtAddUserPassword1.setText("");
@@ -2555,7 +2551,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtAddUserdate.setText("");
         txtAddUsertype.setSelectedIndex(0);
 
-        // enable
         txtAddUserLogin.setEnabled(true);
         txtAddUserName.setEnabled(true);
         txtAddUserPassword1.setEnabled(true);
@@ -2565,28 +2560,18 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtAddUsertype.setEnabled(true);
     }
 
-    /*
-     Dodaje dane pracownika oraz datę do klienta
-     */
     private void addClientAction() {
         txtClientCreateDate.setText(now());
         txtClientCreator.setText(loggedUser.getName() + " " + loggedUser.getSurname());
     }
 
-    /*
-     Zwraca dzisiejszą datę w formacie yyyy-MM-dd HH:mm:ss
-     */
     public static String now() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(cal.getTime());
     }
 
-    /*
-     Zapis nowego klienta do bazy
-     */
-    private void zapiszKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zapiszKlientaAction
-        // Zapis nowego klienta do bazy
+    private void zapiszKlientaAction(ActionEvent evt) {
         if (selectedClient == null) {
             if (validateClient()) {
                 Client client = new Client();
@@ -2605,7 +2590,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                     Date parsedDate = dateFormat.parse(txtClientTelDate.getText());
                     client.setTelDate(new Timestamp(parsedDate.getTime()));
                 } catch (ParseException e) {
-                    throw new RuntimeException(e);
+                    client.setTelDate(null);
                 }
                 client.setTel(txtClientTel.isSelected() ? "T" : "F");
                 Address address = new Address();
@@ -2766,11 +2751,8 @@ public class SadCRMForm extends javax.swing.JFrame {
                 processSearchPanel();
             }
         }
-    }//GEN-LAST:event_zapiszKlientaAction
+    }
 
-    /*
-     Tworzy obiekt String z zaznaczonych produktów
-     */
     private String createProductsEntryForManager() {
         String products = "";
         if (cbEditPersonalAcc.isSelected()) {
@@ -2873,11 +2855,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         return products;
     }
 
-    /**
-     * Walidacja klienta przy dodaniu nowego/zapisie
-     *
-     * @return
-     */
     private boolean validateClient() {
         Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(txtCLientCity.getText(), "Wprowadź miasto");
@@ -2955,31 +2932,26 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
 
-    private void anulujZapisKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anulujZapisKlientaAction
+    private void anulujZapisKlientaAction(ActionEvent evt) {
         if (selectedClient != null) {
             processSearchPanel();
         } else {
             processUserPanel();
         }
-    }//GEN-LAST:event_anulujZapisKlientaAction
+    }
 
-    private void mojeKontaktyAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mojeKontaktyAction
+    private void mojeKontaktyAction(ActionEvent evt) {
         //enableMyClientsPanel();
         myContacts = true;
         mail = false;
         processSearchPanel();
-    }//GEN-LAST:event_mojeKontaktyAction
+    }
 
-    /**
-     * Wszyscy klienci
-     *
-     * @param evt
-     */
-    private void wyszukiwanieAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyszukiwanieAction
+    private void wyszukiwanieAction(ActionEvent evt) {
         myContacts = false;
         mail = false;
         processSearchPanel();
-    }//GEN-LAST:event_wyszukiwanieAction
+    }
 
     private void processSearchPanel() {
         PanelsUtil.enablePanel(searchPanel, new JPanel[]{mainUserPanel, addClientPanel, sendMailPanel});
@@ -3011,51 +2983,31 @@ public class SadCRMForm extends javax.swing.JFrame {
         }
     }
 
-    /*
-     korespondencja seryjna
-     */
-    private void korespondencjaSeryjnaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_korespondencjaSeryjnaAction
-        // KORESPONDENCJ SERYJNA
+    private void korespondencjaSeryjnaAction(ActionEvent evt) {
         myContacts = false;
         mail = true;
         processSearchPanel();
-    }//GEN-LAST:event_korespondencjaSeryjnaAction
+    }
 
-    /*
-     Mój panel
-     */
-    private void mojPanelAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mojPanelAction
+    private void mojPanelAction(ActionEvent evt) {
         PanelsUtil.enablePanel(mainUserPanel, new JPanel[]{addClientPanel, searchPanel, sendMailPanel});
-    }//GEN-LAST:event_mojPanelAction
+    }
 
-    /*
-     Czyszczenie pól maila
-     */
-    private void wyczyscPolaMailaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyczyscPolaMailaAction
-        // Wyczyszczenie pół wysyłania maila
+    private void wyczyscPolaMailaAction(ActionEvent evt) {
         txtMailContent.setText("");
         txtReceip.setText("");
         txtMailSubject.setText("");
-    }//GEN-LAST:event_wyczyscPolaMailaAction
+    }
 
-    private void wyslijMailAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijMailAction
-        // panel wysyłania maila
+    private void wyslijMailAction(ActionEvent evt) {
         PanelsUtil.enablePanel(sendMailPanel, new JPanel[]{mainUserPanel, addClientPanel, searchPanel});
-    }//GEN-LAST:event_wyslijMailAction
+    }
 
-    /*
-     Panel wysyłania maila
-     */
-    private void wyslijMail2Action(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijMail2Action
-        // Panel główny użytkownika
+    private void wyslijMail2Action(ActionEvent evt) {
         processSearchPanel();
-    }//GEN-LAST:event_wyslijMail2Action
+    }
 
-    /*
-     Walidacja pól maila + wysyłka
-     */
-    private void wyslijjednegoMailaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijjednegoMailaAction
-        // Walidatcja pól wysyłania maila + wysyłka
+    private void wyslijjednegoMailaAction(ActionEvent evt) {
         Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(txtReceip.getText(), "Wprowadź odbiorców");
         fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
@@ -3080,12 +3032,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         } else {
             showMessageDialog(this, result, "Błąd wysyłania maila", ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_wyslijjednegoMailaAction
+    }
 
-    /*
-     Akcja szukaj
-     */
-    private void szukajKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szukajKlientaAction
+    private void szukajKlientaAction(ActionEvent evt) {
         List<Client> searchResults = null;
         // Wyszukiwanie klienta
         if (!txtSearchSurname.getText().equals("") && !txtSearchPesel.getText().equals("")) {
@@ -3130,12 +3079,9 @@ public class SadCRMForm extends javax.swing.JFrame {
                     "Błąd wyszukiwania",
                     ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_szukajKlientaAction
+    }
 
-    /*
-     Czyszczenie pól wyszukiwania
-     */
-    private void resetPolSzukaniaKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetPolSzukaniaKlientaAction
+    private void resetPolSzukaniaKlientaAction(ActionEvent evt) {
         // Czyszczenie wyników wyszukiwania
         txtSearchPesel.setText("");
         txtSearchSurname.setText("");
@@ -3149,32 +3095,17 @@ public class SadCRMForm extends javax.swing.JFrame {
             List<Client> clients = ClientDAO.searchByUser(loggedUser);
             TableUtil.displayClients(clients, tableClients);
         }
-    }//GEN-LAST:event_resetPolSzukaniaKlientaAction
+    }
 
-    /**
-     * Szczegóły zaznaczonego klienta
-     *
-     * @param evt
-     */
-    private void szczegolyKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szczegolyKlientaAction
-        // Pokaż szczegóły klienta
+    private void szczegolyKlientaAction(ActionEvent evt) {
         if (tableClients.getSelectedRowCount() == 1) {
             editClientAction(tableClients.getSelectedRow());
         } else {
-            showMessageDialog(this,
-                    "Wybierz klienta",
-                    "Zaznacz wiersz",
-                    ERROR_MESSAGE);
+            showMessageDialog(this, "Wybierz klienta", "Zaznacz wiersz", ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_szczegolyKlientaAction
+    }
 
-    /**
-     * Edycja klienta
-     *
-     * @param evt
-     */
-    private void edytujKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edytujKlientaAction
-        // Edycja klienta - włączenie pól
+    private void edytujKlientaAction(ActionEvent evt) {
         saveClientButton.setEnabled(true);
         editClientButton.setEnabled(false);
 
@@ -3203,14 +3134,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtClientTelDate.setEnabled(false);
 
         txtClientModification.setText(now());
-    }//GEN-LAST:event_edytujKlientaAction
+    }
 
-    /**
-     * Akcja podwójne kliknięcie na klienta otwiera szczegóły
-     *
-     * @param evt
-     */
-    private void tableClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientsMouseClicked
+    private void tableClientsMouseClicked(java.awt.event.MouseEvent evt) {
         tableClients.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3234,43 +3160,25 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         });
-    }//GEN-LAST:event_tableClientsMouseClicked
+    }
 
-    /**
-     * Anuluj logowanie. Zamknięcie systemu
-     *
-     * @param evt
-     */
-    private void wyjscieAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyjscieAction
+    private void wyjscieAction(ActionEvent evt) {
         exitCommonAction();
-    }//GEN-LAST:event_wyjscieAction
+    }
 
-    /**
-     * Wysyłanie wiadomości do zaznaczonych kontaktów
-     *
-     * @param evt
-     */
-    private void wyslijMailDoWszystkichAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wyslijMailDoWszystkichAction
-        // wysyłanie maila                        
+    private void wyslijMailDoWszystkichAction(ActionEvent evt) {
         int[] rows = tableClients.getSelectedRows();
-        List<String> receipents = new ArrayList<>();
         String receipts = "";
         for (int row : rows) {
             receipts = receipts + tableClients.getValueAt(row, 4) + ",";
         }
-
         if (receipts.endsWith(",")) {
             receipts = receipts.substring(0, receipts.length() - 1);
         }
         processMailPanel(receipts);
-    }//GEN-LAST:event_wyslijMailDoWszystkichAction
+    }
 
-    /**
-     * Akcja wyloguj
-     *
-     * @param evt
-     */
-    private void wylogujUserAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wylogujUserAction
+    private void wylogujUserAction(ActionEvent evt) {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
@@ -3282,28 +3190,23 @@ public class SadCRMForm extends javax.swing.JFrame {
             txtPassword.setText("");
             PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel, addClientPanel, searchPanel, sendMailPanel, leftPanel, topPanel});
         }
-    }//GEN-LAST:event_wylogujUserAction
+    }
 
-    /**
-     * Wyjście
-     *
-     * @param evt
-     */
-    private void exitUserAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitUserAction
+    private void exitUserAction(ActionEvent evt) {
         exitCommonAction();
-    }//GEN-LAST:event_exitUserAction
+    }
 
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+    private void txtLoginActionPerformed(ActionEvent evt) {
         processLoginAction();
-    }//GEN-LAST:event_txtLoginActionPerformed
+    }
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+    private void txtPasswordActionPerformed(ActionEvent evt) {
         processLoginAction();
-    }//GEN-LAST:event_txtPasswordActionPerformed
+    }
 
-    private void adminSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminSearchButtonActionPerformed
+    private void adminSearchButtonActionPerformed(ActionEvent evt) {
         // Szukanie użytkowników
-        List<User> searchResults = null;
+        List<User> searchResults;
         // Wyszukiwanie klienta
         if (!txtAdminSearchName.getText().equals("") && !txtAdminSearchSurname.getText().equals("")) {
             // szukanie po imieniu i nazwisku              
@@ -3321,38 +3224,36 @@ public class SadCRMForm extends javax.swing.JFrame {
                     "Błąd wyszukiwania",
                     ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_adminSearchButtonActionPerformed
+    }
 
-    private void adminResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminResetButtonActionPerformed
+    private void adminResetButtonActionPerformed(ActionEvent evt) {
         // Czyszczenie wyszukiwania użytkowników
         txtAdminSearchName.setText("");
         txtAdminSearchSurname.setText("");
 
         List<User> users = UserDAO.findUsers();
         TableUtil.displayUsers(users, tableUsers);
-    }//GEN-LAST:event_adminResetButtonActionPerformed
+    }
 
-    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
+    private void addUserButtonActionPerformed(ActionEvent evt) {
         // DODAWANIE UŻYTKOWNIKA
         PanelsUtil.enablePanel(addUserPanel, new JPanel[]{searchUserPanel, mainAdminPanel});
         clearUserFields();
 
         txtAddUserdate.setText(now());
         selectedUser = null;
-    }//GEN-LAST:event_addUserButtonActionPerformed
+    }
 
-    private void cancelUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelUserButtonActionPerformed
+    private void cancelUserButtonActionPerformed(ActionEvent evt) {
         // Anuluj dodawanie użytkownika
         if (selectedUser == null) {
             PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{searchUserPanel, addUserPanel});
         } else {
             PanelsUtil.enablePanel(searchUserPanel, new JPanel[]{mainAdminPanel, addUserPanel});
         }
+    }
 
-
-    }//GEN-LAST:event_cancelUserButtonActionPerformed
-
-    private void saveUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserButtonActionPerformed
+    private void saveUserButtonActionPerformed(ActionEvent evt) {
         // ZAPISZ USERA
         if (selectedUser == null) {
             // dodanie
@@ -3411,9 +3312,9 @@ public class SadCRMForm extends javax.swing.JFrame {
             }
         }
 
-    }//GEN-LAST:event_saveUserButtonActionPerformed
+    }
 
-    private void logoutAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutAdminButtonActionPerformed
+    private void logoutAdminButtonActionPerformed(ActionEvent evt) {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
@@ -3425,19 +3326,19 @@ public class SadCRMForm extends javax.swing.JFrame {
             txtPassword.setText("");
             PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel, addClientPanel, searchPanel, sendMailPanel, leftPanel, topPanel});
         }
-    }//GEN-LAST:event_logoutAdminButtonActionPerformed
+    }
 
-    private void txtClientTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientTelActionPerformed
+    private void txtClientTelActionPerformed(ActionEvent evt) {
         if (txtClientTel.isSelected()) {
             txtClientTelDate.setText(now());
         } else {
             txtClientTelDate.setText(null);
         }
-    }//GEN-LAST:event_txtClientTelActionPerformed
+    }
 
-    private void searchUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUserButtonActionPerformed
+    private void searchUserButtonActionPerformed(ActionEvent evt) {
         processAdminSearch();
-    }//GEN-LAST:event_searchUserButtonActionPerformed
+    }
 
     private void processAdminSearch() {
         //WYSZUKIWANIE NA PANELU ADMINA        
@@ -3450,7 +3351,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         TableUtil.displayUsers(users, tableUsers);
     }
 
-    private void adminDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminDetailsButtonActionPerformed
+    private void adminDetailsButtonActionPerformed(ActionEvent evt) {
         // Edycja usera
         if (tableUsers.getSelectedRowCount() == 1) {
             editUserAction(tableUsers.getSelectedRow());
@@ -3460,7 +3361,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                     "Zaznacz wiersz",
                     ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_adminDetailsButtonActionPerformed
+    }
 
     private void editUserAction(int row) {
         Object selectedUserId = tableUsers.getModel().getValueAt(row, 0);
@@ -3481,16 +3382,16 @@ public class SadCRMForm extends javax.swing.JFrame {
         }
     }
 
-    private void myAdminPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myAdminPanelButtonActionPerformed
+    private void myAdminPanelButtonActionPerformed(ActionEvent evt) {
         // Panel admina
         PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{addUserPanel, searchUserPanel});
-    }//GEN-LAST:event_myAdminPanelButtonActionPerformed
+    }
 
-    private void exitAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitAdminButtonActionPerformed
+    private void exitAdminButtonActionPerformed(ActionEvent evt) {
         exitCommonAction();
-    }//GEN-LAST:event_exitAdminButtonActionPerformed
+    }
 
-    private void tableUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUsersMouseClicked
+    private void tableUsersMouseClicked(java.awt.event.MouseEvent evt) {
         tableUsers.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3500,11 +3401,11 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         });
-    }//GEN-LAST:event_tableUsersMouseClicked
+    }
 
-    private void changeAdminPassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeAdminPassButtonActionPerformed
+    private void changeAdminPassButtonActionPerformed(ActionEvent evt) {
         commonChangePassword();
-    }//GEN-LAST:event_changeAdminPassButtonActionPerformed
+    }
 
     private void commonChangePassword() {
         jDialog1.setVisible(true);
@@ -3513,7 +3414,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtChangePass2.setText("");
     }
 
-    private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
+    private void changePasswordButtonActionPerformed(ActionEvent evt) {
         if (!ValidationUtil.validatePassword(txtChangePass1.getText())) {
             showMessageDialog(this,
                     "Hasło powinno mieć co najmniej 4 znaki, nie więcej niż 10 znaków. ",
@@ -3534,20 +3435,20 @@ public class SadCRMForm extends javax.swing.JFrame {
             jDialog1.setVisible(false);
             jDialog1.dispose();
         }
-    }//GEN-LAST:event_changePasswordButtonActionPerformed
+    }
 
-    private void cancelChangePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelChangePasswordButtonActionPerformed
+    private void cancelChangePasswordButtonActionPerformed(ActionEvent evt) {
         jDialog1.setVisible(false);
         jDialog1.dispose();
-    }//GEN-LAST:event_cancelChangePasswordButtonActionPerformed
+    }
 
-    private void zmienHasloUzytkAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zmienHasloUzytkAction
+    private void zmienHasloUzytkAction(ActionEvent evt) {
         commonChangePassword();
-    }//GEN-LAST:event_zmienHasloUzytkAction
+    }
 
-    private void searchClientByManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClientByManagerButtonActionPerformed
+    private void searchClientByManagerButtonActionPerformed(ActionEvent evt) {
         processSearchClientsForManager();
-    }//GEN-LAST:event_searchClientByManagerButtonActionPerformed
+    }
 
     private void processSearchClientsForManager() {
         //WYSZUKIWANIE NA PANELU MANAGERA        
@@ -3560,11 +3461,11 @@ public class SadCRMForm extends javax.swing.JFrame {
         TableUtil.displayClients(clients, tableClientsForManager);
     }
 
-    private void myManagerPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myManagerPanelButtonActionPerformed
+    private void myManagerPanelButtonActionPerformed(ActionEvent evt) {
         PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, raportsByManagerPanel});
-    }//GEN-LAST:event_myManagerPanelButtonActionPerformed
+    }
 
-    private void logoutManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutManagerButtonActionPerformed
+    private void logoutManagerButtonActionPerformed(ActionEvent evt) {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
@@ -3576,11 +3477,11 @@ public class SadCRMForm extends javax.swing.JFrame {
             txtPassword.setText("");
             PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel});
         }
-    }//GEN-LAST:event_logoutManagerButtonActionPerformed
+    }
 
-    private void exitManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManagerButtonActionPerformed
+    private void exitManagerButtonActionPerformed(ActionEvent evt) {
         exitCommonAction();
-    }//GEN-LAST:event_exitManagerButtonActionPerformed
+    }
 
     private void exitCommonAction() {
         // wyjście             
@@ -3594,11 +3495,11 @@ public class SadCRMForm extends javax.swing.JFrame {
         }
     }
 
-    private void changeManagerPassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeManagerPassButtonActionPerformed
+    private void changeManagerPassButtonActionPerformed(ActionEvent evt) {
         commonChangePassword();
-    }//GEN-LAST:event_changeManagerPassButtonActionPerformed
+    }
 
-    private void managerSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerSearchButtonActionPerformed
+    private void managerSearchButtonActionPerformed(ActionEvent evt) {
         List<Client> searchResults = null;
         if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             // search by user and pesel
@@ -3613,18 +3514,18 @@ public class SadCRMForm extends javax.swing.JFrame {
             searchResults = ClientDAO.searchBySurname(txtManagerSearchSurname.getText());
             TableUtil.displayClients(searchResults, tableClientsForManager);
         }
-    }//GEN-LAST:event_managerSearchButtonActionPerformed
+    }
 
-    private void managerResetFieldsAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerResetFieldsAction
+    private void managerResetFieldsAction(ActionEvent evt) {
         // resetowanie pól wyszukiwania klient
         txtManagerSearchPesel.setText("");
         txtManagerSearchSurname.setText("");
 
         List<Client> clients = ClientDAO.searchClients();
         TableUtil.displayClients(clients, tableClientsForManager);
-    }//GEN-LAST:event_managerResetFieldsAction
+    }
 
-    private void tableClientsForManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientsForManagerMouseClicked
+    private void tableClientsForManagerMouseClicked(java.awt.event.MouseEvent evt) {
         tableClientsForManager.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3636,13 +3537,13 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         });
-    }//GEN-LAST:event_tableClientsForManagerMouseClicked
+    }
 
-    private void jScrollPane9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane9MouseClicked
+    private void jScrollPane9MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_jScrollPane9MouseClicked
+    }
 
-    private void managerEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerEditButtonActionPerformed
+    private void managerEditButtonActionPerformed(ActionEvent evt) {
         // Pokaż szczegóły klienta
         if (tableClientsForManager.getSelectedRowCount() == 1) {
             editClientForManager(tableClientsForManager.getSelectedRow());
@@ -3652,9 +3553,9 @@ public class SadCRMForm extends javax.swing.JFrame {
                     "Zaznacz wiersz",
                     ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_managerEditButtonActionPerformed
+    }
 
-    private void saveClientByManagerButtonzapiszKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveClientByManagerButtonzapiszKlientaAction
+    private void saveClientByManagerButtonzapiszKlientaAction(ActionEvent evt) {
         // Zapis klienta po edycji przez managera
         // edycja klienta
         boolean isEdited = false;
@@ -3796,19 +3697,19 @@ public class SadCRMForm extends javax.swing.JFrame {
             processSearchClientsForManager();
         }
 
-    }//GEN-LAST:event_saveClientByManagerButtonzapiszKlientaAction
+    }
 
-    private void cancelClientByManagerButtonanulujZapisKlientaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelClientByManagerButtonanulujZapisKlientaAction
+    private void cancelClientByManagerButtonanulujZapisKlientaAction(ActionEvent evt) {
         processSearchClientsForManager();
-    }//GEN-LAST:event_cancelClientByManagerButtonanulujZapisKlientaAction
+    }
 
-    private void editClientTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editClientTelActionPerformed
+    private void editClientTelActionPerformed(ActionEvent evt) {
         if (editClientTel.isSelected()) {
             editClientTelDate.setText(now());
         } else {
             editClientTelDate.setText(null);
         }
-    }//GEN-LAST:event_editClientTelActionPerformed
+    }
 
     private void processUserRaports() {
         newUser = null;
@@ -3857,7 +3758,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         }
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(ActionEvent evt) {
         if (isReport) {
             // process raportow
             processUserRaports();
@@ -3865,24 +3766,24 @@ public class SadCRMForm extends javax.swing.JFrame {
             // process edycji klienta przez managera
             processSelectedCreator();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(ActionEvent evt) {
         jDialog2.dispose();
         jDialog2.setVisible(false);
         jDialog2.setAlwaysOnTop(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
 
-    private void selectUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectUserButtonActionPerformed
+    private void selectUserButtonActionPerformed(ActionEvent evt) {
         newUser = null;
         isReport = false;
         List<User> users = UserDAO.findUsers();
         TableUtil.displayUsersForManager(users, usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);
-    }//GEN-LAST:event_selectUserButtonActionPerformed
+    }
 
-    private void usersForManagerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersForManagerTableMouseClicked
+    private void usersForManagerTableMouseClicked(java.awt.event.MouseEvent evt) {
         usersForManagerTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3900,25 +3801,25 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         });
-    }//GEN-LAST:event_usersForManagerTableMouseClicked
+    }
 
-    private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
+    private void reportsButtonActionPerformed(ActionEvent evt) {
         PanelsUtil.enablePanel(raportsByManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, mainManagerPanel});
-    }//GEN-LAST:event_reportsButtonActionPerformed
+    }
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(ActionEvent evt) {
         int choose = cboxRaportDate.getSelectedIndex();
 
         ReportsUtil util = new ReportsUtil();
         util.createTelephonesReport(choose);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(ActionEvent evt) {
         ReportsUtil util = new ReportsUtil();
         util.createSellChanceReport();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButton6ActionPerformed(ActionEvent evt) {
         // wybierz pracownika do raportu
         newUser = null;
         isReport = true;
@@ -3926,9 +3827,9 @@ public class SadCRMForm extends javax.swing.JFrame {
         TableUtil.displayUsersForManager(users, usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButton7ActionPerformed(ActionEvent evt) {
         if (!txtUserRaport.getText().equalsIgnoreCase("")) {
             ReportsUtil util = new ReportsUtil();
             util.createUserReport(newUser);
@@ -3939,15 +3840,15 @@ public class SadCRMForm extends javax.swing.JFrame {
                     ERROR_MESSAGE);
         }
 
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }
 
-    private void dataExpButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataExpButton2ActionPerformed
+    private void dataExpButton2ActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_dataExpButton2ActionPerformed
+    }
 
-    private void dataExpButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataExpButton1ActionPerformed
+    private void dataExpButton1ActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_dataExpButton1ActionPerformed
+    }
 
     private void editClientForManager(int row) {
         Object selectedClientId = tableClientsForManager.getModel().getValueAt(row, 0);
