@@ -20,8 +20,8 @@ public class HttpJson {
             JSONObject jsonObject = new JSONObject(result);
             throwOnSuccessFalse(jsonObject);
             return jsonObject;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
     }
 

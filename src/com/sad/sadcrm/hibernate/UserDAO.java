@@ -23,7 +23,7 @@ public class UserDAO {
             JSONObject jsonUser = post("/user/login", getCredentials());
             return User.createFromJson(jsonUser.getJSONObject("user"));
         } catch (JSONException exception) {
-            throw new RuntimeException(exception);
+            throw new RuntimeException("Missing \"id\" key", exception);
         } catch (HttpJsonException exception) {
             throw new UserLoginException(exception);
         }
