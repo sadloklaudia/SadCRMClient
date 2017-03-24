@@ -4129,6 +4129,7 @@ public class SadCRMForm extends javax.swing.JFrame {
             getLogger(SadCRMForm.class.getName()).log(SEVERE, null, ex);
         }
         Thread.setDefaultUncaughtExceptionHandler((t, exception) -> {
+            exception.printStackTrace();
             showMessageDialog(null, exception.getMessage());
         });
         invokeLater(() -> new SadCRMForm().setVisible(true));

@@ -1,6 +1,7 @@
 package com.sad.sadcrm.model;
 
 import com.sad.sadcrm.Parameters;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
@@ -197,7 +198,6 @@ public class Client implements java.io.Serializable {
     }
 
     public Parameters asParameters() {
-
         return getCredentials()
                 .add("id", id + "")
                 .add("address_id", address.getId() + "")
@@ -215,12 +215,25 @@ public class Client implements java.io.Serializable {
                 .add("sellChance", sellChance)
                 .add("modified", modified)
                 .add("tel", tel)
-                .add("telDate", telDate.toString());
+                .add("telDate", telDate == null ? "" : telDate.toString());
     }
 
-    public static Client createFromJson(JSONObject jsonObject) {
-        return null;
+    public static Client createFromJson(JSONObject jsonObject) throws JSONException {
+        return new Client(
+                jsonObject.getInt("id"),
+                new Address(jsonObject.getInt("address_id")),
+                new User(jsonObject.getInt("user_id")),
+                jsonObject.getString("name"),
+                jsonObject.getString("surname"),
+                jsonObject.getString("pesel"),
+                jsonObject.getString("phone1"),
+                jsonObject.getString("phone2"),
+                jsonObject.getString("mail"),
+                jsonObject.getString("description"),
+                jsonObject.getBoolean("vip"),
+                jsonObject.getString("created"),
+                jsonObject.getString("products"),
+                jsonObject.getString("sellChance")
+        );
     }
 }
-
-

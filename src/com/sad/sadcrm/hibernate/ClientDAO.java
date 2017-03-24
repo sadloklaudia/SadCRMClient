@@ -149,12 +149,12 @@ public class ClientDAO {
     private static List<Client> fetchClientsByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/client", parameters);
-            List<Client> users = new ArrayList<>();
+            List<Client> clients = new ArrayList<>();
             JSONArray jsonUsers = object.getJSONArray("clients");
             for (int i = 0; i < jsonUsers.length(); i++) {
-                users.add(Client.createFromJson(jsonUsers.getJSONObject(i)));
+                clients.add(Client.createFromJson(jsonUsers.getJSONObject(i)));
             }
-            return users;
+            return clients;
         } catch (HttpJsonException e) {
             e.printStackTrace();
             throw new RuntimeException("Could not fetch clients", e);

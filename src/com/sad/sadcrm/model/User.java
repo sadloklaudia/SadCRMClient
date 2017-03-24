@@ -37,6 +37,10 @@ public class User implements java.io.Serializable {
         this.created = created;
     }
 
+    public User(int user_id) {
+        this.id = user_id;
+    }
+
     public int getId() {
         return this.id;
     }
