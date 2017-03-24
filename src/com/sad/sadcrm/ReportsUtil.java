@@ -213,7 +213,7 @@ public class ReportsUtil {
                         .setStyle(boldCenteredStyle))
                 .columns(
                         Columns.column("Klient", "client", DataTypes.stringType()),
-                        Columns.column("VIP", "vip", DataTypes.characterType()),
+                        Columns.column("VIP", "vip", DataTypes.booleanType()),
                         Columns.column("Szansa sprzedaży", "chance", DataTypes.stringType()),
                         Columns.column("Data kontaktu", "contactDate", DataTypes.stringType()),
                         Columns.column("Opiekun", "owner", DataTypes.stringType())
