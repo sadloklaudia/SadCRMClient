@@ -3,6 +3,10 @@ package com.sad.sadcrm.model;
 import com.sad.sadcrm.Parameters;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.sad.sadcrm.Parameters.getCredentials;
 
 public class Client implements java.io.Serializable {
@@ -22,7 +26,7 @@ public class Client implements java.io.Serializable {
     private String sellChance;
     private String modified;
     private String tel;
-    private String telDate;
+    private Timestamp telDate;
 
     public String getTel() {
         return tel;
@@ -32,11 +36,11 @@ public class Client implements java.io.Serializable {
         this.tel = tel;
     }
 
-    public String getTelDate() {
+    public Timestamp getTelDate() {
         return telDate;
     }
 
-    public void setTelDate(String telDate) {
+    public void setTelDate(Timestamp telDate) {
         this.telDate = telDate;
     }
 
@@ -193,6 +197,7 @@ public class Client implements java.io.Serializable {
     }
 
     public Parameters asParameters() {
+
         return getCredentials()
                 .add("id", id + "")
                 .add("address_id", address.getId() + "")
@@ -210,7 +215,7 @@ public class Client implements java.io.Serializable {
                 .add("sellChance", sellChance)
                 .add("modified", modified)
                 .add("tel", tel)
-                .add("telDate", telDate);
+                .add("telDate", telDate.toString());
     }
 
     public static Client createFromJson(JSONObject jsonObject) {

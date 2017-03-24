@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -2598,7 +2600,14 @@ public class SadCRMForm extends javax.swing.JFrame {
                 client.setVip(txtClientVip.isSelected());
                 client.setCreated(txtClientCreateDate.getText());
                 client.setUser(loggedUser);
-
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try {
+                    Date parsedDate = dateFormat.parse(txtClientTelDate.getText());
+                    client.setTelDate(new Timestamp(parsedDate.getTime()));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+                client.setTel(txtClientTel.isSelected() ? "T" : "F");
                 Address address = new Address();
                 address.setStreet(txtClientStreet.getText());
                 address.setNumber(txtClientNumber.getText());
@@ -2722,11 +2731,11 @@ public class SadCRMForm extends javax.swing.JFrame {
 
             if (selectedClient.getTel().equalsIgnoreCase("F") && txtClientTel.isSelected()) {
                 selectedClient.setTel("T");
-                selectedClient.setTelDate(now());
+                selectedClient.setTelDate(new Timestamp(new Date().getTime()));
                 isEdited = true;
             } else if (selectedClient.getTel().equalsIgnoreCase("T") && !txtClientTel.isSelected()) {
                 selectedClient.setTel("F");
-                selectedClient.setTelDate("");
+                selectedClient.setTelDate(null);
                 isEdited = true;
             }
 
@@ -3749,12 +3758,12 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         if (selectedClient.getTel().equalsIgnoreCase("F") && editClientTel.isSelected()) {
             selectedClient.setTel("T");
-            selectedClient.setTelDate(now());
+            selectedClient.setTelDate(new Timestamp(new Date().getTime()));
             editClientTelDate.setText(now());
             isEdited = true;
         } else if (selectedClient.getTel().equalsIgnoreCase("T") && !editClientTel.isSelected()) {
             selectedClient.setTel("F");
-            selectedClient.setTelDate("");
+            selectedClient.setTelDate(null);
             isEdited = true;
             editClientTelDate.setText(now());
         }
@@ -3974,9 +3983,9 @@ public class SadCRMForm extends javax.swing.JFrame {
             }
 
             editClientTelDate.setEnabled(false);
-            editClientTelDate.setText(selectedClient.getTelDate());
+            editClientTelDate.setText(selectedClient.getTelDate().toString());
 
-            editClientModification.setText(selectedClient.getTelDate());
+            editClientModification.setText(selectedClient.getTelDate().toString());
 
             if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
                 String[] products = selectedClient.getProducts().split(",");
@@ -4112,7 +4121,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 txtClientTel.setSelected(false);
             }
 
-            txtClientModification.setText(selectedClient.getTelDate());
+            txtClientModification.setText(selectedClient.getTelDate().toString());
 
             if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
                 String[] products = selectedClient.getProducts().split(",");

@@ -27,6 +27,7 @@ public class HttpJson {
 
     public static JSONObject post(String urlToRead, Parameters parameters) throws HttpJsonException {
         String result = postHTML(urlToRead, parameters);
+        System.out.print("ddfd: \"" + result + "\"");
         try {
             JSONObject jsonObject = new JSONObject(result);
             throwOnSuccessFalse(jsonObject);

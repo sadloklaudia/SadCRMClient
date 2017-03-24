@@ -94,6 +94,7 @@ public class User implements java.io.Serializable {
     }
 
     public static User createFromJson(JSONObject user) throws JSONException {
+        System.out.print(user.getString("name"));
         return new User(
                 user.getInt("id"),
                 user.getString("name"),

@@ -293,7 +293,7 @@ public class ReportsUtil {
                 .title(Components.text("Raport użytkownika " + user.getName() + " " + user.getSurname() + "\n").setStyle(boldCenteredStyle))
                 .columns(
                         Columns.column("Klient", "client", stringType()),
-                        Columns.column("VIP", "vip", DataTypes.characterType()),
+                        Columns.column("VIP", "vip", booleanType()),
                         Columns.column("Szansa sprzedaży", "chance", stringType()),
                         Columns.column("Produkty", "products", stringType()),
                         Columns.column("Pesel", "pesel", stringType()),
