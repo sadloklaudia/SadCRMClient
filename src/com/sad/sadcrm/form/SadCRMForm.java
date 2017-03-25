@@ -1857,12 +1857,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         managerResetButton.setText("Reset");
         managerResetButton.addActionListener(this::managerResetFieldsAction);
 
-        jScrollPane9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane9MouseClicked(evt);
-            }
-        });
-
         tableClientsForManager.setModel(new DefaultTableModel(
                 new Object[][]{
                         {null, null, null, null},
@@ -3358,22 +3352,20 @@ public class SadCRMForm extends javax.swing.JFrame {
         System.out.println("selectedUserId " + selectedUserId);
         selectedUser = null;
         selectedUser = UserDAO.getUserById((Integer) selectedUserId);
-        if (selectedUser != null) {
-            PanelsUtil.enablePanel(addUserPanel, new JPanel[]{mainAdminPanel, searchUserPanel});
 
-            txtAddUserName.setText(selectedUser.getName());
-            txtAddUserSurname.setText(selectedUser.getSurname());
-            txtAddUserLogin.setText(selectedUser.getLogin());
-            txtAddUserdate.setText(selectedUser.getCreated());
-            txtAddUserdate.setEditable(false);
-            txtAddUserPassword1.setText(selectedUser.getPassword());
-            txtAddUserPassword2.setText(selectedUser.getPassword());
-            txtAddUsertype.setSelectedItem(selectedUser.getType());
-        }
+        PanelsUtil.enablePanel(addUserPanel, new JPanel[]{mainAdminPanel, searchUserPanel});
+
+        txtAddUserName.setText(selectedUser.getName());
+        txtAddUserSurname.setText(selectedUser.getSurname());
+        txtAddUserLogin.setText(selectedUser.getLogin());
+        txtAddUserdate.setText(selectedUser.getCreated());
+        txtAddUserdate.setEditable(false);
+        txtAddUserPassword1.setText(selectedUser.getPassword());
+        txtAddUserPassword2.setText(selectedUser.getPassword());
+        txtAddUsertype.setSelectedItem(selectedUser.getType());
     }
 
     private void myAdminPanelButtonActionPerformed(ActionEvent evt) {
-        // Panel admina
         PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{addUserPanel, searchUserPanel});
     }
 
@@ -3490,7 +3482,7 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void managerSearchButtonActionPerformed(ActionEvent evt) {
-        List<Client> searchResults = null;
+        List<Client> searchResults;
         if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             // search by user and pesel
             searchResults = ClientDAO.searchBySurnameAndPesel(txtManagerSearchSurname.getText(), txtManagerSearchPesel.getText());
@@ -3507,7 +3499,6 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void managerResetFieldsAction(ActionEvent evt) {
-        // resetowanie pól wyszukiwania klient
         txtManagerSearchPesel.setText("");
         txtManagerSearchSurname.setText("");
 
@@ -3529,12 +3520,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         });
     }
 
-    private void jScrollPane9MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-    }
-
     private void managerEditButtonActionPerformed(ActionEvent evt) {
-        // Pokaż szczegóły klienta
         if (tableClientsForManager.getSelectedRowCount() == 1) {
             editClientForManager(tableClientsForManager.getSelectedRow());
         } else {
@@ -3546,8 +3532,6 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void saveClientByManagerButtonzapiszKlientaAction(ActionEvent evt) {
-        // Zapis klienta po edycji przez managera
-        // edycja klienta
         boolean isEdited = false;
         boolean isAddressEdited = false;
         Address address = null;
@@ -3686,7 +3670,6 @@ public class SadCRMForm extends javax.swing.JFrame {
             showMessageDialog(this, "Nic nie edytowano.", "Edycja klienta", INFORMATION_MESSAGE);
             processSearchClientsForManager();
         }
-
     }
 
     private void cancelClientByManagerButtonanulujZapisKlientaAction(ActionEvent evt) {
@@ -3741,19 +3724,14 @@ public class SadCRMForm extends javax.swing.JFrame {
             jDialog2.setVisible(false);
             jDialog2.setAlwaysOnTop(false);
         } else {
-            showMessageDialog(this,
-                    "Wybierz pracownika",
-                    "Zaznacz wiersz",
-                    ERROR_MESSAGE);
+            showMessageDialog(this, "Wybierz pracownika", "Zaznacz wiersz", ERROR_MESSAGE);
         }
     }
 
     private void jButton2ActionPerformed(ActionEvent evt) {
         if (isReport) {
-            // process raportow
             processUserRaports();
         } else {
-            // process edycji klienta przez managera
             processSelectedCreator();
         }
     }
@@ -3842,76 +3820,64 @@ public class SadCRMForm extends javax.swing.JFrame {
 
     private void editClientForManager(int row) {
         Object selectedClientId = tableClientsForManager.getModel().getValueAt(row, 0);
-
-        System.out.println("selectedClientId " + selectedClientId);
-
         selectedClient = ClientDAO.getClientById((Integer) selectedClientId);
+        PanelsUtil.enablePanel(editUserByManagerPanel, new JPanel[]{mainManagerPanel, searchUserByManagerPanel, raportsByManagerPanel});
 
-        if (selectedClient != null) {
-            PanelsUtil.enablePanel(editUserByManagerPanel, new JPanel[]{mainManagerPanel, searchUserByManagerPanel, raportsByManagerPanel});
+        editClientName.setText(selectedClient.getName());
+        editClientSurname.setText(selectedClient.getSurname());
+        editClientStreet.setText(selectedClient.getAddress().getStreet());
+        editClientNumber.setText(selectedClient.getAddress().getNumber());
+        editCLientCity.setText(selectedClient.getAddress().getCity());
+        editClientPostalCode.setText(selectedClient.getAddress().getPostCode());
+        editClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
+        editClientPesel.setText(selectedClient.getPesel());
+        editClientPhone.setText(selectedClient.getPhone1());
+        editClientPhone2.setText(selectedClient.getPhone2());
+        editClientMail.setText(selectedClient.getMail());
+        editClientDesc.setText(selectedClient.getDescription());
+        editClientVip.setSelected(selectedClient.getVip());
+        editClientCreateDate.setText(selectedClient.getCreated());
+        editClientModification.setText(selectedClient.getModified());
+        editClientTel.setSelected(selectedClient.getTel().equalsIgnoreCase("T"));
+        editClientTelDate.setEnabled(false);
+        editClientTelDate.setText(selectedClient.getTelDate().toString());
+        editClientModification.setText(selectedClient.getTelDate().toString());
 
-            editClientName.setText(selectedClient.getName());
-            editClientSurname.setText(selectedClient.getSurname());
-            editClientStreet.setText(selectedClient.getAddress().getStreet());
-            editClientNumber.setText(selectedClient.getAddress().getNumber());
-            editCLientCity.setText(selectedClient.getAddress().getCity());
-            editClientPostalCode.setText(selectedClient.getAddress().getPostCode());
-            editClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
-            editClientPesel.setText(selectedClient.getPesel());
-            editClientPhone.setText(selectedClient.getPhone1());
-            editClientPhone2.setText(selectedClient.getPhone2());
-            editClientMail.setText(selectedClient.getMail());
-            editClientDesc.setText(selectedClient.getDescription());
-            editClientVip.setSelected(selectedClient.getVip());
-            editClientCreateDate.setText(selectedClient.getCreated());
-            editClientModification.setText(selectedClient.getModified());
-            if (selectedClient.getTel().equalsIgnoreCase("T")) {
-                editClientTel.setSelected(true);
-            } else {
-                editClientTel.setSelected(false);
+        if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
+            String[] products = selectedClient.getProducts().split(",");
+            List<String> productsSet = Arrays.asList(products);
+            if (productsSet.contains("Konto osobiste")) {
+                cbEditPersonalAcc.setSelected(true);
             }
-
-            editClientTelDate.setEnabled(false);
-            editClientTelDate.setText(selectedClient.getTelDate().toString());
-
-            editClientModification.setText(selectedClient.getTelDate().toString());
-
-            if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
-                String[] products = selectedClient.getProducts().split(",");
-                List<String> productsSet = Arrays.asList(products);
-                if (productsSet.contains("Konto osobiste")) {
-                    cbEditPersonalAcc.setSelected(true);
-                }
-                if (productsSet.contains("Konto walutowe")) {
-                    cbEditCurrencyAcc.setSelected(true);
-                }
-                if (productsSet.contains("Lokata")) {
-                    cbEditLocate.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt gotówkowy")) {
-                    cbEditCurrenctCredit.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt hipoteczny")) {
-                    cbEditHomeCredit.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt odnawialny")) {
-                    cbEditReapetedCredit.setSelected(true);
-                }
-                if (productsSet.contains("Karta kredytowa")) {
-                    cbEditCreditCard.setSelected(true);
-                }
-            } else {
-                cbEditPersonalAcc.setSelected(false);
-                cbEditCurrencyAcc.setSelected(false);
-                cbEditLocate.setSelected(false);
-                cbEditCurrenctCredit.setSelected(false);
-                cbEditHomeCredit.setSelected(false);
-                cbEditReapetedCredit.setSelected(false);
-                cbEditCreditCard.setSelected(false);
+            if (productsSet.contains("Konto walutowe")) {
+                cbEditCurrencyAcc.setSelected(true);
             }
-
-            cboxEditChanse.setSelectedItem(selectedClient.getSellChance());
+            if (productsSet.contains("Lokata")) {
+                cbEditLocate.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt gotówkowy")) {
+                cbEditCurrenctCredit.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt hipoteczny")) {
+                cbEditHomeCredit.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt odnawialny")) {
+                cbEditReapetedCredit.setSelected(true);
+            }
+            if (productsSet.contains("Karta kredytowa")) {
+                cbEditCreditCard.setSelected(true);
+            }
+        } else {
+            cbEditPersonalAcc.setSelected(false);
+            cbEditCurrencyAcc.setSelected(false);
+            cbEditLocate.setSelected(false);
+            cbEditCurrenctCredit.setSelected(false);
+            cbEditHomeCredit.setSelected(false);
+            cbEditReapetedCredit.setSelected(false);
+            cbEditCreditCard.setSelected(false);
         }
+
+        cboxEditChanse.setSelectedItem(selectedClient.getSellChance());
     }
 
     private boolean validateUser() {
@@ -3969,95 +3935,90 @@ public class SadCRMForm extends javax.swing.JFrame {
         editClientButton.setEnabled(true);
         Object selectedClientId = tableClients.getModel().getValueAt(row, 0);
 
-        System.out.println("selectedClientId " + selectedClientId);
-
         selectedClient = ClientDAO.getClientById((Integer) selectedClientId);
 
-        if (selectedClient != null) {
-            PanelsUtil.enablePanel(addClientPanel, new JPanel[]{mainUserPanel, searchPanel, sendMailPanel});
+        PanelsUtil.enablePanel(addClientPanel, new JPanel[]{mainUserPanel, searchPanel, sendMailPanel});
 
-            txtClientName.setText(selectedClient.getName());
-            txtClientName.setEnabled(false);
-            txtClientSurname.setText(selectedClient.getSurname());
-            txtClientSurname.setEnabled(false);
-            txtClientStreet.setText(selectedClient.getAddress().getStreet());
-            txtClientStreet.setEnabled(false);
-            txtClientNumber.setText(selectedClient.getAddress().getNumber());
-            txtClientNumber.setEnabled(false);
-            txtCLientCity.setText(selectedClient.getAddress().getCity());
-            txtCLientCity.setEnabled(false);
-            txtClientPostalCode.setText(selectedClient.getAddress().getPostCode());
-            txtClientPostalCode.setEnabled(false);
-            txtClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
-            txtClientCreator.setEnabled(false);
-            txtClientPesel.setText(selectedClient.getPesel());
-            txtClientPesel.setEnabled(false);
-            txtClientPhone1.setText(selectedClient.getPhone1());
-            txtClientPhone1.setEnabled(false);
-            txtClientPhone2.setText(selectedClient.getPhone2());
-            txtClientPhone2.setEnabled(false);
-            txtClientMail.setText(selectedClient.getMail());
-            txtClientMail.setEnabled(false);
-            txtClientDesc.setText(selectedClient.getDescription());
-            txtClientDesc.setEnabled(false);
-            txtClientVip.setSelected(selectedClient.getVip());
-            txtClientVip.setEnabled(false);
-            txtClientCreateDate.setText(selectedClient.getCreated());
-            txtClientModification.setText(selectedClient.getModified());
-            if (selectedClient.getTel().equalsIgnoreCase("T")) {
-                txtClientTel.setSelected(true);
-            } else {
-                txtClientTel.setSelected(false);
-            }
-
-            txtClientModification.setText(selectedClient.getTelDate().toString());
-
-            if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
-                String[] products = selectedClient.getProducts().split(",");
-                List<String> productsSet = Arrays.asList(products);
-                if (productsSet.contains("Konto osobiste")) {
-                    cbPersonalAcc.setSelected(true);
-                }
-                if (productsSet.contains("Konto walutowe")) {
-                    cbCurrencyAcc.setSelected(true);
-                }
-                if (productsSet.contains("Lokata")) {
-                    cbLocate.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt gotówkowy")) {
-                    cbCurrenctCredit.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt hipoteczny")) {
-                    cbHomeCredit.setSelected(true);
-                }
-                if (productsSet.contains("Kredyt odnawialny")) {
-                    cbReapetedCredit.setSelected(true);
-                }
-                if (productsSet.contains("Karta kredytowa")) {
-                    cbCreditCard.setSelected(true);
-                }
-            } else {
-                cbPersonalAcc.setSelected(false);
-                cbCurrencyAcc.setSelected(false);
-                cbLocate.setSelected(false);
-                cbCurrenctCredit.setSelected(false);
-                cbHomeCredit.setSelected(false);
-                cbReapetedCredit.setSelected(false);
-                cbCreditCard.setSelected(false);
-            }
-            cbPersonalAcc.setEnabled(false);
-            cbCurrencyAcc.setEnabled(false);
-            cbLocate.setEnabled(false);
-            cbCurrenctCredit.setEnabled(false);
-            cbHomeCredit.setEnabled(false);
-            cbReapetedCredit.setEnabled(false);
-            cbCreditCard.setEnabled(false);
-            txtClientTel.setEnabled(false);
-
-            cboxChanse.setSelectedItem(selectedClient.getSellChance());
-            cboxChanse.setEnabled(false);
-
+        txtClientName.setText(selectedClient.getName());
+        txtClientName.setEnabled(false);
+        txtClientSurname.setText(selectedClient.getSurname());
+        txtClientSurname.setEnabled(false);
+        txtClientStreet.setText(selectedClient.getAddress().getStreet());
+        txtClientStreet.setEnabled(false);
+        txtClientNumber.setText(selectedClient.getAddress().getNumber());
+        txtClientNumber.setEnabled(false);
+        txtCLientCity.setText(selectedClient.getAddress().getCity());
+        txtCLientCity.setEnabled(false);
+        txtClientPostalCode.setText(selectedClient.getAddress().getPostCode());
+        txtClientPostalCode.setEnabled(false);
+        txtClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
+        txtClientCreator.setEnabled(false);
+        txtClientPesel.setText(selectedClient.getPesel());
+        txtClientPesel.setEnabled(false);
+        txtClientPhone1.setText(selectedClient.getPhone1());
+        txtClientPhone1.setEnabled(false);
+        txtClientPhone2.setText(selectedClient.getPhone2());
+        txtClientPhone2.setEnabled(false);
+        txtClientMail.setText(selectedClient.getMail());
+        txtClientMail.setEnabled(false);
+        txtClientDesc.setText(selectedClient.getDescription());
+        txtClientDesc.setEnabled(false);
+        txtClientVip.setSelected(selectedClient.getVip());
+        txtClientVip.setEnabled(false);
+        txtClientCreateDate.setText(selectedClient.getCreated());
+        txtClientModification.setText(selectedClient.getModified());
+        if (selectedClient.getTel().equalsIgnoreCase("T")) {
+            txtClientTel.setSelected(true);
+        } else {
+            txtClientTel.setSelected(false);
         }
+
+        txtClientModification.setText(selectedClient.getTelDate().toString());
+
+        if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
+            String[] products = selectedClient.getProducts().split(",");
+            List<String> productsSet = Arrays.asList(products);
+            if (productsSet.contains("Konto osobiste")) {
+                cbPersonalAcc.setSelected(true);
+            }
+            if (productsSet.contains("Konto walutowe")) {
+                cbCurrencyAcc.setSelected(true);
+            }
+            if (productsSet.contains("Lokata")) {
+                cbLocate.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt gotówkowy")) {
+                cbCurrenctCredit.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt hipoteczny")) {
+                cbHomeCredit.setSelected(true);
+            }
+            if (productsSet.contains("Kredyt odnawialny")) {
+                cbReapetedCredit.setSelected(true);
+            }
+            if (productsSet.contains("Karta kredytowa")) {
+                cbCreditCard.setSelected(true);
+            }
+        } else {
+            cbPersonalAcc.setSelected(false);
+            cbCurrencyAcc.setSelected(false);
+            cbLocate.setSelected(false);
+            cbCurrenctCredit.setSelected(false);
+            cbHomeCredit.setSelected(false);
+            cbReapetedCredit.setSelected(false);
+            cbCreditCard.setSelected(false);
+        }
+        cbPersonalAcc.setEnabled(false);
+        cbCurrencyAcc.setEnabled(false);
+        cbLocate.setEnabled(false);
+        cbCurrenctCredit.setEnabled(false);
+        cbHomeCredit.setEnabled(false);
+        cbReapetedCredit.setEnabled(false);
+        cbCreditCard.setEnabled(false);
+        txtClientTel.setEnabled(false);
+
+        cboxChanse.setSelectedItem(selectedClient.getSellChance());
+        cboxChanse.setEnabled(false);
     }
 
     private void processManagerPanel() {
