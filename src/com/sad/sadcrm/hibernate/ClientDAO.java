@@ -42,7 +42,7 @@ public class ClientDAO {
 
     public static List<Client> searchByCreateDate(String date) {
         return fetchClientsByParameters(getCredentials()
-                .add("date", date));
+                .add("created", date));
     }
 
     public static List<Client> phonesFromDate(int days) {

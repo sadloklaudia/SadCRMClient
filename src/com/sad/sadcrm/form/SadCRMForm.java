@@ -3049,7 +3049,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 searchResults = ClientDAO.searchBySurnameAndPesel(txtSearchSurname.getText(), txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             }
-        } else if (txtSearchSurname.getText().equals("") && !txtSearchPesel.getText().equals("")) {
+        } else if (txtSearchSurname.getText().isEmpty() && !txtSearchPesel.getText().isEmpty()) {
             // szukanie po peselu
             if (myContacts) {
                 searchResults = ClientDAO.searchByUserAndPesel(loggedUser, txtSearchPesel.getText());
@@ -3061,7 +3061,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 searchResults = ClientDAO.searchByPesel(txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
             }
-        } else if (!txtSearchSurname.getText().equals("") && txtSearchPesel.getText().equals("")) {
+        } else if (!txtSearchSurname.getText().isEmpty() && txtSearchPesel.getText().isEmpty()) {
             // szukanie po nazwisku
             if (myContacts) {
                 searchResults = ClientDAO.searchByUserAndSurname(loggedUser, txtClientSurname.getText());
@@ -3074,10 +3074,8 @@ public class SadCRMForm extends javax.swing.JFrame {
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else {
-            showMessageDialog(this,
-                    "Wprowadź kryteria wyszukiwania",
-                    "Błąd wyszukiwania",
-                    ERROR_MESSAGE);
+            searchResults = ClientDAO.searchClients();
+            TableUtil.displayClients(searchResults, tableClients);
         }
     }
 
@@ -3205,38 +3203,31 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void adminSearchButtonActionPerformed(ActionEvent evt) {
-        // Szukanie użytkowników
         List<User> searchResults;
-        // Wyszukiwanie klienta
-        if (!txtAdminSearchName.getText().equals("") && !txtAdminSearchSurname.getText().equals("")) {
-            // szukanie po imieniu i nazwisku              
+        if (!txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersBySurnameAndName(txtAdminSearchSurname.getText(), txtAdminSearchName.getText());
             TableUtil.displayUsers(searchResults, tableUsers);
-        } else if (txtAdminSearchName.getText().equals("") && !txtAdminSearchSurname.getText().equals("")) {
+        } else if (txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersBySurname(txtAdminSearchSurname.getText());
             TableUtil.displayUsers(searchResults, tableUsers);
-        } else if (!txtAdminSearchName.getText().equals("") && txtAdminSearchSurname.getText().equals("")) {
+        } else if (!txtAdminSearchName.getText().isEmpty() && txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersByName(txtAdminSearchName.getText());
             TableUtil.displayUsers(searchResults, tableUsers);
         } else {
-            showMessageDialog(this,
-                    "Wprowadź kryteria wyszukiwania",
-                    "Błąd wyszukiwania",
-                    ERROR_MESSAGE);
+            searchResults = UserDAO.searchUsers();
+            TableUtil.displayUsers(searchResults, tableUsers);
         }
     }
 
     private void adminResetButtonActionPerformed(ActionEvent evt) {
-        // Czyszczenie wyszukiwania użytkowników
         txtAdminSearchName.setText("");
         txtAdminSearchSurname.setText("");
 
-        List<User> users = UserDAO.findUsers();
+        List<User> users = UserDAO.searchUsers();
         TableUtil.displayUsers(users, tableUsers);
     }
 
     private void addUserButtonActionPerformed(ActionEvent evt) {
-        // DODAWANIE UŻYTKOWNIKA
         PanelsUtil.enablePanel(addUserPanel, new JPanel[]{searchUserPanel, mainAdminPanel});
         clearUserFields();
 
@@ -3245,7 +3236,6 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void cancelUserButtonActionPerformed(ActionEvent evt) {
-        // Anuluj dodawanie użytkownika
         if (selectedUser == null) {
             PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{searchUserPanel, addUserPanel});
         } else {
@@ -3347,7 +3337,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         tableUsers.setRowSelectionAllowed(true);
         tableUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        List<User> users = UserDAO.findUsers();
+        List<User> users = UserDAO.searchUsers();
         TableUtil.displayUsers(users, tableUsers);
     }
 
@@ -3777,7 +3767,7 @@ public class SadCRMForm extends javax.swing.JFrame {
     private void selectUserButtonActionPerformed(ActionEvent evt) {
         newUser = null;
         isReport = false;
-        List<User> users = UserDAO.findUsers();
+        List<User> users = UserDAO.searchUsers();
         TableUtil.displayUsersForManager(users, usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);
@@ -3823,7 +3813,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         // wybierz pracownika do raportu
         newUser = null;
         isReport = true;
-        List<User> users = UserDAO.findUsers();
+        List<User> users = UserDAO.searchUsers();
         TableUtil.displayUsersForManager(users, usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);

@@ -52,7 +52,7 @@ public class UserDAO {
                 .add("id", Integer.toString(id)));
     }
 
-    public static List<User> findUsers() {
+    public static List<User> searchUsers() {
         return fetchUsersByParameters(getCredentials());
     }
 
