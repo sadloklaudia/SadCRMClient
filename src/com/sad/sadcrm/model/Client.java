@@ -230,7 +230,7 @@ public class Client implements java.io.Serializable {
                 jsonObject.getString("phone2"),
                 jsonObject.getString("mail"),
                 jsonObject.getString("description"),
-                jsonObject.getBoolean("vip"),
+                jsonObject.getString("vip").equals("true"),
                 jsonObject.getString("created"),
                 jsonObject.getString("products"),
                 jsonObject.getString("sellChance")
