@@ -3267,31 +3267,7 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         } else {
-            // edycja
-
-            boolean isEdited = false;
-            if (!selectedUser.getName().equalsIgnoreCase(txtAddUserName.getText())) {
-                isEdited = true;
-                selectedUser.setName(txtAddUserName.getText());
-            }
-            if (!selectedUser.getSurname().equalsIgnoreCase(txtAddUserSurname.getText())) {
-                isEdited = true;
-                selectedUser.setSurname(txtAddUserSurname.getText());
-            }
-            if (!selectedUser.getLogin().equalsIgnoreCase(txtAddUserLogin.getText())) {
-                isEdited = true;
-                selectedUser.setLogin(txtAddUserLogin.getText());
-            }
-            if (!selectedUser.getPassword().equalsIgnoreCase(txtAddUserPassword1.getText())) {
-                isEdited = true;
-                selectedUser.setPassword(txtAddUserPassword1.getText());
-            }
-            if (!selectedUser.getType().equalsIgnoreCase(txtAddUsertype.getSelectedItem().toString())) {
-                isEdited = true;
-                selectedUser.setType(txtAddUsertype.getSelectedItem().toString());
-            }
-
-            if (isEdited && validateUser()) {
+            if (isUserEdited() && validateUser()) {
                 selectedUser.setCreated(now());
                 try {
                     UserDAO.updateUser(selectedUser);
@@ -3301,7 +3277,31 @@ public class SadCRMForm extends javax.swing.JFrame {
                 }
             }
         }
+    }
 
+    private boolean isUserEdited() {
+        boolean isEdited = false;
+        if (!selectedUser.getName().equalsIgnoreCase(txtAddUserName.getText())) {
+            selectedUser.setName(txtAddUserName.getText());
+            isEdited = true;
+        }
+        if (!selectedUser.getSurname().equalsIgnoreCase(txtAddUserSurname.getText())) {
+            selectedUser.setSurname(txtAddUserSurname.getText());
+            isEdited = true;
+        }
+        if (!selectedUser.getLogin().equalsIgnoreCase(txtAddUserLogin.getText())) {
+            selectedUser.setLogin(txtAddUserLogin.getText());
+            isEdited = true;
+        }
+        if (!selectedUser.getPassword().equalsIgnoreCase(txtAddUserPassword1.getText())) {
+            selectedUser.setPassword(txtAddUserPassword1.getText());
+            isEdited = true;
+        }
+        if (!selectedUser.getType().equalsIgnoreCase(txtAddUsertype.getSelectedItem().toString())) {
+            selectedUser.setType(txtAddUsertype.getSelectedItem().toString());
+            isEdited = true;
+        }
+        return isEdited;
     }
 
     private void logoutAdminButtonActionPerformed(ActionEvent evt) {
