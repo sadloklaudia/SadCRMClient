@@ -3029,10 +3029,8 @@ public class SadCRMForm extends javax.swing.JFrame {
     }
 
     private void szukajKlientaAction(ActionEvent evt) {
-        List<Client> searchResults = null;
-        // Wyszukiwanie klienta
-        if (!txtSearchSurname.getText().equals("") && !txtSearchPesel.getText().equals("")) {
-            // szukanie po peselu i nazwisku  
+        List<Client> searchResults;
+        if (!txtSearchSurname.getText().isEmpty() && !txtSearchPesel.getText().isEmpty()) {
             if (myContacts) {
                 searchResults = ClientDAO.searchByUserSurnameAndPesel(loggedUser, txtSearchSurname.getText(), txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
@@ -3044,7 +3042,6 @@ public class SadCRMForm extends javax.swing.JFrame {
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else if (txtSearchSurname.getText().isEmpty() && !txtSearchPesel.getText().isEmpty()) {
-            // szukanie po peselu
             if (myContacts) {
                 searchResults = ClientDAO.searchByUserAndPesel(loggedUser, txtSearchPesel.getText());
                 TableUtil.displayClients(searchResults, tableClients);
@@ -3056,7 +3053,6 @@ public class SadCRMForm extends javax.swing.JFrame {
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else if (!txtSearchSurname.getText().isEmpty() && txtSearchPesel.getText().isEmpty()) {
-            // szukanie po nazwisku
             if (myContacts) {
                 searchResults = ClientDAO.searchByUserAndSurname(loggedUser, txtClientSurname.getText());
                 TableUtil.displayClients(searchResults, tableClients);
@@ -3068,8 +3064,16 @@ public class SadCRMForm extends javax.swing.JFrame {
                 TableUtil.displayClients(searchResults, tableClients);
             }
         } else {
-            searchResults = ClientDAO.searchClients();
-            TableUtil.displayClients(searchResults, tableClients);
+            if (myContacts) {
+                searchResults = ClientDAO.searchByUser(loggedUser);
+                TableUtil.displayClients(searchResults, tableClients);
+            } else if (mail) {
+                searchResults = ClientDAO.searchHasMail();
+                TableUtil.displayClients(searchResults, tableClients);
+            } else {
+                searchResults = ClientDAO.searchClients();
+                TableUtil.displayClients(searchResults, tableClients);
+            }
         }
     }
 
@@ -3967,13 +3971,13 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtClientVip.setEnabled(false);
         txtClientCreateDate.setText(selectedClient.getCreated());
         txtClientModification.setText(selectedClient.getModified());
-        if (selectedClient.getTel().equalsIgnoreCase("T")) {
+        if ("T".equalsIgnoreCase(selectedClient.getTel())) {
             txtClientTel.setSelected(true);
         } else {
             txtClientTel.setSelected(false);
         }
 
-        txtClientModification.setText(selectedClient.getTelDate().toString());
+        txtClientModification.setText(Objects.toString(selectedClient.getTelDate()));
 
         if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
             String[] products = selectedClient.getProducts().split(",");

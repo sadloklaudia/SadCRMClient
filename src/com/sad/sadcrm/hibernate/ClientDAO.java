@@ -137,7 +137,7 @@ public class ClientDAO {
 
     private static Client fetchClientById(Parameters parameters) {
         try {
-            JSONObject object = HttpJson.get("/client", parameters);
+            JSONObject object = HttpJson.get("/client/byId", parameters);
             return Client.createFromJson(object.getJSONObject("client"));
         } catch (HttpJsonException e) {
             throw new RuntimeException("Could not fetch client", e);

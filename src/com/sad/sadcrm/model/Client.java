@@ -1,6 +1,8 @@
 package com.sad.sadcrm.model;
 
 import com.sad.sadcrm.Parameters;
+import com.sad.sadcrm.hibernate.AddressDAO;
+import com.sad.sadcrm.hibernate.UserDAO;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +28,7 @@ public class Client implements java.io.Serializable {
     private String products;
     private String sellChance;
     private String modified;
-    private String tel;
+    private String tel = "";
     private Timestamp telDate;
 
     public String getTel() {
@@ -221,8 +223,8 @@ public class Client implements java.io.Serializable {
     public static Client createFromJson(JSONObject jsonObject) throws JSONException {
         return new Client(
                 jsonObject.getInt("id"),
-                new Address(jsonObject.getInt("address_id")),
-                new User(jsonObject.getInt("user_id")),
+                AddressDAO.fetchById(jsonObject.getInt("address_id")),
+                UserDAO.getUserById(jsonObject.getInt("user_id")),
                 jsonObject.getString("name"),
                 jsonObject.getString("surname"),
                 jsonObject.getString("pesel"),

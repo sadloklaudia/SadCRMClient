@@ -1,6 +1,8 @@
 package com.sad.sadcrm.model;
 
 import com.sad.sadcrm.Parameters;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.sad.sadcrm.Parameters.getCredentials;
 
@@ -73,5 +75,14 @@ public class Address implements java.io.Serializable {
                 .add("number", number)
                 .add("city", city)
                 .add("postCode", postCode);
+    }
+
+    public static Address createFromJson(JSONObject address) throws JSONException {
+        return new Address(
+                address.getInt("id"),
+                address.getString("street"),
+                address.getString("number"),
+                address.getString("city"),
+                address.getString("postCode"));
     }
 }
