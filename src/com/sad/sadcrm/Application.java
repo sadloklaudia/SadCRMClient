@@ -13,6 +13,8 @@ import static javax.swing.UIManager.getInstalledLookAndFeels;
 import static javax.swing.UIManager.setLookAndFeel;
 
 public class Application {
+    public static final String VERSION = "0.8.1";
+
     public static void main(String args[]) {
         setLookAndFeelIfExists("Windows");
         setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());

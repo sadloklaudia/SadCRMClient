@@ -13,11 +13,9 @@ import com.sad.sadcrm.model.Client;
 import com.sad.sadcrm.model.User;
 
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
@@ -29,15 +27,10 @@ import java.util.List;
 import static com.sad.sadcrm.model.UserTypeConstants.ADMIN;
 import static com.sad.sadcrm.model.UserTypeConstants.MANAGER;
 import static java.awt.Color.lightGray;
-import static java.awt.EventQueue.invokeLater;
-import static java.util.logging.Level.SEVERE;
-import static java.util.logging.Logger.getLogger;
 import static javax.swing.BorderFactory.createEtchedBorder;
 import static javax.swing.BorderFactory.createLineBorder;
 import static javax.swing.JOptionPane.*;
 import static javax.swing.SwingConstants.HORIZONTAL;
-import static javax.swing.UIManager.getInstalledLookAndFeels;
-import static javax.swing.UIManager.setLookAndFeel;
 
 public class SadCRMForm extends javax.swing.JFrame {
     private Object[] options = {"Tak", "Nie"};
@@ -65,7 +58,7 @@ public class SadCRMForm extends javax.swing.JFrame {
         PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel});
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle("Klient SadCRM");
+        setTitle("Klient SadCRM v" + Application.VERSION);
 
         createPopupMenuForExport();
     }
@@ -77,11 +70,10 @@ public class SadCRMForm extends javax.swing.JFrame {
 
         exportUserDataMenu.add(exportUserDataSubmenu1);
 
-        ActionListener exportAdminDataListener = this::showPopupAdmin;
         exportAdminDataSubmenu1.addActionListener(event -> ReportsUtil.exportAll());
         exportAdminDataSubmenu2.addActionListener(event -> ReportsUtil.exportTodays(now()));
-        dataExpButton1.addActionListener(exportAdminDataListener);
-        dataExpButton2.addActionListener(exportAdminDataListener);
+        dataExpButton1.addActionListener(this::showPopupAdmin);
+        dataExpButton2.addActionListener(this::showPopupAdmin);
 
         exportUserDataSubmenu1.addActionListener(e -> ReportsUtil.exportMy(loggedUser));
 
