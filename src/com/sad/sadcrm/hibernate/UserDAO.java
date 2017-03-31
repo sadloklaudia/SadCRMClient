@@ -6,6 +6,7 @@ import com.sad.sadcrm.Parameters;
 import com.sad.sadcrm.UserLoginException;
 import com.sad.sadcrm.hibernate.exception.UserInsertException;
 import com.sad.sadcrm.hibernate.exception.UserUpdateException;
+import com.sad.sadcrm.model.LoginResponse;
 import com.sad.sadcrm.model.User;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,16 +17,16 @@ import java.util.List;
 
 import static com.sad.sadcrm.HttpJson.post;
 import static com.sad.sadcrm.Parameters.getCredentials;
-import static com.sad.sadcrm.model.User.createFromJson;
+import static com.sad.sadcrm.model.LoginResponse.createFromJson;
 
 public class UserDAO {
-    public static User login(String login, String password) {
+    public static LoginResponse login(String login, String password) {
         try {
             Parameters.useCredentials(login, password);
-            JSONObject jsonUser = post("/user/login", getCredentials());
-            return createFromJson(jsonUser.getJSONObject("user"));
+            JSONObject jsonLoginResponse = post("/user/login", getCredentials());
+            return createFromJson(jsonLoginResponse);
         } catch (JSONException exception) {
-            throw new RuntimeException("Missing \"id\" key", exception);
+            throw new RuntimeException(exception);
         } catch (HttpJsonException exception) {
             throw new UserLoginException(exception);
         }
@@ -89,7 +90,7 @@ public class UserDAO {
             List<User> users = new ArrayList<>();
             JSONArray jsonUsers = object.getJSONArray("users");
             for (int i = 0; i < jsonUsers.length(); i++) {
-                users.add(createFromJson(jsonUsers.getJSONObject(i)));
+                users.add(User.createFromJson(jsonUsers.getJSONObject(i)));
             }
             return users;
         } catch (HttpJsonException e) {

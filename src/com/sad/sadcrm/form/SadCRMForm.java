@@ -10,6 +10,7 @@ import com.sad.sadcrm.hibernate.exception.UserInsertException;
 import com.sad.sadcrm.hibernate.exception.UserUpdateException;
 import com.sad.sadcrm.model.Address;
 import com.sad.sadcrm.model.Client;
+import com.sad.sadcrm.model.LoginResponse;
 import com.sad.sadcrm.model.User;
 
 import javax.swing.*;
@@ -24,15 +25,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+import static com.sad.sadcrm.Application.VERSION;
 import static com.sad.sadcrm.model.UserTypeConstants.ADMIN;
 import static com.sad.sadcrm.model.UserTypeConstants.MANAGER;
 import static java.awt.Color.lightGray;
+import static java.lang.String.format;
 import static javax.swing.BorderFactory.createEtchedBorder;
 import static javax.swing.BorderFactory.createLineBorder;
 import static javax.swing.JOptionPane.*;
 import static javax.swing.SwingConstants.HORIZONTAL;
 
-public class SadCRMForm extends javax.swing.JFrame {
+public class SadCRMForm extends ApplicationWindow {
     private Object[] options = {"Tak", "Nie"};
 
     private User loggedUser = null;
@@ -53,12 +56,9 @@ public class SadCRMForm extends javax.swing.JFrame {
     JMenuItem exportUserDataSubmenu1 = new JMenuItem("Eksport moich klientów");
 
     public SadCRMForm() {
+        super(VERSION);
         initComponents();
-        setSize(1000, 800);
         PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel});
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setTitle("Klient SadCRM v" + Application.VERSION);
 
         createPopupMenuForExport();
     }
@@ -2452,7 +2452,10 @@ public class SadCRMForm extends javax.swing.JFrame {
         leftPanel.setVisible(true);
         topPanel.setVisible(true);
         try {
-            loggedUser = UserDAO.login(txtLogin.getText(), txtPassword.getText());
+            LoginResponse response = UserDAO.login(txtLogin.getText(), txtPassword.getText());
+
+            showVersionParityMessageBox(response);
+            loggedUser = response.getUser();
 
             if (loggedUser.getType().equalsIgnoreCase(ADMIN)) {
                 processAdminPanel();
@@ -2463,6 +2466,14 @@ public class SadCRMForm extends javax.swing.JFrame {
             }
         } catch (UserLoginException exception) {
             showMessageDialog(this, exception.getMessage(), "Błąd logowania", ERROR_MESSAGE);
+        }
+    }
+
+    private void showVersionParityMessageBox(LoginResponse response) {
+        if (response.getVersion().equals(VERSION)) {
+            messageBox(format("Client and Server are of the same version (%s).", VERSION));
+        } else {
+            messageBox(format("Client (%s) and Server (%s) are of different version.", VERSION, response.getVersion()));
         }
     }
 
