@@ -4073,23 +4073,6 @@ public class SadCRMForm extends javax.swing.JFrame {
         txtUserType.setText(type);
     }
 
-    public static void main(String args[]) {
-        try {
-            for (LookAndFeelInfo info : getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    setLookAndFeel(info.getClassName());
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
-            getLogger(SadCRMForm.class.getName()).log(SEVERE, null, ex);
-        }
-        Thread.setDefaultUncaughtExceptionHandler((t, exception) -> {
-            exception.printStackTrace();
-            showMessageDialog(null, exception.getMessage());
-        });
-        invokeLater(() -> new SadCRMForm().setVisible(true));
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton addClientButton;
     private JPanel addClientPanel;
