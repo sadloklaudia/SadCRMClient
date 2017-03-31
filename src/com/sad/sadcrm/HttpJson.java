@@ -81,8 +81,7 @@ public class HttpJson {
             //  result = Encryption.decrypt(result);
             return result;
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
