@@ -29,6 +29,8 @@ import static com.sad.sadcrm.Application.VERSION;
 import static com.sad.sadcrm.model.UserTypeConstants.ADMIN;
 import static com.sad.sadcrm.model.UserTypeConstants.MANAGER;
 import static java.awt.Color.lightGray;
+import static java.awt.Font.BOLD;
+import static java.awt.Font.PLAIN;
 import static java.lang.String.format;
 import static javax.swing.BorderFactory.createEtchedBorder;
 import static javax.swing.BorderFactory.createLineBorder;
@@ -44,16 +46,16 @@ public class SadCRMForm extends ApplicationWindow {
     private User selectedUser = null;
     private User newUser = null;
 
-    boolean myContacts = false;
-    boolean mail = false;
-    boolean isReport = false;
+    private boolean myContacts = false;
+    private boolean mail = false;
+    private boolean isReport = false;
 
-    JPopupMenu exportAdminDataMenu = new JPopupMenu();
-    JMenuItem exportAdminDataSubmenu1 = new JMenuItem("Eksport wszystkich klientów");
-    JMenuItem exportAdminDataSubmenu2 = new JMenuItem("Eksport klientów dodanych dziś");
+    private JPopupMenu exportAdminDataMenu = new JPopupMenu();
+    private JMenuItem exportAdminDataSubmenu1 = new JMenuItem("Eksport wszystkich klientów");
+    private JMenuItem exportAdminDataSubmenu2 = new JMenuItem("Eksport klientów dodanych dziś");
 
-    JPopupMenu exportUserDataMenu = new JPopupMenu();
-    JMenuItem exportUserDataSubmenu1 = new JMenuItem("Eksport moich klientów");
+    private JPopupMenu exportUserDataMenu = new JPopupMenu();
+    private JMenuItem exportUserDataSubmenu1 = new JMenuItem("Eksport moich klientów");
 
     public SadCRMForm() {
         super(VERSION);
@@ -95,275 +97,15 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void initComponents() {
-        jDialog1 = new javax.swing.JDialog();
-        changePasswordButton = new JButton();
-        cancelChangePasswordButton = new JButton();
-        jLabel46 = new JLabel();
-        jLabel47 = new JLabel();
-        txtChangePass1 = new JPasswordField();
-        txtChangePass2 = new JPasswordField();
-        jDialog2 = new javax.swing.JDialog();
-        jLabel54 = new JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        usersForManagerTable = new javax.swing.JTable();
-        jButton2 = new JButton();
-        jButton3 = new JButton();
-        userPanel = new JPanel();
-        topPanel = new JPanel();
-        mailButton = new JButton();
-        exportUserDataButton = new JButton();
-        leftPanel = new JPanel();
-        addClientButton = new JButton();
-        searchButton = new JButton();
-        mailMergeButton = new JButton();
-        myContactsButton = new JButton();
-        myPanelButton = new JButton();
-        logoutButton = new JButton();
-        exitButton = new JButton();
-        mainUserPanel = new JPanel();
-        jLabel3 = new JLabel();
-        jLabel25 = new JLabel();
-        jLabel26 = new JLabel();
-        jLabel27 = new JLabel();
-        jLabel28 = new JLabel();
-        txtUserName = new JTextField();
-        txtUserSurname = new JTextField();
-        txtUserLogin = new JTextField();
-        txtUserType = new JTextField();
-        jButton1 = new JButton();
-        addClientPanel = new JPanel();
-        jLabel2 = new JLabel();
-        jLabel4 = new JLabel();
-        jLabel5 = new JLabel();
-        jLabel6 = new JLabel();
-        jLabel7 = new JLabel();
-        jLabel8 = new JLabel();
-        jLabel9 = new JLabel();
-        jLabel10 = new JLabel();
-        jLabel11 = new JLabel();
-        jLabel12 = new JLabel();
-        jLabel13 = new JLabel();
-        jLabel15 = new JLabel();
-        jLabel16 = new JLabel();
-        jLabel17 = new JLabel();
-        jLabel18 = new JLabel();
-        jLabel19 = new JLabel();
-        txtClientName = new JTextField();
-        txtClientSurname = new JTextField();
-        txtClientPesel = new JTextField();
-        txtClientPhone1 = new JTextField();
-        txtClientPhone2 = new JTextField();
-        txtClientMail = new JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtClientDesc = new javax.swing.JTextArea();
-        txtClientCreator = new JTextField();
-        txtClientCreateDate = new JTextField();
-        txtClientStreet = new JTextField();
-        txtClientNumber = new JTextField();
-        txtCLientCity = new JTextField();
-        saveClientButton = new JButton();
-        cancelClientButton = new JButton();
-        txtClientVip = new JCheckBox();
-        cbPersonalAcc = new JCheckBox();
-        cbCurrencyAcc = new JCheckBox();
-        cbLocate = new JCheckBox();
-        cbCurrenctCredit = new JCheckBox();
-        cbHomeCredit = new JCheckBox();
-        cbReapetedCredit = new JCheckBox();
-        cbCreditCard = new JCheckBox();
-        cboxChanse = new JComboBox();
-        jLabel14 = new JLabel();
-        editClientButton = new JButton();
-        txtClientPostalCode = new JFormattedTextField();
-        labelClientModDate = new JLabel();
-        txtClientModification = new JTextField();
-        lab = new JLabel();
-        jLabel44 = new JLabel();
-        txtClientTel = new JCheckBox();
-        txtClientTelDate = new JTextField();
-        searchPanel = new JPanel();
-        jLabel1 = new JLabel();
-        jLabel29 = new JLabel();
-        jLabel30 = new JLabel();
-        txtSearchSurname = new JTextField();
-        txtSearchPesel = new JTextField();
-        searchSearchButton = new JButton();
-        resetSearchButton = new JButton();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        tableClients = new javax.swing.JTable();
-        txtDetailsClientButton = new JButton();
-        txtSendMultipleMail = new JButton();
-        sendMailPanel = new JPanel();
-        jLabel32 = new JLabel();
-        jLabel34 = new JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtReceip = new javax.swing.JTextArea();
-        jLabel35 = new JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        txtMailContent = new javax.swing.JTextArea();
-        sendOneMailButton = new JButton();
-        clearMailButton = new JButton();
-        sendMailButton = new JButton();
-        jLabel36 = new JLabel();
-        txtMailSubject = new JTextField();
-        loginPanel = new JPanel();
-        jLabel21 = new JLabel();
-        jLabel22 = new JLabel();
-        jLabel23 = new JLabel();
-        txtLogin = new JTextField();
-        loginButton = new JButton();
-        txtPassword = new JPasswordField();
-        adminPanel = new JPanel();
-        topPanel1 = new JPanel();
-        dataExpButton1 = new JButton();
-        leftPanel1 = new JPanel();
-        addUserButton = new JButton();
-        searchUserButton = new JButton();
-        myAdminPanelButton = new JButton();
-        logoutAdminButton = new JButton();
-        exitAdminButton = new JButton();
-        mainAdminPanel = new JPanel();
-        jLabel20 = new JLabel();
-        jLabel31 = new JLabel();
-        jLabel33 = new JLabel();
-        jLabel37 = new JLabel();
-        jLabel38 = new JLabel();
-        txtAdminName = new JTextField();
-        txtAdminSurname = new JTextField();
-        txtAdminLogin = new JTextField();
-        txtAdminType = new JTextField();
-        changeAdminPassButton = new JButton();
-        addUserPanel = new JPanel();
-        jLabel24 = new JLabel();
-        jLabel39 = new JLabel();
-        jLabel40 = new JLabel();
-        jLabel41 = new JLabel();
-        jLabel42 = new JLabel();
-        jLabel48 = new JLabel();
-        txtAddUserName = new JTextField();
-        txtAddUserSurname = new JTextField();
-        txtAddUserLogin = new JTextField();
-        saveUserButton = new JButton();
-        cancelUserButton = new JButton();
-        jLabel58 = new JLabel();
-        txtAddUserdate = new JTextField();
-        jLabel43 = new JLabel();
-        txtAddUserPassword1 = new JPasswordField();
-        txtAddUserPassword2 = new JPasswordField();
-        txtAddUsertype = new JComboBox();
-        searchUserPanel = new JPanel();
-        jLabel55 = new JLabel();
-        jLabel56 = new JLabel();
-        jLabel57 = new JLabel();
-        txtAdminSearchSurname = new JTextField();
-        txtAdminSearchName = new JTextField();
-        adminSearchButton = new JButton();
-        adminResetButton = new JButton();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        tableUsers = new javax.swing.JTable();
-        adminDetailsButton = new JButton();
-        managerPanel = new JPanel();
-        topManagerPanel = new JPanel();
-        reportsButton = new JButton();
-        dataExpButton2 = new JButton();
-        leftManagerPanel = new JPanel();
-        searchClientByManagerButton = new JButton();
-        myManagerPanelButton = new JButton();
-        logoutManagerButton = new JButton();
-        exitManagerButton = new JButton();
-        mainManagerPanel = new JPanel();
-        jLabel49 = new JLabel();
-        jLabel50 = new JLabel();
-        jLabel51 = new JLabel();
-        jLabel52 = new JLabel();
-        jLabel53 = new JLabel();
-        txtManagerName = new JTextField();
-        txtManagerSurname = new JTextField();
-        txtManagerLogin = new JTextField();
-        txtManagerType = new JTextField();
-        changeManagerPassButton = new JButton();
-        searchUserByManagerPanel = new JPanel();
-        jLabel66 = new JLabel();
-        jLabel67 = new JLabel();
-        jLabel68 = new JLabel();
-        txtManagerSearchSurname = new JTextField();
-        txtManagerSearchPesel = new JTextField();
-        managerSearchButton = new JButton();
-        managerResetButton = new JButton();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        tableClientsForManager = new javax.swing.JTable();
-        managerEditButton = new JButton();
-        editUserByManagerPanel = new JPanel();
-        jLabel69 = new JLabel();
-        jLabel70 = new JLabel();
-        jLabel71 = new JLabel();
-        jLabel72 = new JLabel();
-        jLabel73 = new JLabel();
-        jLabel74 = new JLabel();
-        jLabel75 = new JLabel();
-        jLabel76 = new JLabel();
-        jLabel77 = new JLabel();
-        jLabel78 = new JLabel();
-        jLabel79 = new JLabel();
-        jLabel80 = new JLabel();
-        jLabel81 = new JLabel();
-        jLabel82 = new JLabel();
-        jLabel83 = new JLabel();
-        jLabel84 = new JLabel();
-        editClientName = new JTextField();
-        editClientSurname = new JTextField();
-        editClientPesel = new JTextField();
-        editClientPhone = new JTextField();
-        editClientPhone2 = new JTextField();
-        editClientMail = new JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        editClientDesc = new javax.swing.JTextArea();
-        editClientCreator = new JTextField();
-        editClientCreateDate = new JTextField();
-        editClientStreet = new JTextField();
-        editClientNumber = new JTextField();
-        editCLientCity = new JTextField();
-        saveClientByManagerButton = new JButton();
-        cancelClientByManagerButton = new JButton();
-        editClientVip = new JCheckBox();
-        cbEditPersonalAcc = new JCheckBox();
-        cbEditCurrencyAcc = new JCheckBox();
-        cbEditLocate = new JCheckBox();
-        cbEditCurrenctCredit = new JCheckBox();
-        cbEditHomeCredit = new JCheckBox();
-        cbEditReapetedCredit = new JCheckBox();
-        cbEditCreditCard = new JCheckBox();
-        cboxEditChanse = new JComboBox();
-        jLabel85 = new JLabel();
-        editClientPostalCode = new JFormattedTextField();
-        labelClientModDate1 = new JLabel();
-        editClientModification = new JTextField();
-        lab1 = new JLabel();
-        jLabel86 = new JLabel();
-        editClientTel = new JCheckBox();
-        editClientTelDate = new JTextField();
-        selectUserButton = new JButton();
-        raportsByManagerPanel = new JPanel();
-        jLabel59 = new JLabel();
-        jButton4 = new JButton();
-        jLabel60 = new JLabel();
-        cboxRaportDate = new JComboBox();
-        jLabel45 = new JLabel();
-        jButton5 = new JButton();
-        jLabel61 = new JLabel();
-        txtUserRaport = new JTextField();
-        jButton6 = new JButton();
-        jButton7 = new JButton();
-        changePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif"))); // NOI18N
+        changePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif")));
         changePasswordButton.setText("OK");
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
 
-        cancelChangePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        cancelChangePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         cancelChangePasswordButton.setText("Anuluj");
         cancelChangePasswordButton.addActionListener(this::cancelChangePasswordButtonActionPerformed);
 
         jLabel46.setText("Hasło:");
-
         jLabel47.setText("Powtórz hasło");
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -433,11 +175,11 @@ public class SadCRMForm extends ApplicationWindow {
         });
         jScrollPane3.setViewportView(usersForManagerTable);
 
-        jButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif"))); // NOI18N
+        jButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif")));
         jButton2.setText("Wybierz");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        jButton3.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         jButton3.setText("Zamknij");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
@@ -482,11 +224,11 @@ public class SadCRMForm extends ApplicationWindow {
         topPanel.setForeground(new java.awt.Color(238, 9, 9));
         topPanel.setPreferredSize(new Dimension(1000, 50));
 
-        mailButton.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif"))); // NOI18N
+        mailButton.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif")));
         mailButton.setText("Wyślij wiadomość");
         mailButton.addActionListener(this::wyslijMailAction);
 
-        exportUserDataButton.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif"))); // NOI18N
+        exportUserDataButton.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
         exportUserDataButton.setText("Eksport danych");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
@@ -515,31 +257,31 @@ public class SadCRMForm extends ApplicationWindow {
         leftPanel.setOpaque(false);
         leftPanel.setPreferredSize(new Dimension(200, 750));
 
-        addClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif"))); // NOI18N
+        addClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif")));
         addClientButton.setText("Dodaj klienta");
         addClientButton.addActionListener(this::dodajKlientaAction);
 
-        searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif"))); // NOI18N
+        searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
         searchButton.setText("Wyszukiwanie");
         searchButton.addActionListener(this::wyszukiwanieAction);
 
-        mailMergeButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif"))); // NOI18N
+        mailMergeButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif")));
         mailMergeButton.setText("Korespondencja seryjna");
         mailMergeButton.addActionListener(this::korespondencjaSeryjnaAction);
 
-        myContactsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Address book.gif"))); // NOI18N
+        myContactsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Address book.gif")));
         myContactsButton.setText("Tylko moje kontakty");
         myContactsButton.addActionListener(this::mojeKontaktyAction);
 
-        myPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif"))); // NOI18N
+        myPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
         myPanelButton.setText("Mój panel");
         myPanelButton.addActionListener(this::mojPanelAction);
 
-        logoutButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
+        logoutButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
         logoutButton.setText("Wyloguj");
         logoutButton.addActionListener(this::wylogujUserAction);
 
-        exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif"))); // NOI18N
+        exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitButton.setText("Wyjście");
         exitButton.addActionListener(this::exitUserAction);
 
@@ -577,30 +319,31 @@ public class SadCRMForm extends ApplicationWindow {
         mainUserPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
         mainUserPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        Font timesNewRomanBold24 = new Font("Times New Roman,", BOLD, 24);
+        Font timesNewRoman20 = new Font("Times New Roman,", PLAIN, 20);
+        Font verdanaBold24 = new Font("Verdana", BOLD, 24);
+
+        jLabel3.setFont(timesNewRomanBold24);
         jLabel3.setText("Zalogowany uzytkownik:");
 
-        jLabel25.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel25.setFont(timesNewRoman20);
         jLabel25.setText("Imię:");
 
-        jLabel26.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel26.setFont(timesNewRoman20);
         jLabel26.setText("Nazwisko:");
 
-        jLabel27.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel27.setFont(timesNewRoman20);
         jLabel27.setText("Typ konta:");
 
-        jLabel28.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel28.setFont(timesNewRoman20);
         jLabel28.setText("Login:");
 
         txtUserName.setEditable(false);
-
         txtUserSurname.setEditable(false);
-
         txtUserLogin.setEditable(false);
-
         txtUserType.setEditable(false);
 
-        jButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        jButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         jButton1.setText("Zmień hasło");
         jButton1.addActionListener(this::zmienHasloUzytkAction);
 
@@ -656,52 +399,52 @@ public class SadCRMForm extends ApplicationWindow {
         addClientPanel.setBorder(null);
         addClientPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel2.setFont(timesNewRomanBold24);
         jLabel2.setText("Dodanie nowego klienta");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel4.setFont(timesNewRoman20);
         jLabel4.setText("Imię*:");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel5.setFont(timesNewRoman20);
         jLabel5.setText("Nazwisko*:");
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel6.setFont(timesNewRoman20);
         jLabel6.setText("Pesel*");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel7.setFont(timesNewRoman20);
         jLabel7.setText("Nr telefonu 1");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel8.setFont(timesNewRoman20);
         jLabel8.setText("Nr telefonu 2");
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel9.setFont(timesNewRoman20);
         jLabel9.setText("Klient VIP");
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel10.setFont(timesNewRoman20);
         jLabel10.setText("Adres mail");
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel11.setFont(timesNewRoman20);
         jLabel11.setText("Uwagi");
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel12.setFont(timesNewRoman20);
         jLabel12.setText("Utworzony przez");
 
-        jLabel13.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel13.setFont(timesNewRoman20);
         jLabel13.setText("Data utworzenia");
 
-        jLabel15.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel15.setFont(timesNewRoman20);
         jLabel15.setText("Ulica*");
 
-        jLabel16.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel16.setFont(timesNewRoman20);
         jLabel16.setText("Nr budynku*");
 
-        jLabel17.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel17.setFont(timesNewRoman20);
         jLabel17.setText("Miasto*");
 
-        jLabel18.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel18.setFont(timesNewRoman20);
         jLabel18.setText("Kod pocztowy*");
 
-        jLabel19.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel19.setFont(timesNewRoman20);
         jLabel19.setText("Produkty");
 
         txtClientDesc.setColumns(20);
@@ -712,41 +455,41 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtClientCreateDate.setEnabled(false);
 
-        saveClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif"))); // NOI18N
+        saveClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
         saveClientButton.setText("Zapisz");
         saveClientButton.addActionListener(this::zapiszKlientaAction);
 
-        cancelClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        cancelClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         cancelClientButton.setText("Anuluj");
         cancelClientButton.addActionListener(this::anulujZapisKlientaAction);
 
-        cbPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbPersonalAcc.setText("Konto osobiste");
 
-        cbCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbCurrencyAcc.setText("Konto walutowe");
 
-        cbLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbLocate.setText("Lokata");
 
-        cbCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbCurrenctCredit.setText("Kredyt gotówkowy");
 
-        cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbHomeCredit.setText("Kredyt hipoteczny");
 
-        cbReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbReapetedCredit.setText("Kredyt odnawialny");
 
-        cbCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbCreditCard.setText("Karta kredytowa");
 
         cboxChanse.setModel(new DefaultComboBoxModel(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel14.setFont(timesNewRoman20);
         jLabel14.setText("Szansa sprzedaży");
 
-        editClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        editClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         editClientButton.setText("Edytuj");
         editClientButton.addActionListener(this::edytujKlientaAction);
 
@@ -756,16 +499,16 @@ public class SadCRMForm extends ApplicationWindow {
             ex.printStackTrace();
         }
 
-        labelClientModDate.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        labelClientModDate.setFont(timesNewRoman20);
         labelClientModDate.setText("Data modyfikacji");
 
         txtClientModification.setEditable(false);
         txtClientModification.setEnabled(false);
 
-        lab.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        lab.setFont(timesNewRoman20);
         lab.setText("Telefon do klienta");
 
-        jLabel44.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel44.setFont(timesNewRoman20);
         jLabel44.setText("Data telefonu");
 
         txtClientTel.setEnabled(false);
@@ -985,20 +728,20 @@ public class SadCRMForm extends ApplicationWindow {
 
         searchPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel1.setFont(timesNewRomanBold24);
         jLabel1.setText("Wyszukiwanie klienta");
 
-        jLabel29.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel29.setFont(timesNewRoman20);
         jLabel29.setText("Nazwisko:");
 
-        jLabel30.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel30.setFont(timesNewRoman20);
         jLabel30.setText("Pesel:");
 
-        searchSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif"))); // NOI18N
+        searchSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
         searchSearchButton.setText("Szukaj");
         searchSearchButton.addActionListener(this::szukajKlientaAction);
 
-        resetSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif"))); // NOI18N
+        resetSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
         resetSearchButton.setText("Reset");
         resetSearchButton.addActionListener(this::resetPolSzukaniaKlientaAction);
 
@@ -1026,11 +769,11 @@ public class SadCRMForm extends ApplicationWindow {
         });
         jScrollPane7.setViewportView(tableClients);
 
-        txtDetailsClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/About.gif"))); // NOI18N
+        txtDetailsClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/About.gif")));
         txtDetailsClientButton.setText("Szczegóły");
         txtDetailsClientButton.addActionListener(this::szczegolyKlientaAction);
 
-        txtSendMultipleMail.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif"))); // NOI18N
+        txtSendMultipleMail.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif")));
         txtSendMultipleMail.setText("Wyślij wiadomość do zanaczonych kontaktów");
         txtSendMultipleMail.addActionListener(this::wyslijMailDoWszystkichAction);
 
@@ -1090,36 +833,36 @@ public class SadCRMForm extends ApplicationWindow {
 
         sendMailPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel32.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel32.setFont(verdanaBold24);
         jLabel32.setText("Wyślij wiadomość");
 
-        jLabel34.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel34.setFont(timesNewRoman20);
         jLabel34.setText("Odbiorcy:");
 
         txtReceip.setColumns(20);
         txtReceip.setRows(5);
         jScrollPane5.setViewportView(txtReceip);
 
-        jLabel35.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel35.setFont(timesNewRoman20);
         jLabel35.setText("Wiadomość:");
 
         txtMailContent.setColumns(20);
         txtMailContent.setRows(5);
         jScrollPane6.setViewportView(txtMailContent);
 
-        sendOneMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif"))); // NOI18N
+        sendOneMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif")));
         sendOneMailButton.setText("Wyślij");
         sendOneMailButton.addActionListener(this::wyslijjednegoMailaAction);
 
-        clearMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif"))); // NOI18N
+        clearMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
         clearMailButton.setText("Wyczyść");
         clearMailButton.addActionListener(this::wyczyscPolaMailaAction);
 
-        sendMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        sendMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         sendMailButton.setText("Anuluj");
         sendMailButton.addActionListener(this::wyslijMail2Action);
 
-        jLabel36.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel36.setFont(timesNewRoman20);
         jLabel36.setText("Temat:");
 
         javax.swing.GroupLayout sendMailPanelLayout = new javax.swing.GroupLayout(sendMailPanel);
@@ -1214,18 +957,18 @@ public class SadCRMForm extends ApplicationWindow {
 
         loginPanel.setPreferredSize(new Dimension(800, 600));
 
-        jLabel21.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel21.setFont(timesNewRomanBold24);
         jLabel21.setText("LOGOWANIE DO SYSTEMU SadCRM");
 
-        jLabel22.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel22.setFont(timesNewRoman20);
         jLabel22.setText("Login");
 
-        jLabel23.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel23.setFont(timesNewRoman20);
         jLabel23.setText("Hasło");
 
         txtLogin.addActionListener(this::txtLoginActionPerformed);
 
-        loginButton.setIcon(new ImageIcon(getClass().getResource("/icons/Blue key.gif"))); // NOI18N
+        loginButton.setIcon(new ImageIcon(getClass().getResource("/icons/Blue key.gif")));
         loginButton.setText("Zaloguj");
         loginButton.addActionListener(this::logowanieAction);
 
@@ -1281,7 +1024,7 @@ public class SadCRMForm extends ApplicationWindow {
         topPanel1.setForeground(new java.awt.Color(238, 9, 9));
         topPanel1.setPreferredSize(new Dimension(1000, 50));
 
-        dataExpButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif"))); // NOI18N
+        dataExpButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
         dataExpButton1.setText("Eksport danych");
         dataExpButton1.addActionListener(this::dataExpButton1ActionPerformed);
 
@@ -1307,23 +1050,23 @@ public class SadCRMForm extends ApplicationWindow {
         leftPanel1.setOpaque(false);
         leftPanel1.setPreferredSize(new Dimension(200, 750));
 
-        addUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif"))); // NOI18N
+        addUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif")));
         addUserButton.setText("Dodaj użytkownika");
         addUserButton.addActionListener(this::addUserButtonActionPerformed);
 
-        searchUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif"))); // NOI18N
+        searchUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
         searchUserButton.setText("Wyszukiwanie");
         searchUserButton.addActionListener(this::searchUserButtonActionPerformed);
 
-        myAdminPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif"))); // NOI18N
+        myAdminPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
         myAdminPanelButton.setText("Mój panel");
         myAdminPanelButton.addActionListener(this::myAdminPanelButtonActionPerformed);
 
-        logoutAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
+        logoutAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
         logoutAdminButton.setText("Wylogowanie");
         logoutAdminButton.addActionListener(this::logoutAdminButtonActionPerformed);
 
-        exitAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif"))); // NOI18N
+        exitAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitAdminButton.setText("Wyjście");
         exitAdminButton.addActionListener(this::exitAdminButtonActionPerformed);
 
@@ -1355,19 +1098,19 @@ public class SadCRMForm extends ApplicationWindow {
         mainAdminPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
         mainAdminPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel20.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel20.setFont(timesNewRomanBold24);
         jLabel20.setText("Zalogowany uzytkownik:");
 
-        jLabel31.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel31.setFont(timesNewRoman20);
         jLabel31.setText("Imię:");
 
-        jLabel33.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel33.setFont(timesNewRoman20);
         jLabel33.setText("Nazwisko:");
 
-        jLabel37.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel37.setFont(timesNewRoman20);
         jLabel37.setText("Typ konta:");
 
-        jLabel38.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel38.setFont(timesNewRoman20);
         jLabel38.setText("Login:");
 
         txtAdminName.setEditable(false);
@@ -1378,7 +1121,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtAdminType.setEditable(false);
 
-        changeAdminPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        changeAdminPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         changeAdminPassButton.setText("Zmiana hasła");
         changeAdminPassButton.addActionListener(this::changeAdminPassButtonActionPerformed);
 
@@ -1434,39 +1177,39 @@ public class SadCRMForm extends ApplicationWindow {
         addUserPanel.setBorder(null);
         addUserPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel24.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel24.setFont(timesNewRomanBold24);
         jLabel24.setText("Dodanie nowego użytkownika");
 
-        jLabel39.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel39.setFont(timesNewRoman20);
         jLabel39.setText("Imię*:");
 
-        jLabel40.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel40.setFont(timesNewRoman20);
         jLabel40.setText("Nazwisko*:");
 
-        jLabel41.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel41.setFont(timesNewRoman20);
         jLabel41.setText("Typ*:");
 
-        jLabel42.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel42.setFont(timesNewRoman20);
         jLabel42.setText("Hasło*:");
 
-        jLabel48.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel48.setFont(timesNewRoman20);
         jLabel48.setText("Data utworzenia");
 
-        saveUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif"))); // NOI18N
+        saveUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
         saveUserButton.setText("Zapisz");
         saveUserButton.addActionListener(this::saveUserButtonActionPerformed);
 
-        cancelUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        cancelUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         cancelUserButton.setText("Anuluj");
         cancelUserButton.addActionListener(this::cancelUserButtonActionPerformed);
 
-        jLabel58.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel58.setFont(timesNewRoman20);
         jLabel58.setText("Powtórz hasło*:");
 
         txtAddUserdate.setEditable(false);
         txtAddUserdate.setEnabled(false);
 
-        jLabel43.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel43.setFont(timesNewRoman20);
         jLabel43.setText("Login*:");
 
         txtAddUsertype.setModel(new DefaultComboBoxModel(new String[]{"Pracownik", "Manager", "Administrator"}));
@@ -1547,20 +1290,20 @@ public class SadCRMForm extends ApplicationWindow {
 
         searchUserPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel55.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel55.setFont(timesNewRomanBold24);
         jLabel55.setText("Wyszukiwanie użytkowników");
 
-        jLabel56.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel56.setFont(timesNewRoman20);
         jLabel56.setText("Nazwisko:");
 
-        jLabel57.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel57.setFont(timesNewRoman20);
         jLabel57.setText("Imię:");
 
-        adminSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif"))); // NOI18N
+        adminSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
         adminSearchButton.setText("Szukaj");
         adminSearchButton.addActionListener(this::adminSearchButtonActionPerformed);
 
-        adminResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif"))); // NOI18N
+        adminResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
         adminResetButton.setText("Reset");
         adminResetButton.addActionListener(this::adminResetButtonActionPerformed);
 
@@ -1586,7 +1329,7 @@ public class SadCRMForm extends ApplicationWindow {
         });
         jScrollPane8.setViewportView(tableUsers);
 
-        adminDetailsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        adminDetailsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         adminDetailsButton.setText("Edycja");
         adminDetailsButton.addActionListener(this::adminDetailsButtonActionPerformed);
 
@@ -1679,11 +1422,11 @@ public class SadCRMForm extends ApplicationWindow {
         topManagerPanel.setForeground(new java.awt.Color(238, 9, 9));
         topManagerPanel.setPreferredSize(new Dimension(1000, 50));
 
-        reportsButton.setIcon(new ImageIcon(getClass().getResource("/icons/3d bar chart.gif"))); // NOI18N
+        reportsButton.setIcon(new ImageIcon(getClass().getResource("/icons/3d bar chart.gif")));
         reportsButton.setText("Raporty");
         reportsButton.addActionListener(this::reportsButtonActionPerformed);
 
-        dataExpButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif"))); // NOI18N
+        dataExpButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
         dataExpButton2.setText("Eksport danych");
         dataExpButton2.addActionListener(this::dataExpButton2ActionPerformed);
 
@@ -1713,19 +1456,19 @@ public class SadCRMForm extends ApplicationWindow {
         leftManagerPanel.setOpaque(false);
         leftManagerPanel.setPreferredSize(new Dimension(200, 750));
 
-        searchClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif"))); // NOI18N
+        searchClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
         searchClientByManagerButton.setText("Wyszukiwanie");
         searchClientByManagerButton.addActionListener(this::searchClientByManagerButtonActionPerformed);
 
-        myManagerPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif"))); // NOI18N
+        myManagerPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
         myManagerPanelButton.setText("Mój panel");
         myManagerPanelButton.addActionListener(this::myManagerPanelButtonActionPerformed);
 
-        logoutManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif"))); // NOI18N
+        logoutManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
         logoutManagerButton.setText("Wylogowanie");
         logoutManagerButton.addActionListener(this::logoutManagerButtonActionPerformed);
 
-        exitManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif"))); // NOI18N
+        exitManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitManagerButton.setText("Wyjście");
         exitManagerButton.addActionListener(this::exitManagerButtonActionPerformed);
 
@@ -1754,19 +1497,19 @@ public class SadCRMForm extends ApplicationWindow {
         mainManagerPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
         mainManagerPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel49.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel49.setFont(timesNewRomanBold24);
         jLabel49.setText("Zalogowany manager:");
 
-        jLabel50.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel50.setFont(timesNewRoman20);
         jLabel50.setText("Imię:");
 
-        jLabel51.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel51.setFont(timesNewRoman20);
         jLabel51.setText("Nazwisko:");
 
-        jLabel52.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel52.setFont(timesNewRoman20);
         jLabel52.setText("Typ konta:");
 
-        jLabel53.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel53.setFont(timesNewRoman20);
         jLabel53.setText("Login:");
 
         txtManagerName.setEditable(false);
@@ -1777,7 +1520,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtManagerType.setEditable(false);
 
-        changeManagerPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        changeManagerPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         changeManagerPassButton.setText("Zmiana hasła");
         changeManagerPassButton.addActionListener(this::changeManagerPassButtonActionPerformed);
 
@@ -1832,20 +1575,20 @@ public class SadCRMForm extends ApplicationWindow {
 
         searchUserByManagerPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel66.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel66.setFont(timesNewRomanBold24);
         jLabel66.setText("Wyszukiwanie klienta:");
 
-        jLabel67.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel67.setFont(timesNewRoman20);
         jLabel67.setText("Nazwisko:");
 
-        jLabel68.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel68.setFont(timesNewRoman20);
         jLabel68.setText("Pesel:");
 
-        managerSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif"))); // NOI18N
+        managerSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
         managerSearchButton.setText("Szukaj");
         managerSearchButton.addActionListener(this::managerSearchButtonActionPerformed);
 
-        managerResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif"))); // NOI18N
+        managerResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
         managerResetButton.setText("Reset");
         managerResetButton.addActionListener(this::managerResetFieldsAction);
 
@@ -1871,7 +1614,7 @@ public class SadCRMForm extends ApplicationWindow {
         });
         jScrollPane9.setViewportView(tableClientsForManager);
 
-        managerEditButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif"))); // NOI18N
+        managerEditButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         managerEditButton.setText("Edycja");
         managerEditButton.addActionListener(this::managerEditButtonActionPerformed);
 
@@ -1927,52 +1670,52 @@ public class SadCRMForm extends ApplicationWindow {
         editUserByManagerPanel.setBorder(null);
         editUserByManagerPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel69.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel69.setFont(timesNewRomanBold24);
         jLabel69.setText("Edycja klienta");
 
-        jLabel70.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel70.setFont(timesNewRoman20);
         jLabel70.setText("Imię*:");
 
-        jLabel71.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel71.setFont(timesNewRoman20);
         jLabel71.setText("Nazwisko*:");
 
-        jLabel72.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel72.setFont(timesNewRoman20);
         jLabel72.setText("Pesel*");
 
-        jLabel73.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel73.setFont(timesNewRoman20);
         jLabel73.setText("Nr telefonu 1");
 
-        jLabel74.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel74.setFont(timesNewRoman20);
         jLabel74.setText("Nr telefonu 2");
 
-        jLabel75.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel75.setFont(timesNewRoman20);
         jLabel75.setText("Klient VIP");
 
-        jLabel76.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel76.setFont(timesNewRoman20);
         jLabel76.setText("Adres mail");
 
-        jLabel77.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel77.setFont(timesNewRoman20);
         jLabel77.setText("Uwagi");
 
-        jLabel78.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel78.setFont(timesNewRoman20);
         jLabel78.setText("Utworzony przez");
 
-        jLabel79.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel79.setFont(timesNewRoman20);
         jLabel79.setText("Data utworzenia");
 
-        jLabel80.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel80.setFont(timesNewRoman20);
         jLabel80.setText("Ulica*");
 
-        jLabel81.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel81.setFont(timesNewRoman20);
         jLabel81.setText("Nr budynku*");
 
-        jLabel82.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel82.setFont(timesNewRoman20);
         jLabel82.setText("Miasto*");
 
-        jLabel83.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel83.setFont(timesNewRoman20);
         jLabel83.setText("Kod pocztowy*");
 
-        jLabel84.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel84.setFont(timesNewRoman20);
         jLabel84.setText("Produkty");
 
         editClientDesc.setColumns(20);
@@ -1983,38 +1726,38 @@ public class SadCRMForm extends ApplicationWindow {
 
         editClientCreateDate.setEnabled(false);
 
-        saveClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif"))); // NOI18N
+        saveClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
         saveClientByManagerButton.setText("Zapisz");
         saveClientByManagerButton.addActionListener(this::saveClientByManagerButtonzapiszKlientaAction);
 
-        cancelClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif"))); // NOI18N
+        cancelClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         cancelClientByManagerButton.setText("Anuluj");
         cancelClientByManagerButton.addActionListener(this::cancelClientByManagerButtonanulujZapisKlientaAction);
 
-        cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditPersonalAcc.setText("Konto osobiste");
 
-        cbEditCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditCurrencyAcc.setText("Konto walutowe");
 
-        cbEditLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditLocate.setText("Lokata");
 
-        cbEditCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditCurrenctCredit.setText("Kredyt gotówkowy");
 
-        cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditHomeCredit.setText("Kredyt hipoteczny");
 
-        cbEditReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditReapetedCredit.setText("Kredyt odnawialny");
 
-        cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18)); // NOI18N
+        cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditCreditCard.setText("Karta kredytowa");
 
         cboxEditChanse.setModel(new DefaultComboBoxModel(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
 
-        jLabel85.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel85.setFont(timesNewRoman20);
         jLabel85.setText("Szansa sprzedaży");
 
         try {
@@ -2023,16 +1766,16 @@ public class SadCRMForm extends ApplicationWindow {
             ex.printStackTrace();
         }
 
-        labelClientModDate1.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        labelClientModDate1.setFont(timesNewRoman20);
         labelClientModDate1.setText("Data modyfikacji");
 
         editClientModification.setEditable(false);
         editClientModification.setEnabled(false);
 
-        lab1.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        lab1.setFont(timesNewRoman20);
         lab1.setText("Telefon do klienta");
 
-        jLabel86.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel86.setFont(timesNewRoman20);
         jLabel86.setText("Data telefonu");
 
         editClientTel.addActionListener(this::editClientTelActionPerformed);
@@ -2252,26 +1995,26 @@ public class SadCRMForm extends ApplicationWindow {
 
         raportsByManagerPanel.setPreferredSize(new Dimension(800, 750));
 
-        jLabel59.setFont(new java.awt.Font("Times New Roman,", 1, 24)); // NOI18N
+        jLabel59.setFont(timesNewRomanBold24);
         jLabel59.setText("Generowanie raportów");
 
-        jButton4.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif"))); // NOI18N
+        jButton4.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
         jButton4.setText("Generuj");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
-        jLabel60.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel60.setFont(timesNewRoman20);
         jLabel60.setText("Telefony z: ");
 
         cboxRaportDate.setModel(new DefaultComboBoxModel(new String[]{"ostatni dzień", "ostatnie 3 dni", "ostatni tydzień", "ostatni miesiąc", "ostatnie 3 miesiące"}));
 
-        jLabel45.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel45.setFont(timesNewRoman20);
         jLabel45.setText("Szansa sprzedaży:");
 
-        jButton5.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif"))); // NOI18N
+        jButton5.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
         jButton5.setText("Generuj");
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
-        jLabel61.setFont(new java.awt.Font("Times New Roman,", 0, 20)); // NOI18N
+        jLabel61.setFont(timesNewRoman20);
         jLabel61.setText("Raport pracownika:");
 
         txtUserRaport.setEditable(false);
@@ -2279,7 +2022,7 @@ public class SadCRMForm extends ApplicationWindow {
         jButton6.setText("...");
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
-        jButton7.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif"))); // NOI18N
+        jButton7.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
         jButton7.setText("Generuj");
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
@@ -4077,264 +3820,264 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton addClientButton;
-    private JPanel addClientPanel;
-    private JButton addUserButton;
-    private JPanel addUserPanel;
-    private JButton adminDetailsButton;
-    private JPanel adminPanel;
-    private JButton adminResetButton;
-    private JButton adminSearchButton;
-    private JButton cancelChangePasswordButton;
-    private JButton cancelClientButton;
-    private JButton cancelClientByManagerButton;
-    private JButton cancelUserButton;
-    private JCheckBox cbCreditCard;
-    private JCheckBox cbCurrenctCredit;
-    private JCheckBox cbCurrencyAcc;
-    private JCheckBox cbEditCreditCard;
-    private JCheckBox cbEditCurrenctCredit;
-    private JCheckBox cbEditCurrencyAcc;
-    private JCheckBox cbEditHomeCredit;
-    private JCheckBox cbEditLocate;
-    private JCheckBox cbEditPersonalAcc;
-    private JCheckBox cbEditReapetedCredit;
-    private JCheckBox cbHomeCredit;
-    private JCheckBox cbLocate;
-    private JCheckBox cbPersonalAcc;
-    private JCheckBox cbReapetedCredit;
-    private JComboBox cboxChanse;
-    private JComboBox cboxEditChanse;
-    private JComboBox cboxRaportDate;
-    private JButton changeAdminPassButton;
-    private JButton changeManagerPassButton;
-    private JButton changePasswordButton;
-    private JButton clearMailButton;
-    private JButton dataExpButton1;
-    private JButton dataExpButton2;
-    private JTextField editCLientCity;
-    private JButton editClientButton;
-    private JTextField editClientCreateDate;
-    private JTextField editClientCreator;
-    private javax.swing.JTextArea editClientDesc;
-    private JTextField editClientMail;
-    private JTextField editClientModification;
-    private JTextField editClientName;
-    private JTextField editClientNumber;
-    private JTextField editClientPesel;
-    private JTextField editClientPhone;
-    private JTextField editClientPhone2;
-    private JFormattedTextField editClientPostalCode;
-    private JTextField editClientStreet;
-    private JTextField editClientSurname;
-    private JCheckBox editClientTel;
-    private JTextField editClientTelDate;
-    private JCheckBox editClientVip;
-    private JPanel editUserByManagerPanel;
-    private JButton exitAdminButton;
-    private JButton exitButton;
-    private JButton exitManagerButton;
-    private JButton exportUserDataButton;
-    private JButton jButton1;
-    private JButton jButton2;
-    private JButton jButton3;
-    private JButton jButton4;
-    private JButton jButton5;
-    private JButton jButton6;
-    private JButton jButton7;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JDialog jDialog2;
-    private JLabel jLabel1;
-    private JLabel jLabel10;
-    private JLabel jLabel11;
-    private JLabel jLabel12;
-    private JLabel jLabel13;
-    private JLabel jLabel14;
-    private JLabel jLabel15;
-    private JLabel jLabel16;
-    private JLabel jLabel17;
-    private JLabel jLabel18;
-    private JLabel jLabel19;
-    private JLabel jLabel2;
-    private JLabel jLabel20;
-    private JLabel jLabel21;
-    private JLabel jLabel22;
-    private JLabel jLabel23;
-    private JLabel jLabel24;
-    private JLabel jLabel25;
-    private JLabel jLabel26;
-    private JLabel jLabel27;
-    private JLabel jLabel28;
-    private JLabel jLabel29;
-    private JLabel jLabel3;
-    private JLabel jLabel30;
-    private JLabel jLabel31;
-    private JLabel jLabel32;
-    private JLabel jLabel33;
-    private JLabel jLabel34;
-    private JLabel jLabel35;
-    private JLabel jLabel36;
-    private JLabel jLabel37;
-    private JLabel jLabel38;
-    private JLabel jLabel39;
-    private JLabel jLabel4;
-    private JLabel jLabel40;
-    private JLabel jLabel41;
-    private JLabel jLabel42;
-    private JLabel jLabel43;
-    private JLabel jLabel44;
-    private JLabel jLabel45;
-    private JLabel jLabel46;
-    private JLabel jLabel47;
-    private JLabel jLabel48;
-    private JLabel jLabel49;
-    private JLabel jLabel5;
-    private JLabel jLabel50;
-    private JLabel jLabel51;
-    private JLabel jLabel52;
-    private JLabel jLabel53;
-    private JLabel jLabel54;
-    private JLabel jLabel55;
-    private JLabel jLabel56;
-    private JLabel jLabel57;
-    private JLabel jLabel58;
-    private JLabel jLabel59;
-    private JLabel jLabel6;
-    private JLabel jLabel60;
-    private JLabel jLabel61;
-    private JLabel jLabel66;
-    private JLabel jLabel67;
-    private JLabel jLabel68;
-    private JLabel jLabel69;
-    private JLabel jLabel7;
-    private JLabel jLabel70;
-    private JLabel jLabel71;
-    private JLabel jLabel72;
-    private JLabel jLabel73;
-    private JLabel jLabel74;
-    private JLabel jLabel75;
-    private JLabel jLabel76;
-    private JLabel jLabel77;
-    private JLabel jLabel78;
-    private JLabel jLabel79;
-    private JLabel jLabel8;
-    private JLabel jLabel80;
-    private JLabel jLabel81;
-    private JLabel jLabel82;
-    private JLabel jLabel83;
-    private JLabel jLabel84;
-    private JLabel jLabel85;
-    private JLabel jLabel86;
-    private JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
-    private JLabel lab;
-    private JLabel lab1;
-    private JLabel labelClientModDate;
-    private JLabel labelClientModDate1;
-    private JPanel leftManagerPanel;
-    private JPanel leftPanel;
-    private JPanel leftPanel1;
-    private JButton loginButton;
-    private JPanel loginPanel;
-    private JButton logoutAdminButton;
-    private JButton logoutButton;
-    private JButton logoutManagerButton;
-    private JButton mailButton;
-    private JButton mailMergeButton;
-    private JPanel mainAdminPanel;
-    private JPanel mainManagerPanel;
-    private JPanel mainUserPanel;
-    private JButton managerEditButton;
-    private JPanel managerPanel;
-    private JButton managerResetButton;
-    private JButton managerSearchButton;
-    private JButton myAdminPanelButton;
-    private JButton myContactsButton;
-    private JButton myManagerPanelButton;
-    private JButton myPanelButton;
-    private JPanel raportsByManagerPanel;
-    private JButton reportsButton;
-    private JButton resetSearchButton;
-    private JButton saveClientButton;
-    private JButton saveClientByManagerButton;
-    private JButton saveUserButton;
-    private JButton searchButton;
-    private JButton searchClientByManagerButton;
-    private JPanel searchPanel;
-    private JButton searchSearchButton;
-    private JButton searchUserButton;
-    private JPanel searchUserByManagerPanel;
-    private JPanel searchUserPanel;
-    private JButton selectUserButton;
-    private JButton sendMailButton;
-    private JPanel sendMailPanel;
-    private JButton sendOneMailButton;
-    private javax.swing.JTable tableClients;
-    private javax.swing.JTable tableClientsForManager;
-    private javax.swing.JTable tableUsers;
-    private JPanel topManagerPanel;
-    private JPanel topPanel;
-    private JPanel topPanel1;
-    private JTextField txtAddUserLogin;
-    private JTextField txtAddUserName;
-    private JPasswordField txtAddUserPassword1;
-    private JPasswordField txtAddUserPassword2;
-    private JTextField txtAddUserSurname;
-    private JTextField txtAddUserdate;
-    private JComboBox txtAddUsertype;
-    private JTextField txtAdminLogin;
-    private JTextField txtAdminName;
-    private JTextField txtAdminSearchName;
-    private JTextField txtAdminSearchSurname;
-    private JTextField txtAdminSurname;
-    private JTextField txtAdminType;
-    private JTextField txtCLientCity;
-    private JPasswordField txtChangePass1;
-    private JPasswordField txtChangePass2;
-    private JTextField txtClientCreateDate;
-    private JTextField txtClientCreator;
-    private javax.swing.JTextArea txtClientDesc;
-    private JTextField txtClientMail;
-    private JTextField txtClientModification;
-    private JTextField txtClientName;
-    private JTextField txtClientNumber;
-    private JTextField txtClientPesel;
-    private JTextField txtClientPhone1;
-    private JTextField txtClientPhone2;
-    private JFormattedTextField txtClientPostalCode;
-    private JTextField txtClientStreet;
-    private JTextField txtClientSurname;
-    private JCheckBox txtClientTel;
-    private JTextField txtClientTelDate;
-    private JCheckBox txtClientVip;
-    private JButton txtDetailsClientButton;
-    private JTextField txtLogin;
-    private javax.swing.JTextArea txtMailContent;
-    private JTextField txtMailSubject;
-    private JTextField txtManagerLogin;
-    private JTextField txtManagerName;
-    private JTextField txtManagerSearchPesel;
-    private JTextField txtManagerSearchSurname;
-    private JTextField txtManagerSurname;
-    private JTextField txtManagerType;
-    private JPasswordField txtPassword;
-    private javax.swing.JTextArea txtReceip;
-    private JTextField txtSearchPesel;
-    private JTextField txtSearchSurname;
-    private JButton txtSendMultipleMail;
-    private JTextField txtUserLogin;
-    private JTextField txtUserName;
-    private JTextField txtUserRaport;
-    private JTextField txtUserSurname;
-    private JTextField txtUserType;
-    private JPanel userPanel;
-    private javax.swing.JTable usersForManagerTable;
+    private JButton addClientButton = new JButton();
+    private JPanel addClientPanel = new JPanel();
+    private JButton addUserButton = new JButton();
+    private JPanel addUserPanel = new JPanel();
+    private JButton adminDetailsButton = new JButton();
+    private JPanel adminPanel = new JPanel();
+    private JButton adminResetButton = new JButton();
+    private JButton adminSearchButton = new JButton();
+    private JButton cancelChangePasswordButton = new JButton();
+    private JButton cancelClientButton = new JButton();
+    private JButton cancelClientByManagerButton = new JButton();
+    private JButton cancelUserButton = new JButton();
+    private JCheckBox cbCreditCard = new JCheckBox();
+    private JCheckBox cbCurrenctCredit = new JCheckBox();
+    private JCheckBox cbCurrencyAcc = new JCheckBox();
+    private JCheckBox cbEditCreditCard = new JCheckBox();
+    private JCheckBox cbEditCurrenctCredit = new JCheckBox();
+    private JCheckBox cbEditCurrencyAcc = new JCheckBox();
+    private JCheckBox cbEditHomeCredit = new JCheckBox();
+    private JCheckBox cbEditLocate = new JCheckBox();
+    private JCheckBox cbEditPersonalAcc = new JCheckBox();
+    private JCheckBox cbEditReapetedCredit = new JCheckBox();
+    private JCheckBox cbHomeCredit = new JCheckBox();
+    private JCheckBox cbLocate = new JCheckBox();
+    private JCheckBox cbPersonalAcc = new JCheckBox();
+    private JCheckBox cbReapetedCredit = new JCheckBox();
+    private JComboBox cboxChanse = new JComboBox();
+    private JComboBox cboxEditChanse = new JComboBox();
+    private JComboBox cboxRaportDate = new JComboBox();
+    private JButton changeAdminPassButton = new JButton();
+    private JButton changeManagerPassButton = new JButton();
+    private JButton changePasswordButton = new JButton();
+    private JButton clearMailButton = new JButton();
+    private JButton dataExpButton1 = new JButton();
+    private JButton dataExpButton2 = new JButton();
+    private JTextField editCLientCity = new JTextField();
+    private JButton editClientButton = new JButton();
+    private JTextField editClientCreateDate = new JTextField();
+    private JTextField editClientCreator = new JTextField();
+    private javax.swing.JTextArea editClientDesc = new JTextArea();
+    private JTextField editClientMail = new JTextField();
+    private JTextField editClientModification = new JTextField();
+    private JTextField editClientName = new JTextField();
+    private JTextField editClientNumber = new JTextField();
+    private JTextField editClientPesel = new JTextField();
+    private JTextField editClientPhone = new JTextField();
+    private JTextField editClientPhone2 = new JTextField();
+    private JFormattedTextField editClientPostalCode = new JFormattedTextField();
+    private JTextField editClientStreet = new JTextField();
+    private JTextField editClientSurname = new JTextField();
+    private JCheckBox editClientTel = new JCheckBox();
+    private JTextField editClientTelDate = new JTextField();
+    private JCheckBox editClientVip = new JCheckBox();
+    private JPanel editUserByManagerPanel = new JPanel();
+    private JButton exitAdminButton = new JButton();
+    private JButton exitButton = new JButton();
+    private JButton exitManagerButton = new JButton();
+    private JButton exportUserDataButton = new JButton();
+    private JButton jButton1 = new JButton();
+    private JButton jButton2 = new JButton();
+    private JButton jButton3 = new JButton();
+    private JButton jButton4 = new JButton();
+    private JButton jButton5 = new JButton();
+    private JButton jButton6 = new JButton();
+    private JButton jButton7 = new JButton();
+    private javax.swing.JDialog jDialog1 = new JDialog();
+    private javax.swing.JDialog jDialog2 = new JDialog();
+    private JLabel jLabel1 = new JLabel();
+    private JLabel jLabel10 = new JLabel();
+    private JLabel jLabel11 = new JLabel();
+    private JLabel jLabel12 = new JLabel();
+    private JLabel jLabel13 = new JLabel();
+    private JLabel jLabel14 = new JLabel();
+    private JLabel jLabel15 = new JLabel();
+    private JLabel jLabel16 = new JLabel();
+    private JLabel jLabel17 = new JLabel();
+    private JLabel jLabel18 = new JLabel();
+    private JLabel jLabel19 = new JLabel();
+    private JLabel jLabel2 = new JLabel();
+    private JLabel jLabel20 = new JLabel();
+    private JLabel jLabel21 = new JLabel();
+    private JLabel jLabel22 = new JLabel();
+    private JLabel jLabel23 = new JLabel();
+    private JLabel jLabel24 = new JLabel();
+    private JLabel jLabel25 = new JLabel();
+    private JLabel jLabel26 = new JLabel();
+    private JLabel jLabel27 = new JLabel();
+    private JLabel jLabel28 = new JLabel();
+    private JLabel jLabel29 = new JLabel();
+    private JLabel jLabel3 = new JLabel();
+    private JLabel jLabel30 = new JLabel();
+    private JLabel jLabel31 = new JLabel();
+    private JLabel jLabel32 = new JLabel();
+    private JLabel jLabel33 = new JLabel();
+    private JLabel jLabel34 = new JLabel();
+    private JLabel jLabel35 = new JLabel();
+    private JLabel jLabel36 = new JLabel();
+    private JLabel jLabel37 = new JLabel();
+    private JLabel jLabel38 = new JLabel();
+    private JLabel jLabel39 = new JLabel();
+    private JLabel jLabel4 = new JLabel();
+    private JLabel jLabel40 = new JLabel();
+    private JLabel jLabel41 = new JLabel();
+    private JLabel jLabel42 = new JLabel();
+    private JLabel jLabel43 = new JLabel();
+    private JLabel jLabel44 = new JLabel();
+    private JLabel jLabel45 = new JLabel();
+    private JLabel jLabel46 = new JLabel();
+    private JLabel jLabel47 = new JLabel();
+    private JLabel jLabel48 = new JLabel();
+    private JLabel jLabel49 = new JLabel();
+    private JLabel jLabel5 = new JLabel();
+    private JLabel jLabel50 = new JLabel();
+    private JLabel jLabel51 = new JLabel();
+    private JLabel jLabel52 = new JLabel();
+    private JLabel jLabel53 = new JLabel();
+    private JLabel jLabel54 = new JLabel();
+    private JLabel jLabel55 = new JLabel();
+    private JLabel jLabel56 = new JLabel();
+    private JLabel jLabel57 = new JLabel();
+    private JLabel jLabel58 = new JLabel();
+    private JLabel jLabel59 = new JLabel();
+    private JLabel jLabel6 = new JLabel();
+    private JLabel jLabel60 = new JLabel();
+    private JLabel jLabel61 = new JLabel();
+    private JLabel jLabel66 = new JLabel();
+    private JLabel jLabel67 = new JLabel();
+    private JLabel jLabel68 = new JLabel();
+    private JLabel jLabel69 = new JLabel();
+    private JLabel jLabel7 = new JLabel();
+    private JLabel jLabel70 = new JLabel();
+    private JLabel jLabel71 = new JLabel();
+    private JLabel jLabel72 = new JLabel();
+    private JLabel jLabel73 = new JLabel();
+    private JLabel jLabel74 = new JLabel();
+    private JLabel jLabel75 = new JLabel();
+    private JLabel jLabel76 = new JLabel();
+    private JLabel jLabel77 = new JLabel();
+    private JLabel jLabel78 = new JLabel();
+    private JLabel jLabel79 = new JLabel();
+    private JLabel jLabel8 = new JLabel();
+    private JLabel jLabel80 = new JLabel();
+    private JLabel jLabel81 = new JLabel();
+    private JLabel jLabel82 = new JLabel();
+    private JLabel jLabel83 = new JLabel();
+    private JLabel jLabel84 = new JLabel();
+    private JLabel jLabel85 = new JLabel();
+    private JLabel jLabel86 = new JLabel();
+    private JLabel jLabel9 = new JLabel();
+    private javax.swing.JScrollPane jScrollPane1 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane2 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane3 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane5 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane6 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane7 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane8 = new JScrollPane();
+    private javax.swing.JScrollPane jScrollPane9 = new JScrollPane();
+    private JLabel lab = new JLabel();
+    private JLabel lab1 = new JLabel();
+    private JLabel labelClientModDate = new JLabel();
+    private JLabel labelClientModDate1 = new JLabel();
+    private JPanel leftManagerPanel = new JPanel();
+    private JPanel leftPanel = new JPanel();
+    private JPanel leftPanel1 = new JPanel();
+    private JButton loginButton = new JButton();
+    private JPanel loginPanel = new JPanel();
+    private JButton logoutAdminButton = new JButton();
+    private JButton logoutButton = new JButton();
+    private JButton logoutManagerButton = new JButton();
+    private JButton mailButton = new JButton();
+    private JButton mailMergeButton = new JButton();
+    private JPanel mainAdminPanel = new JPanel();
+    private JPanel mainManagerPanel = new JPanel();
+    private JPanel mainUserPanel = new JPanel();
+    private JButton managerEditButton = new JButton();
+    private JPanel managerPanel = new JPanel();
+    private JButton managerResetButton = new JButton();
+    private JButton managerSearchButton = new JButton();
+    private JButton myAdminPanelButton = new JButton();
+    private JButton myContactsButton = new JButton();
+    private JButton myManagerPanelButton = new JButton();
+    private JButton myPanelButton = new JButton();
+    private JPanel raportsByManagerPanel = new JPanel();
+    private JButton reportsButton = new JButton();
+    private JButton resetSearchButton = new JButton();
+    private JButton saveClientButton = new JButton();
+    private JButton saveClientByManagerButton = new JButton();
+    private JButton saveUserButton = new JButton();
+    private JButton searchButton = new JButton();
+    private JButton searchClientByManagerButton = new JButton();
+    private JPanel searchPanel = new JPanel();
+    private JButton searchSearchButton = new JButton();
+    private JButton searchUserButton = new JButton();
+    private JPanel searchUserByManagerPanel = new JPanel();
+    private JPanel searchUserPanel = new JPanel();
+    private JButton selectUserButton = new JButton();
+    private JButton sendMailButton = new JButton();
+    private JPanel sendMailPanel = new JPanel();
+    private JButton sendOneMailButton = new JButton();
+    private javax.swing.JTable tableClients = new JTable();
+    private javax.swing.JTable tableClientsForManager = new JTable();
+    private javax.swing.JTable tableUsers = new JTable();
+    private JPanel topManagerPanel = new JPanel();
+    private JPanel topPanel = new JPanel();
+    private JPanel topPanel1 = new JPanel();
+    private JTextField txtAddUserLogin = new JTextField();
+    private JTextField txtAddUserName = new JTextField();
+    private JPasswordField txtAddUserPassword1 = new JPasswordField();
+    private JPasswordField txtAddUserPassword2 = new JPasswordField();
+    private JTextField txtAddUserSurname = new JTextField();
+    private JTextField txtAddUserdate = new JTextField();
+    private JComboBox txtAddUsertype = new JComboBox();
+    private JTextField txtAdminLogin = new JTextField();
+    private JTextField txtAdminName = new JTextField();
+    private JTextField txtAdminSearchName = new JTextField();
+    private JTextField txtAdminSearchSurname = new JTextField();
+    private JTextField txtAdminSurname = new JTextField();
+    private JTextField txtAdminType = new JTextField();
+    private JTextField txtCLientCity = new JTextField();
+    private JPasswordField txtChangePass1 = new JPasswordField();
+    private JPasswordField txtChangePass2 = new JPasswordField();
+    private JTextField txtClientCreateDate = new JTextField();
+    private JTextField txtClientCreator = new JTextField();
+    private javax.swing.JTextArea txtClientDesc = new JTextArea();
+    private JTextField txtClientMail = new JTextField();
+    private JTextField txtClientModification = new JTextField();
+    private JTextField txtClientName = new JTextField();
+    private JTextField txtClientNumber = new JTextField();
+    private JTextField txtClientPesel = new JTextField();
+    private JTextField txtClientPhone1 = new JTextField();
+    private JTextField txtClientPhone2 = new JTextField();
+    private JFormattedTextField txtClientPostalCode = new JFormattedTextField();
+    private JTextField txtClientStreet = new JTextField();
+    private JTextField txtClientSurname = new JTextField();
+    private JCheckBox txtClientTel = new JCheckBox();
+    private JTextField txtClientTelDate = new JTextField();
+    private JCheckBox txtClientVip = new JCheckBox();
+    private JButton txtDetailsClientButton = new JButton();
+    private JTextField txtLogin = new JTextField();
+    private javax.swing.JTextArea txtMailContent = new JTextArea();
+    private JTextField txtMailSubject = new JTextField();
+    private JTextField txtManagerLogin = new JTextField();
+    private JTextField txtManagerName = new JTextField();
+    private JTextField txtManagerSearchPesel = new JTextField();
+    private JTextField txtManagerSearchSurname = new JTextField();
+    private JTextField txtManagerSurname = new JTextField();
+    private JTextField txtManagerType = new JTextField();
+    private JPasswordField txtPassword = new JPasswordField();
+    private javax.swing.JTextArea txtReceip = new JTextArea();
+    private JTextField txtSearchPesel = new JTextField();
+    private JTextField txtSearchSurname = new JTextField();
+    private JButton txtSendMultipleMail = new JButton();
+    private JTextField txtUserLogin = new JTextField();
+    private JTextField txtUserName = new JTextField();
+    private JTextField txtUserRaport = new JTextField();
+    private JTextField txtUserSurname = new JTextField();
+    private JTextField txtUserType = new JTextField();
+    private JPanel userPanel = new JPanel();
+    private javax.swing.JTable usersForManagerTable = new JTable();
     // End of variables declaration//GEN-END:variables
 }
