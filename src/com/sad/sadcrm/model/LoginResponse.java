@@ -4,8 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginResponse {
-    private String version;
-    private User user;
+    private final String version;
+    private final User user;
 
     private LoginResponse(String version, User user) {
         this.version = version;

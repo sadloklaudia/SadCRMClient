@@ -2,7 +2,7 @@ package com.sad.sadcrm;
 
 import static com.sad.sadcrm.Parameters.getCredentials;
 
-public class MailUtil {
+public class MailSender {
     public static void sendMail(String recipients, String subject, String message) {
         try {
             HttpJson.post("/mail", getCredentials()

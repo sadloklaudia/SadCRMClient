@@ -8,10 +8,7 @@ import com.sad.sadcrm.hibernate.exception.ClientInsertException;
 import com.sad.sadcrm.hibernate.exception.ClientUpdateException;
 import com.sad.sadcrm.hibernate.exception.UserInsertException;
 import com.sad.sadcrm.hibernate.exception.UserUpdateException;
-import com.sad.sadcrm.model.Address;
-import com.sad.sadcrm.model.Client;
-import com.sad.sadcrm.model.LoginResponse;
-import com.sad.sadcrm.model.User;
+import com.sad.sadcrm.model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,8 +23,8 @@ import java.util.*;
 import java.util.List;
 
 import static com.sad.sadcrm.Application.VERSION;
-import static com.sad.sadcrm.model.UserTypeConstants.ADMIN;
-import static com.sad.sadcrm.model.UserTypeConstants.MANAGER;
+import static com.sad.sadcrm.model.UserType.ADMIN;
+import static com.sad.sadcrm.model.UserType.MANAGER;
 import static java.awt.Color.lightGray;
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
@@ -477,19 +474,19 @@ public class SadCRMForm extends ApplicationWindow {
         cbLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbLocate.setText("Lokata");
 
-        cbCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
-        cbCurrenctCredit.setText("Kredyt gotówkowy");
+        cbCurrentCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbCurrentCredit.setText("Kredyt gotówkowy");
 
         cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbHomeCredit.setText("Kredyt hipoteczny");
 
-        cbReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
-        cbReapetedCredit.setText("Kredyt odnawialny");
+        cbRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbRepeatedCredit.setText("Kredyt odnawialny");
 
         cbCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbCreditCard.setText("Karta kredytowa");
 
-        cboxChanse.setModel(new DefaultComboBoxModel(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
+        cbChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
 
         jLabel14.setFont(timesNewRoman20);
         jLabel14.setText("Szansa sprzedaży");
@@ -577,9 +574,9 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(cbCurrencyAcc)
                                                                         .addComponent(cbPersonalAcc)
                                                                         .addComponent(cbLocate)
-                                                                        .addComponent(cbCurrenctCredit)
+                                                                        .addComponent(cbCurrentCredit)
                                                                         .addComponent(cbHomeCredit)
-                                                                        .addComponent(cbReapetedCredit)
+                                                                        .addComponent(cbRepeatedCredit)
                                                                         .addComponent(cbCreditCard)
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel44)
@@ -588,7 +585,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel14)
                                                                                 .addPreferredGap(RELATED)
-                                                                                .addComponent(cboxChanse, PREFERRED_SIZE, 139, PREFERRED_SIZE))
+                                                                                .addComponent(cbChance, PREFERRED_SIZE, 139, PREFERRED_SIZE))
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                                 .addComponent(lab)
                                                                                 .addPreferredGap(RELATED)
@@ -612,7 +609,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                                                 .addComponent(jLabel19))
                                                                                         .addGap(41, 41, 41)
                                                                                         .addGroup(addClientPanelLayout.createParallelGroup(LEADING, false)
-                                                                                                .addComponent(txtCLientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                                                                                .addComponent(txtClientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                                                                                 .addComponent(txtClientNumber, TRAILING))))))))
                                         .addComponent(jLabel2))
                                 .addContainerGap(38, Short.MAX_VALUE))
@@ -620,7 +617,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         addClientPanelLayout.linkSize(HORIZONTAL, txtClientCreateDate, txtClientName, txtClientPesel, txtClientPhone1, txtClientPhone2, txtClientSurname);
 
-        addClientPanelLayout.linkSize(HORIZONTAL, txtCLientCity, txtClientNumber, txtClientPostalCode);
+        addClientPanelLayout.linkSize(HORIZONTAL, txtClientCity, txtClientNumber, txtClientPostalCode);
 
         addClientPanelLayout.setVerticalGroup(
                 addClientPanelLayout.createParallelGroup(LEADING)
@@ -660,7 +657,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel17)
-                                                                        .addComponent(txtCLientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel18)
@@ -674,17 +671,17 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbLocate)
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(cbCurrenctCredit)
+                                                                .addComponent(cbCurrentCredit)
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbHomeCredit)
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(cbReapetedCredit)
+                                                                .addComponent(cbRepeatedCredit)
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbCreditCard)
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel14)
-                                                                        .addComponent(cboxChanse, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                                        .addComponent(cbChance, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -762,7 +759,7 @@ public class SadCRMForm extends ApplicationWindow {
                 }
         ));
         tableClients.setToolTipText("Klikniej dwukrotnie aby edytować");
-        tableClients.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tableClients.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableClients.setPreferredSize(new Dimension(780, 100));
         tableClients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableClients.getTableHeader().setResizingAllowed(false);
@@ -844,9 +841,9 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel34.setFont(timesNewRoman20);
         jLabel34.setText("Odbiorcy:");
 
-        txtReceip.setColumns(20);
-        txtReceip.setRows(5);
-        jScrollPane5.setViewportView(txtReceip);
+        txtRecipient.setColumns(20);
+        txtRecipient.setRows(5);
+        jScrollPane5.setViewportView(txtRecipient);
 
         jLabel35.setFont(timesNewRoman20);
         jLabel35.setText("Wiadomość:");
@@ -1211,13 +1208,13 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel58.setFont(timesNewRoman20);
         jLabel58.setText("Powtórz hasło*:");
 
-        txtAddUserdate.setEditable(false);
-        txtAddUserdate.setEnabled(false);
+        txtAddUserDate.setEditable(false);
+        txtAddUserDate.setEnabled(false);
 
         jLabel43.setFont(timesNewRoman20);
         jLabel43.setText("Login*:");
 
-        txtAddUsertype.setModel(new DefaultComboBoxModel(new String[]{"Pracownik", "Manager", "Administrator"}));
+        txtAddUserType.setModel(new DefaultComboBoxModel<>(UserType.values()));
 
         javax.swing.GroupLayout addUserPanelLayout = new javax.swing.GroupLayout(addUserPanel);
         addUserPanel.setLayout(addUserPanelLayout);
@@ -1229,7 +1226,7 @@ public class SadCRMForm extends ApplicationWindow {
                                         .addGroup(addUserPanelLayout.createSequentialGroup()
                                                 .addComponent(jLabel41)
                                                 .addGap(130, 130, 130)
-                                                .addComponent(txtAddUsertype, PREFERRED_SIZE, 235, PREFERRED_SIZE))
+                                                .addComponent(txtAddUserType, PREFERRED_SIZE, 235, PREFERRED_SIZE))
                                         .addComponent(jLabel40)
                                         .addComponent(jLabel24)
                                         .addGroup(addUserPanelLayout.createSequentialGroup()
@@ -1250,7 +1247,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                         .addComponent(txtAddUserLogin, PREFERRED_SIZE, 317, PREFERRED_SIZE)
                                                         .addComponent(txtAddUserSurname, PREFERRED_SIZE, 317, PREFERRED_SIZE)
                                                         .addComponent(txtAddUserName, PREFERRED_SIZE, 317, PREFERRED_SIZE)
-                                                        .addComponent(txtAddUserdate, PREFERRED_SIZE, 317, PREFERRED_SIZE))))
+                                                        .addComponent(txtAddUserDate, PREFERRED_SIZE, 317, PREFERRED_SIZE))))
                                 .addContainerGap(288, Short.MAX_VALUE))
         );
         addUserPanelLayout.setVerticalGroup(
@@ -1273,7 +1270,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addPreferredGap(RELATED)
                                 .addGroup(addUserPanelLayout.createParallelGroup(TRAILING)
                                         .addComponent(jLabel41)
-                                        .addComponent(txtAddUsertype, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserType, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
                                 .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel42)
@@ -1285,7 +1282,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addPreferredGap(RELATED)
                                 .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel48)
-                                        .addComponent(txtAddUserdate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(26, 26, 26)
                                 .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveUserButton)
@@ -1323,7 +1320,7 @@ public class SadCRMForm extends ApplicationWindow {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        tableUsers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableUsers.setPreferredSize(new Dimension(780, 100));
         tableUsers.getTableHeader().setResizingAllowed(false);
         tableUsers.getTableHeader().setReorderingAllowed(false);
@@ -1608,7 +1605,7 @@ public class SadCRMForm extends ApplicationWindow {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        tableClientsForManager.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tableClientsForManager.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableClientsForManager.setPreferredSize(new Dimension(780, 100));
         tableClientsForManager.getTableHeader().setResizingAllowed(false);
         tableClientsForManager.getTableHeader().setReorderingAllowed(false);
@@ -1748,19 +1745,19 @@ public class SadCRMForm extends ApplicationWindow {
         cbEditLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditLocate.setText("Lokata");
 
-        cbEditCurrenctCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
-        cbEditCurrenctCredit.setText("Kredyt gotówkowy");
+        cbEditCurrentCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditCurrentCredit.setText("Kredyt gotówkowy");
 
         cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditHomeCredit.setText("Kredyt hipoteczny");
 
-        cbEditReapetedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
-        cbEditReapetedCredit.setText("Kredyt odnawialny");
+        cbEditRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditRepeatedCredit.setText("Kredyt odnawialny");
 
         cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditCreditCard.setText("Karta kredytowa");
 
-        cboxEditChanse.setModel(new DefaultComboBoxModel(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
+        cbEditChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
 
         jLabel85.setFont(timesNewRoman20);
         jLabel85.setText("Szansa sprzedaży");
@@ -1850,9 +1847,9 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(cbEditCurrencyAcc)
                                                                         .addComponent(cbEditPersonalAcc)
                                                                         .addComponent(cbEditLocate)
-                                                                        .addComponent(cbEditCurrenctCredit)
+                                                                        .addComponent(cbEditCurrentCredit)
                                                                         .addComponent(cbEditHomeCredit)
-                                                                        .addComponent(cbEditReapetedCredit)
+                                                                        .addComponent(cbEditRepeatedCredit)
                                                                         .addComponent(cbEditCreditCard)
                                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel86)
@@ -1861,7 +1858,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel85)
                                                                                 .addPreferredGap(RELATED)
-                                                                                .addComponent(cboxEditChanse, PREFERRED_SIZE, 139, PREFERRED_SIZE))
+                                                                                .addComponent(cbEditChance, PREFERRED_SIZE, 139, PREFERRED_SIZE))
                                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                                 .addComponent(lab1)
                                                                                 .addPreferredGap(RELATED)
@@ -1885,7 +1882,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                                                 .addComponent(jLabel84))
                                                                                         .addGap(41, 41, 41)
                                                                                         .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING, false)
-                                                                                                .addComponent(editCLientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                                                                                .addComponent(editClientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                                                                                 .addComponent(editClientNumber, TRAILING)))))))
                                                 .addGap(23, 23, 23))))
         );
@@ -1928,7 +1925,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel82)
-                                                                        .addComponent(editCLientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel83)
@@ -1942,17 +1939,17 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbEditLocate)
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(cbEditCurrenctCredit)
+                                                                .addComponent(cbEditCurrentCredit)
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbEditHomeCredit)
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(cbEditReapetedCredit)
+                                                                .addComponent(cbEditRepeatedCredit)
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbEditCreditCard)
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel85)
-                                                                        .addComponent(cboxEditChanse, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                                        .addComponent(cbEditChance, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1998,7 +1995,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
-        raportsByManagerPanel.setPreferredSize(new Dimension(800, 750));
+        reportsByManagerPanel.setPreferredSize(new Dimension(800, 750));
 
         jLabel59.setFont(timesNewRomanBold24);
         jLabel59.setText("Generowanie raportów");
@@ -2010,7 +2007,7 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel60.setFont(timesNewRoman20);
         jLabel60.setText("Telefony z: ");
 
-        cboxRaportDate.setModel(new DefaultComboBoxModel(new String[]{"ostatni dzień", "ostatnie 3 dni", "ostatni tydzień", "ostatni miesiąc", "ostatnie 3 miesiące"}));
+        cbReportDate.setModel(new DefaultComboBoxModel<>(new String[]{"ostatni dzień", "ostatnie 3 dni", "ostatni tydzień", "ostatni miesiąc", "ostatnie 3 miesiące"}));
 
         jLabel45.setFont(timesNewRoman20);
         jLabel45.setText("Szansa sprzedaży:");
@@ -2022,7 +2019,7 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel61.setFont(timesNewRoman20);
         jLabel61.setText("Raport pracownika:");
 
-        txtUserRaport.setEditable(false);
+        txtUserReport.setEditable(false);
 
         jButton6.setText("...");
         jButton6.addActionListener(this::jButton6ActionPerformed);
@@ -2031,8 +2028,8 @@ public class SadCRMForm extends ApplicationWindow {
         jButton7.setText("Generuj");
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        javax.swing.GroupLayout raportsByManagerPanelLayout = new javax.swing.GroupLayout(raportsByManagerPanel);
-        raportsByManagerPanel.setLayout(raportsByManagerPanelLayout);
+        javax.swing.GroupLayout raportsByManagerPanelLayout = new javax.swing.GroupLayout(reportsByManagerPanel);
+        reportsByManagerPanel.setLayout(raportsByManagerPanelLayout);
         raportsByManagerPanelLayout.setHorizontalGroup(
                 raportsByManagerPanelLayout.createParallelGroup(LEADING)
                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
@@ -2045,11 +2042,11 @@ public class SadCRMForm extends ApplicationWindow {
                                                         .addGroup(LEADING, raportsByManagerPanelLayout.createSequentialGroup()
                                                                 .addComponent(jLabel61)
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(txtUserRaport))
+                                                                .addComponent(txtUserReport))
                                                         .addGroup(LEADING, raportsByManagerPanelLayout.createSequentialGroup()
                                                                 .addComponent(jLabel60)
                                                                 .addGap(93, 93, 93)
-                                                                .addComponent(cboxRaportDate, PREFERRED_SIZE, 199, PREFERRED_SIZE)))
+                                                                .addComponent(cbReportDate, PREFERRED_SIZE, 199, PREFERRED_SIZE)))
                                                 .addPreferredGap(RELATED)
                                                 .addComponent(jButton6, PREFERRED_SIZE, 29, PREFERRED_SIZE)))
                                 .addPreferredGap(RELATED, 38, Short.MAX_VALUE)
@@ -2069,7 +2066,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                 .addGap(18, 18, 18)
                                                 .addGroup(raportsByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel60)
-                                                        .addComponent(cboxRaportDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                        .addComponent(cbReportDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel45))
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
@@ -2081,7 +2078,7 @@ public class SadCRMForm extends ApplicationWindow {
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
                                                 .addGroup(raportsByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtUserRaport, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(txtUserReport, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(jButton6)
                                                         .addComponent(jButton7)))
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
@@ -2113,7 +2110,7 @@ public class SadCRMForm extends ApplicationWindow {
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(200, 200, 200)
-                                        .addComponent(raportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
         managerPanelLayout.setVerticalGroup(
@@ -2134,7 +2131,7 @@ public class SadCRMForm extends ApplicationWindow {
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(50, 50, 50)
-                                        .addComponent(raportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
 
@@ -2210,9 +2207,9 @@ public class SadCRMForm extends ApplicationWindow {
             showVersionParityMessageBox(response);
             loggedUser = response.getUser();
 
-            if (loggedUser.getType().equalsIgnoreCase(ADMIN)) {
+            if (loggedUser.getType() == ADMIN) {
                 processAdminPanel();
-            } else if (loggedUser.getType().equalsIgnoreCase(MANAGER)) {
+            } else if (loggedUser.getType() == MANAGER) {
                 processManagerPanel();
             } else {
                 processUserPanel();
@@ -2268,7 +2265,7 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientSurname.setText("");
         txtClientStreet.setText("");
         txtClientNumber.setText("");
-        txtCLientCity.setText("");
+        txtClientCity.setText("");
         txtClientPostalCode.setText("");
         txtClientCreator.setText("");
         txtClientPesel.setText("");
@@ -2284,16 +2281,16 @@ public class SadCRMForm extends ApplicationWindow {
         cbPersonalAcc.setSelected(false);
         cbCurrencyAcc.setSelected(false);
         cbLocate.setSelected(false);
-        cbCurrenctCredit.setSelected(false);
+        cbCurrentCredit.setSelected(false);
         cbHomeCredit.setSelected(false);
-        cbReapetedCredit.setSelected(false);
+        cbRepeatedCredit.setSelected(false);
         cbCreditCard.setSelected(false);
-        cboxChanse.setSelectedIndex(0);
+        cbChance.setSelectedIndex(0);
         txtClientName.setEnabled(true);
         txtClientSurname.setEnabled(true);
         txtClientStreet.setEnabled(true);
         txtClientNumber.setEnabled(true);
-        txtCLientCity.setEnabled(true);
+        txtClientCity.setEnabled(true);
         txtClientPostalCode.setEnabled(true);
         txtClientPesel.setEnabled(true);
         txtClientPhone1.setEnabled(true);
@@ -2304,11 +2301,11 @@ public class SadCRMForm extends ApplicationWindow {
         cbPersonalAcc.setEnabled(true);
         cbCurrencyAcc.setEnabled(true);
         cbLocate.setEnabled(true);
-        cbCurrenctCredit.setEnabled(true);
+        cbCurrentCredit.setEnabled(true);
         cbHomeCredit.setEnabled(true);
-        cbReapetedCredit.setEnabled(true);
+        cbRepeatedCredit.setEnabled(true);
         cbCreditCard.setEnabled(true);
-        cboxChanse.setEnabled(true);
+        cbChance.setEnabled(true);
         txtClientModification.setEnabled(false);
         txtClientTel.setEnabled(true);
         txtClientTelDate.setEnabled(false);
@@ -2320,16 +2317,16 @@ public class SadCRMForm extends ApplicationWindow {
         txtAddUserPassword1.setText("");
         txtAddUserPassword2.setText("");
         txtAddUserSurname.setText("");
-        txtAddUserdate.setText("");
-        txtAddUsertype.setSelectedIndex(0);
+        txtAddUserDate.setText("");
+        txtAddUserType.setSelectedIndex(0);
 
         txtAddUserLogin.setEnabled(true);
         txtAddUserName.setEnabled(true);
         txtAddUserPassword1.setEnabled(true);
         txtAddUserPassword2.setEnabled(true);
         txtAddUserSurname.setEnabled(true);
-        txtAddUserdate.setEnabled(true);
-        txtAddUsertype.setEnabled(true);
+        txtAddUserDate.setEnabled(true);
+        txtAddUserType.setEnabled(true);
     }
 
     private void addClientAction() {
@@ -2368,7 +2365,7 @@ public class SadCRMForm extends ApplicationWindow {
                 Address address = new Address();
                 address.setStreet(txtClientStreet.getText());
                 address.setNumber(txtClientNumber.getText());
-                address.setCity(txtCLientCity.getText());
+                address.setCity(txtClientCity.getText());
                 address.setPostCode(txtClientPostalCode.getText());
                 AddressDAO.insert(address);
 
@@ -2376,8 +2373,8 @@ public class SadCRMForm extends ApplicationWindow {
 
                 client.setProducts(createProductsEntry());
 
-                if (cboxChanse.getSelectedIndex() != 0) {
-                    client.setSellChance(cboxChanse.getSelectedItem().toString());
+                if (cbChance.getSelectedIndex() != 0) {
+                    client.setSellChance(cbChance.getSelectedItem().toString());
                 }
 
                 try {
@@ -2454,12 +2451,12 @@ public class SadCRMForm extends ApplicationWindow {
                 isAddressEdited = true;
             }
 
-            if (!selectedClient.getAddress().getCity().equalsIgnoreCase(txtCLientCity.getText())) {
+            if (!selectedClient.getAddress().getCity().equalsIgnoreCase(txtClientCity.getText())) {
                 if (address == null) {
                     address = selectedClient.getAddress();
-                    address.setNumber(txtCLientCity.getText());
+                    address.setNumber(txtClientCity.getText());
                 } else {
-                    address.setNumber(txtCLientCity.getText());
+                    address.setNumber(txtClientCity.getText());
                 }
 
                 isAddressEdited = true;
@@ -2476,8 +2473,8 @@ public class SadCRMForm extends ApplicationWindow {
                 isAddressEdited = true;
             }
 
-            if (!selectedClient.getSellChance().equalsIgnoreCase(cboxChanse.getSelectedItem().toString())) {
-                selectedClient.setSellChance(cboxChanse.getSelectedItem().toString());
+            if (!selectedClient.getSellChance().equalsIgnoreCase(cbChance.getSelectedItem().toString())) {
+                selectedClient.setSellChance(cbChance.getSelectedItem().toString());
                 isEdited = true;
             }
 
@@ -2531,42 +2528,42 @@ public class SadCRMForm extends ApplicationWindow {
             products = "Konto osobiste";
         }
         if (cbEditCurrencyAcc.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Konto walutowe";
             } else {
                 products = products + ",Konto walutowe";
             }
         }
         if (cbEditLocate.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Lokata";
             } else {
                 products = products + ",Lokata";
             }
         }
-        if (cbEditCurrenctCredit.isSelected()) {
-            if (products.equals("")) {
+        if (cbEditCurrentCredit.isSelected()) {
+            if (products.isEmpty()) {
                 products = "Kredyt gotówkowy";
             } else {
                 products = products + ",Kredyt gotówkowy";
             }
         }
         if (cbEditHomeCredit.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Kredyt hipoteczny";
             } else {
                 products = products + ",Kredyt hipoteczny";
             }
         }
-        if (cbEditReapetedCredit.isSelected()) {
-            if (products.equals("")) {
+        if (cbEditRepeatedCredit.isSelected()) {
+            if (products.isEmpty()) {
                 products = "Kredyt odnawialny";
             } else {
                 products = products + ",Kredyt odnawialny";
             }
         }
         if (cbEditCreditCard.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Karta kredytowa";
             } else {
                 products = products + ",Karta kredytowa";
@@ -2582,42 +2579,42 @@ public class SadCRMForm extends ApplicationWindow {
             products = "Konto osobiste";
         }
         if (cbCurrencyAcc.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Konto walutowe";
             } else {
                 products = products + ",Konto walutowe";
             }
         }
         if (cbLocate.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Lokata";
             } else {
                 products = products + ",Lokata";
             }
         }
-        if (cbCurrenctCredit.isSelected()) {
-            if (products.equals("")) {
+        if (cbCurrentCredit.isSelected()) {
+            if (products.isEmpty()) {
                 products = "Kredyt gotówkowy";
             } else {
                 products = products + ",Kredyt gotówkowy";
             }
         }
         if (cbHomeCredit.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Kredyt hipoteczny";
             } else {
                 products = products + ",Kredyt hipoteczny";
             }
         }
-        if (cbReapetedCredit.isSelected()) {
-            if (products.equals("")) {
+        if (cbRepeatedCredit.isSelected()) {
+            if (products.isEmpty()) {
                 products = "Kredyt odnawialny";
             } else {
                 products = products + ",Kredyt odnawialny";
             }
         }
         if (cbCreditCard.isSelected()) {
-            if (products.equals("")) {
+            if (products.isEmpty()) {
                 products = "Karta kredytowa";
             } else {
                 products = products + ",Karta kredytowa";
@@ -2629,7 +2626,7 @@ public class SadCRMForm extends ApplicationWindow {
 
     private boolean validateClient() {
         Map<String, String> fieldsMap = new HashMap<>();
-        fieldsMap.put(txtCLientCity.getText(), "Wprowadź miasto");
+        fieldsMap.put(txtClientCity.getText(), "Wprowadź miasto");
         fieldsMap.put(txtClientNumber.getText(), "Wprowadź nr budynku");
         fieldsMap.put(txtClientStreet.getText(), "Wprowadź ulicę");
         fieldsMap.put(txtClientPesel.getText(), "Wprowadź pesel");
@@ -2667,7 +2664,7 @@ public class SadCRMForm extends ApplicationWindow {
 
     private boolean validateClientForManager() {
         Map<String, String> fieldsMap = new HashMap<>();
-        fieldsMap.put(editCLientCity.getText(), "Wprowadź miasto");
+        fieldsMap.put(editClientCity.getText(), "Wprowadź miasto");
         fieldsMap.put(editClientNumber.getText(), "Wprowadź nr budynku");
         fieldsMap.put(editClientStreet.getText(), "Wprowadź ulicę");
         fieldsMap.put(editClientPesel.getText(), "Wprowadź pesel");
@@ -2767,7 +2764,7 @@ public class SadCRMForm extends ApplicationWindow {
 
     private void wyczyscPolaMailaAction(ActionEvent evt) {
         txtMailContent.setText("");
-        txtReceip.setText("");
+        txtRecipient.setText("");
         txtMailSubject.setText("");
     }
 
@@ -2781,16 +2778,16 @@ public class SadCRMForm extends ApplicationWindow {
 
     private void wyslijjednegoMailaAction(ActionEvent evt) {
         Map<String, String> fieldsMap = new HashMap<>();
-        fieldsMap.put(txtReceip.getText(), "Wprowadź odbiorców");
+        fieldsMap.put(txtRecipient.getText(), "Wprowadź odbiorców");
         fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
         fieldsMap.put(txtMailContent.getText(), "Wprowadź treść maila");
 
         String result = ValidationUtil.validateNotNull(fieldsMap);
         if (result == null) {
-            String recipients = txtReceip.getText();
+            String recipients = txtRecipient.getText();
 
             try {
-                MailUtil.sendMail(recipients, txtMailSubject.getText(), txtMailContent.getText());
+                MailSender.sendMail(recipients, txtMailSubject.getText(), txtMailContent.getText());
                 showMessageDialog(this, "Wiadmość została wysłana", "Wysylanie maila", INFORMATION_MESSAGE);
 
                 if (mail) {
@@ -2887,7 +2884,7 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientSurname.setEnabled(true);
         txtClientStreet.setEnabled(true);
         txtClientNumber.setEnabled(true);
-        txtCLientCity.setEnabled(true);
+        txtClientCity.setEnabled(true);
         txtClientPostalCode.setEnabled(true);
         txtClientPesel.setEnabled(true);
         txtClientPhone1.setEnabled(true);
@@ -2898,11 +2895,11 @@ public class SadCRMForm extends ApplicationWindow {
         cbPersonalAcc.setEnabled(true);
         cbCurrencyAcc.setEnabled(true);
         cbLocate.setEnabled(true);
-        cbCurrenctCredit.setEnabled(true);
+        cbCurrentCredit.setEnabled(true);
         cbHomeCredit.setEnabled(true);
-        cbReapetedCredit.setEnabled(true);
+        cbRepeatedCredit.setEnabled(true);
         cbCreditCard.setEnabled(true);
-        cboxChanse.setEnabled(true);
+        cbChance.setEnabled(true);
         txtClientModification.setEnabled(false);
         txtClientTel.setEnabled(true);
         txtClientTelDate.setEnabled(false);
@@ -3007,7 +3004,7 @@ public class SadCRMForm extends ApplicationWindow {
         PanelsUtil.enablePanel(addUserPanel, new JPanel[]{searchUserPanel, mainAdminPanel});
         clearUserFields();
 
-        txtAddUserdate.setText(now());
+        txtAddUserDate.setText(now());
         selectedUser = null;
     }
 
@@ -3029,8 +3026,8 @@ public class SadCRMForm extends ApplicationWindow {
                 newUserLocal.setSurname(txtAddUserSurname.getText());
                 newUserLocal.setLogin(txtAddUserLogin.getText());
                 newUserLocal.setPassword(txtAddUserPassword1.getText());
-                newUserLocal.setType(txtAddUsertype.getSelectedItem().toString());
-                newUserLocal.setCreated(txtAddUserdate.getText());
+                newUserLocal.setType(txtAddUserType.getSelectedItem());
+                newUserLocal.setCreated(txtAddUserDate.getText());
 
                 try {
                     UserDAO.insertUser(newUserLocal);
@@ -3073,8 +3070,8 @@ public class SadCRMForm extends ApplicationWindow {
             selectedUser.setPassword(txtAddUserPassword1.getText());
             isEdited = true;
         }
-        if (!selectedUser.getType().equalsIgnoreCase(txtAddUsertype.getSelectedItem().toString())) {
-            selectedUser.setType(txtAddUsertype.getSelectedItem().toString());
+        if (selectedUser.getType() != txtAddUserType.getSelectedItem()) {
+            selectedUser.setType(txtAddUserType.getSelectedItem());
             isEdited = true;
         }
         return isEdited;
@@ -3140,11 +3137,11 @@ public class SadCRMForm extends ApplicationWindow {
         txtAddUserName.setText(selectedUser.getName());
         txtAddUserSurname.setText(selectedUser.getSurname());
         txtAddUserLogin.setText(selectedUser.getLogin());
-        txtAddUserdate.setText(selectedUser.getCreated());
-        txtAddUserdate.setEditable(false);
+        txtAddUserDate.setText(selectedUser.getCreated());
+        txtAddUserDate.setEditable(false);
         txtAddUserPassword1.setText(selectedUser.getPassword());
         txtAddUserPassword2.setText(selectedUser.getPassword());
-        txtAddUsertype.setSelectedItem(selectedUser.getType());
+        txtAddUserType.setSelectedItem(selectedUser.getType());
     }
 
     private void myAdminPanelButtonActionPerformed(ActionEvent evt) {
@@ -3216,7 +3213,7 @@ public class SadCRMForm extends ApplicationWindow {
 
     private void processSearchClientsForManager() {
         //WYSZUKIWANIE NA PANELU MANAGERA        
-        PanelsUtil.enablePanel(searchUserByManagerPanel, new JPanel[]{editUserByManagerPanel, mainManagerPanel, raportsByManagerPanel});
+        PanelsUtil.enablePanel(searchUserByManagerPanel, new JPanel[]{editUserByManagerPanel, mainManagerPanel, reportsByManagerPanel});
         selectedUser = null;
         tableClientsForManager.setRowSelectionAllowed(true);
         tableClientsForManager.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -3226,7 +3223,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void myManagerPanelButtonActionPerformed(ActionEvent evt) {
-        PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, raportsByManagerPanel});
+        PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, reportsByManagerPanel});
     }
 
     private void logoutManagerButtonActionPerformed(ActionEvent evt) {
@@ -3373,12 +3370,12 @@ public class SadCRMForm extends ApplicationWindow {
         }
 
         // TODO
-        if (!selectedClient.getAddress().getCity().equalsIgnoreCase(editCLientCity.getText())) {
+        if (!selectedClient.getAddress().getCity().equalsIgnoreCase(editClientCity.getText())) {
             if (address == null) {
                 address = selectedClient.getAddress();
-                address.setNumber(editCLientCity.getText());
+                address.setNumber(editClientCity.getText());
             } else {
-                address.setNumber(editCLientCity.getText());
+                address.setNumber(editClientCity.getText());
             }
 
             isAddressEdited = true;
@@ -3396,11 +3393,11 @@ public class SadCRMForm extends ApplicationWindow {
         }
 
         String sellChan = selectedClient.getSellChance();
-        if (sellChan == null && cboxEditChanse.getSelectedIndex() != 0) {
-            selectedClient.setSellChance(cboxEditChanse.getSelectedItem().toString());
+        if (sellChan == null && cbEditChance.getSelectedIndex() != 0) {
+            selectedClient.setSellChance(cbEditChance.getSelectedItem().toString());
             isEdited = true;
-        } else if (sellChan != null && !sellChan.equalsIgnoreCase(cboxEditChanse.getSelectedItem().toString())) {
-            selectedClient.setSellChance(cboxEditChanse.getSelectedItem().toString());
+        } else if (sellChan != null && !sellChan.equalsIgnoreCase(cbEditChance.getSelectedItem().toString())) {
+            selectedClient.setSellChance(cbEditChance.getSelectedItem().toString());
             isEdited = true;
         }
 
@@ -3473,7 +3470,7 @@ public class SadCRMForm extends ApplicationWindow {
             Integer i = Integer.valueOf(id);
             newUser = UserDAO.getUserById(i);
 
-            txtUserRaport.setText(newUser.getName() + " " + newUser.getSurname());
+            txtUserReport.setText(newUser.getName() + " " + newUser.getSurname());
 
             jDialog2.dispose();
             jDialog2.setVisible(false);
@@ -3537,15 +3534,9 @@ public class SadCRMForm extends ApplicationWindow {
         usersForManagerTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
-
                     if (isReport) {
-                        // process raportow
                         processUserRaports();
                     } else {
-                        // process edycji klienta przez managera
                         processSelectedCreator();
                     }
                 }
@@ -3554,11 +3545,11 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void reportsButtonActionPerformed(ActionEvent evt) {
-        PanelsUtil.enablePanel(raportsByManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, mainManagerPanel});
+        PanelsUtil.enablePanel(reportsByManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, mainManagerPanel});
     }
 
     private void jButton4ActionPerformed(ActionEvent evt) {
-        int choose = cboxRaportDate.getSelectedIndex();
+        int choose = cbReportDate.getSelectedIndex();
 
         ReportsUtil util = new ReportsUtil();
         util.createTelephonesReport(choose);
@@ -3580,7 +3571,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void jButton7ActionPerformed(ActionEvent evt) {
-        if (!txtUserRaport.getText().equalsIgnoreCase("")) {
+        if (!txtUserReport.getText().equalsIgnoreCase("")) {
             ReportsUtil util = new ReportsUtil();
             util.createUserReport(newUser);
         } else {
@@ -3603,13 +3594,13 @@ public class SadCRMForm extends ApplicationWindow {
     private void editClientForManager(int row) {
         Object selectedClientId = tableClientsForManager.getModel().getValueAt(row, 0);
         selectedClient = ClientDAO.getClientById((Integer) selectedClientId);
-        PanelsUtil.enablePanel(editUserByManagerPanel, new JPanel[]{mainManagerPanel, searchUserByManagerPanel, raportsByManagerPanel});
+        PanelsUtil.enablePanel(editUserByManagerPanel, new JPanel[]{mainManagerPanel, searchUserByManagerPanel, reportsByManagerPanel});
 
         editClientName.setText(selectedClient.getName());
         editClientSurname.setText(selectedClient.getSurname());
         editClientStreet.setText(selectedClient.getAddress().getStreet());
         editClientNumber.setText(selectedClient.getAddress().getNumber());
-        editCLientCity.setText(selectedClient.getAddress().getCity());
+        editClientCity.setText(selectedClient.getAddress().getCity());
         editClientPostalCode.setText(selectedClient.getAddress().getPostCode());
         editClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
         editClientPesel.setText(selectedClient.getPesel());
@@ -3625,7 +3616,7 @@ public class SadCRMForm extends ApplicationWindow {
         editClientTelDate.setText(selectedClient.getTelDate().toString());
         editClientModification.setText(selectedClient.getTelDate().toString());
 
-        if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
+        if (!selectedClient.getProducts().isEmpty() && selectedClient.getProducts() != null) {
             String[] products = selectedClient.getProducts().split(",");
             List<String> productsSet = Arrays.asList(products);
             if (productsSet.contains("Konto osobiste")) {
@@ -3638,13 +3629,13 @@ public class SadCRMForm extends ApplicationWindow {
                 cbEditLocate.setSelected(true);
             }
             if (productsSet.contains("Kredyt gotówkowy")) {
-                cbEditCurrenctCredit.setSelected(true);
+                cbEditCurrentCredit.setSelected(true);
             }
             if (productsSet.contains("Kredyt hipoteczny")) {
                 cbEditHomeCredit.setSelected(true);
             }
             if (productsSet.contains("Kredyt odnawialny")) {
-                cbEditReapetedCredit.setSelected(true);
+                cbEditRepeatedCredit.setSelected(true);
             }
             if (productsSet.contains("Karta kredytowa")) {
                 cbEditCreditCard.setSelected(true);
@@ -3653,13 +3644,13 @@ public class SadCRMForm extends ApplicationWindow {
             cbEditPersonalAcc.setSelected(false);
             cbEditCurrencyAcc.setSelected(false);
             cbEditLocate.setSelected(false);
-            cbEditCurrenctCredit.setSelected(false);
+            cbEditCurrentCredit.setSelected(false);
             cbEditHomeCredit.setSelected(false);
-            cbEditReapetedCredit.setSelected(false);
+            cbEditRepeatedCredit.setSelected(false);
             cbEditCreditCard.setSelected(false);
         }
 
-        cboxEditChanse.setSelectedItem(selectedClient.getSellChance());
+        cbEditChance.setSelectedItem(selectedClient.getSellChance());
     }
 
     private boolean validateUser() {
@@ -3705,7 +3696,7 @@ public class SadCRMForm extends ApplicationWindow {
 
     private void processMailPanel(String r) {
         PanelsUtil.enablePanel(sendMailPanel, new JPanel[]{mainUserPanel, addClientPanel, searchPanel});
-        txtReceip.setText(r);
+        txtRecipient.setText(r);
 
         txtMailContent.setText("");
         txtMailSubject.setText("");
@@ -3729,8 +3720,8 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientStreet.setEnabled(false);
         txtClientNumber.setText(selectedClient.getAddress().getNumber());
         txtClientNumber.setEnabled(false);
-        txtCLientCity.setText(selectedClient.getAddress().getCity());
-        txtCLientCity.setEnabled(false);
+        txtClientCity.setText(selectedClient.getAddress().getCity());
+        txtClientCity.setEnabled(false);
         txtClientPostalCode.setText(selectedClient.getAddress().getPostCode());
         txtClientPostalCode.setEnabled(false);
         txtClientCreator.setText(selectedClient.getUser().getName() + " " + selectedClient.getUser().getSurname());
@@ -3757,7 +3748,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtClientModification.setText(Objects.toString(selectedClient.getTelDate()));
 
-        if (!selectedClient.getProducts().equals("") && selectedClient.getProducts() != null) {
+        if (!selectedClient.getProducts().isEmpty() && selectedClient.getProducts() != null) {
             String[] products = selectedClient.getProducts().split(",");
             List<String> productsSet = Arrays.asList(products);
             if (productsSet.contains("Konto osobiste")) {
@@ -3770,13 +3761,13 @@ public class SadCRMForm extends ApplicationWindow {
                 cbLocate.setSelected(true);
             }
             if (productsSet.contains("Kredyt gotówkowy")) {
-                cbCurrenctCredit.setSelected(true);
+                cbCurrentCredit.setSelected(true);
             }
             if (productsSet.contains("Kredyt hipoteczny")) {
                 cbHomeCredit.setSelected(true);
             }
             if (productsSet.contains("Kredyt odnawialny")) {
-                cbReapetedCredit.setSelected(true);
+                cbRepeatedCredit.setSelected(true);
             }
             if (productsSet.contains("Karta kredytowa")) {
                 cbCreditCard.setSelected(true);
@@ -3785,36 +3776,32 @@ public class SadCRMForm extends ApplicationWindow {
             cbPersonalAcc.setSelected(false);
             cbCurrencyAcc.setSelected(false);
             cbLocate.setSelected(false);
-            cbCurrenctCredit.setSelected(false);
+            cbCurrentCredit.setSelected(false);
             cbHomeCredit.setSelected(false);
-            cbReapetedCredit.setSelected(false);
+            cbRepeatedCredit.setSelected(false);
             cbCreditCard.setSelected(false);
         }
         cbPersonalAcc.setEnabled(false);
         cbCurrencyAcc.setEnabled(false);
         cbLocate.setEnabled(false);
-        cbCurrenctCredit.setEnabled(false);
+        cbCurrentCredit.setEnabled(false);
         cbHomeCredit.setEnabled(false);
-        cbReapetedCredit.setEnabled(false);
+        cbRepeatedCredit.setEnabled(false);
         cbCreditCard.setEnabled(false);
         txtClientTel.setEnabled(false);
 
-        cboxChanse.setSelectedItem(selectedClient.getSellChance());
-        cboxChanse.setEnabled(false);
+        cbChance.setSelectedItem(selectedClient.getSellChance());
+        cbChance.setEnabled(false);
     }
 
     private void processManagerPanel() {
         PanelsUtil.enablePanel(managerPanel, new JPanel[]{loginPanel, userPanel, adminPanel});
 
-        PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{searchUserByManagerPanel, editUserByManagerPanel, raportsByManagerPanel});
+        PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{searchUserByManagerPanel, editUserByManagerPanel, reportsByManagerPanel});
         txtManagerName.setText(loggedUser.getName());
         txtManagerSurname.setText(loggedUser.getSurname());
         txtManagerLogin.setText(loggedUser.getLogin());
-        String type = loggedUser.getType();
-        if (type == null || type.equals("")) {
-            type = "Pracownik";
-        }
-        txtManagerType.setText(type);
+        txtManagerType.setText(loggedUser.getType().getTitle());
     }
 
     private void processAdminPanel() {
@@ -3825,16 +3812,9 @@ public class SadCRMForm extends ApplicationWindow {
         txtAdminName.setText(loggedUser.getName());
         txtAdminSurname.setText(loggedUser.getSurname());
         txtAdminLogin.setText(loggedUser.getLogin());
-        String type = loggedUser.getType();
-        if (type == null || type.equals("")) {
-            type = "Pracownik";
-        }
-        txtAdminType.setText(type);
+        txtAdminType.setText(loggedUser.getType().getTitle());
     }
 
-    /*
-     Włączenie panelu usera
-     */
     private void processUserPanel() {
         PanelsUtil.enablePanel(userPanel, new JPanel[]{loginPanel, adminPanel, managerPanel});
 
@@ -3843,15 +3823,9 @@ public class SadCRMForm extends ApplicationWindow {
         txtUserName.setText(loggedUser.getName());
         txtUserSurname.setText(loggedUser.getSurname());
         txtUserLogin.setText(loggedUser.getLogin());
-
-        String type = loggedUser.getType();
-        if (type == null || type.equals("")) {
-            type = "Pracownik";
-        }
-        txtUserType.setText(type);
+        txtUserType.setText(loggedUser.getType().getTitle());
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton addClientButton = new JButton();
     private JPanel addClientPanel = new JPanel();
     private JButton addUserButton = new JButton();
@@ -3865,33 +3839,33 @@ public class SadCRMForm extends ApplicationWindow {
     private JButton cancelClientByManagerButton = new JButton();
     private JButton cancelUserButton = new JButton();
     private JCheckBox cbCreditCard = new JCheckBox();
-    private JCheckBox cbCurrenctCredit = new JCheckBox();
+    private JCheckBox cbCurrentCredit = new JCheckBox();
     private JCheckBox cbCurrencyAcc = new JCheckBox();
     private JCheckBox cbEditCreditCard = new JCheckBox();
-    private JCheckBox cbEditCurrenctCredit = new JCheckBox();
+    private JCheckBox cbEditCurrentCredit = new JCheckBox();
     private JCheckBox cbEditCurrencyAcc = new JCheckBox();
     private JCheckBox cbEditHomeCredit = new JCheckBox();
     private JCheckBox cbEditLocate = new JCheckBox();
     private JCheckBox cbEditPersonalAcc = new JCheckBox();
-    private JCheckBox cbEditReapetedCredit = new JCheckBox();
+    private JCheckBox cbEditRepeatedCredit = new JCheckBox();
     private JCheckBox cbHomeCredit = new JCheckBox();
     private JCheckBox cbLocate = new JCheckBox();
     private JCheckBox cbPersonalAcc = new JCheckBox();
-    private JCheckBox cbReapetedCredit = new JCheckBox();
-    private JComboBox cboxChanse = new JComboBox();
-    private JComboBox cboxEditChanse = new JComboBox();
-    private JComboBox cboxRaportDate = new JComboBox();
+    private JCheckBox cbRepeatedCredit = new JCheckBox();
+    private JComboBox<String> cbChance = new JComboBox<>();
+    private JComboBox<String> cbEditChance = new JComboBox<>();
+    private JComboBox<String> cbReportDate = new JComboBox<>();
     private JButton changeAdminPassButton = new JButton();
     private JButton changeManagerPassButton = new JButton();
     private JButton changePasswordButton = new JButton();
     private JButton clearMailButton = new JButton();
     private JButton dataExpButton1 = new JButton();
     private JButton dataExpButton2 = new JButton();
-    private JTextField editCLientCity = new JTextField();
+    private JTextField editClientCity = new JTextField();
     private JButton editClientButton = new JButton();
     private JTextField editClientCreateDate = new JTextField();
     private JTextField editClientCreator = new JTextField();
-    private javax.swing.JTextArea editClientDesc = new JTextArea();
+    private JTextArea editClientDesc = new JTextArea();
     private JTextField editClientMail = new JTextField();
     private JTextField editClientModification = new JTextField();
     private JTextField editClientName = new JTextField();
@@ -3917,8 +3891,8 @@ public class SadCRMForm extends ApplicationWindow {
     private JButton jButton5 = new JButton();
     private JButton jButton6 = new JButton();
     private JButton jButton7 = new JButton();
-    private javax.swing.JDialog jDialog1 = new JDialog();
-    private javax.swing.JDialog jDialog2 = new JDialog();
+    private JDialog jDialog1 = new JDialog();
+    private JDialog jDialog2 = new JDialog();
     private JLabel jLabel1 = new JLabel();
     private JLabel jLabel10 = new JLabel();
     private JLabel jLabel11 = new JLabel();
@@ -4001,14 +3975,14 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel jLabel85 = new JLabel();
     private JLabel jLabel86 = new JLabel();
     private JLabel jLabel9 = new JLabel();
-    private javax.swing.JScrollPane jScrollPane1 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane2 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane3 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane5 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane6 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane7 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane8 = new JScrollPane();
-    private javax.swing.JScrollPane jScrollPane9 = new JScrollPane();
+    private JScrollPane jScrollPane1 = new JScrollPane();
+    private JScrollPane jScrollPane2 = new JScrollPane();
+    private JScrollPane jScrollPane3 = new JScrollPane();
+    private JScrollPane jScrollPane5 = new JScrollPane();
+    private JScrollPane jScrollPane6 = new JScrollPane();
+    private JScrollPane jScrollPane7 = new JScrollPane();
+    private JScrollPane jScrollPane8 = new JScrollPane();
+    private JScrollPane jScrollPane9 = new JScrollPane();
     private JLabel lab = new JLabel();
     private JLabel lab1 = new JLabel();
     private JLabel labelClientModDate = new JLabel();
@@ -4034,7 +4008,7 @@ public class SadCRMForm extends ApplicationWindow {
     private JButton myContactsButton = new JButton();
     private JButton myManagerPanelButton = new JButton();
     private JButton myPanelButton = new JButton();
-    private JPanel raportsByManagerPanel = new JPanel();
+    private JPanel reportsByManagerPanel = new JPanel();
     private JButton reportsButton = new JButton();
     private JButton resetSearchButton = new JButton();
     private JButton saveClientButton = new JButton();
@@ -4051,9 +4025,9 @@ public class SadCRMForm extends ApplicationWindow {
     private JButton sendMailButton = new JButton();
     private JPanel sendMailPanel = new JPanel();
     private JButton sendOneMailButton = new JButton();
-    private javax.swing.JTable tableClients = new JTable();
-    private javax.swing.JTable tableClientsForManager = new JTable();
-    private javax.swing.JTable tableUsers = new JTable();
+    private JTable tableClients = new JTable();
+    private JTable tableClientsForManager = new JTable();
+    private JTable tableUsers = new JTable();
     private JPanel topManagerPanel = new JPanel();
     private JPanel topPanel = new JPanel();
     private JPanel topPanel1 = new JPanel();
@@ -4062,20 +4036,20 @@ public class SadCRMForm extends ApplicationWindow {
     private JPasswordField txtAddUserPassword1 = new JPasswordField();
     private JPasswordField txtAddUserPassword2 = new JPasswordField();
     private JTextField txtAddUserSurname = new JTextField();
-    private JTextField txtAddUserdate = new JTextField();
-    private JComboBox txtAddUsertype = new JComboBox();
+    private JTextField txtAddUserDate = new JTextField();
+    private JComboBox<UserType> txtAddUserType = new JComboBox<>();
     private JTextField txtAdminLogin = new JTextField();
     private JTextField txtAdminName = new JTextField();
     private JTextField txtAdminSearchName = new JTextField();
     private JTextField txtAdminSearchSurname = new JTextField();
     private JTextField txtAdminSurname = new JTextField();
     private JTextField txtAdminType = new JTextField();
-    private JTextField txtCLientCity = new JTextField();
+    private JTextField txtClientCity = new JTextField();
     private JPasswordField txtChangePass1 = new JPasswordField();
     private JPasswordField txtChangePass2 = new JPasswordField();
     private JTextField txtClientCreateDate = new JTextField();
     private JTextField txtClientCreator = new JTextField();
-    private javax.swing.JTextArea txtClientDesc = new JTextArea();
+    private JTextArea txtClientDesc = new JTextArea();
     private JTextField txtClientMail = new JTextField();
     private JTextField txtClientModification = new JTextField();
     private JTextField txtClientName = new JTextField();
@@ -4091,7 +4065,7 @@ public class SadCRMForm extends ApplicationWindow {
     private JCheckBox txtClientVip = new JCheckBox();
     private JButton txtDetailsClientButton = new JButton();
     private JTextField txtLogin = new JTextField();
-    private javax.swing.JTextArea txtMailContent = new JTextArea();
+    private JTextArea txtMailContent = new JTextArea();
     private JTextField txtMailSubject = new JTextField();
     private JTextField txtManagerLogin = new JTextField();
     private JTextField txtManagerName = new JTextField();
@@ -4100,16 +4074,15 @@ public class SadCRMForm extends ApplicationWindow {
     private JTextField txtManagerSurname = new JTextField();
     private JTextField txtManagerType = new JTextField();
     private JPasswordField txtPassword = new JPasswordField();
-    private javax.swing.JTextArea txtReceip = new JTextArea();
+    private JTextArea txtRecipient = new JTextArea();
     private JTextField txtSearchPesel = new JTextField();
     private JTextField txtSearchSurname = new JTextField();
     private JButton txtSendMultipleMail = new JButton();
     private JTextField txtUserLogin = new JTextField();
     private JTextField txtUserName = new JTextField();
-    private JTextField txtUserRaport = new JTextField();
+    private JTextField txtUserReport = new JTextField();
     private JTextField txtUserSurname = new JTextField();
     private JTextField txtUserType = new JTextField();
     private JPanel userPanel = new JPanel();
-    private javax.swing.JTable usersForManagerTable = new JTable();
-    // End of variables declaration//GEN-END:variables
+    private JTable usersForManagerTable = new JTable();
 }

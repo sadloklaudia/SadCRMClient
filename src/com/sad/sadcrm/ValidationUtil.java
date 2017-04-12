@@ -2,10 +2,15 @@ package com.sad.sadcrm;
 
 import java.util.Map;
 
+import static java.lang.Character.getNumericValue;
+import static java.lang.Character.isDigit;
+
 public class ValidationUtil {
+    private final static int[] PESEL_WEIGHTS = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+
     public static String validateNotNull(Map<String, String> fields) {
         for (String s : fields.keySet()) {
-            if (s.equals("")) {
+            if (s.isEmpty()) {
                 return fields.get(s);
             }
         }
@@ -25,8 +30,6 @@ public class ValidationUtil {
         return postalCode.matches("[0-9]{2}-[0-9]{3}");
     }
 
-    private final static int[] PESEL_WEIGHTS = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
-
     public static boolean validatePesel(String pesel) {
         if (pesel.length() != 11) {
             return false;
@@ -34,10 +37,14 @@ public class ValidationUtil {
 
         int controlSum = 0;
         for (int i = 0; i < 10; i++) {
-            controlSum += Integer.parseInt(pesel.charAt(i) + "") * PESEL_WEIGHTS[i];
+            char character = pesel.charAt(i);
+            if (!isDigit(character)) {
+                return false;
+            }
+            controlSum += getNumericValue(character) * PESEL_WEIGHTS[i];
         }
 
-        int controlDigit = Integer.parseInt(pesel.charAt(10) + "");
+        int controlDigit = getNumericValue(pesel.charAt(10));
         controlSum = (10 - (controlSum % 10)) % 10;
 
         return controlSum == controlDigit;

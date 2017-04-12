@@ -16,7 +16,7 @@ public class Parameters {
         return this;
     }
 
-    public String getParamString() {
+    String getParamString() {
         return paramString;
     }
 

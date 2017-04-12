@@ -24,10 +24,6 @@ public class Address implements java.io.Serializable {
         this.postCode = postCode;
     }
 
-    public Address(int address_id) {
-        this.id = address_id;
-    }
-
     public int getId() {
         return this.id;
     }

@@ -3,9 +3,13 @@ package com.sad.sadcrm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -82,19 +86,12 @@ public class HttpJson {
             String result = getStringFromInputStream(connection.getInputStream());
             //  result = Encryption.decrypt(result);
             return result;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
-    private static String getStringFromInputStream(InputStream inputStream) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String result = "";
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result += line;
-            }
-            return result;
-        }
+    private static String getStringFromInputStream(InputStream inputStream) {
+        return new Scanner(inputStream).useDelimiter("\\A").next();
     }
 }

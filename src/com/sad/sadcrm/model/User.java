@@ -10,7 +10,7 @@ public class User implements java.io.Serializable {
     private int id;
     private String name;
     private String surname;
-    private String type;
+    private UserType type;
     private String login;
     private String password;
     private String created;
@@ -18,7 +18,7 @@ public class User implements java.io.Serializable {
     public User() {
     }
 
-    public User(int id, String name, String surname, String type, String login, String password) {
+    public User(int id, String name, String surname, UserType type, String login, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -27,7 +27,7 @@ public class User implements java.io.Serializable {
         this.password = password;
     }
 
-    public User(int id, String name, String surname, String type, String login, String password, String created) {
+    public User(int id, String name, String surname, UserType type, String login, String password, String created) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -65,11 +65,11 @@ public class User implements java.io.Serializable {
         this.surname = surname;
     }
 
-    public String getType() {
+    public UserType getType() {
         return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 
@@ -102,7 +102,7 @@ public class User implements java.io.Serializable {
                 user.getInt("id"),
                 user.getString("name"),
                 user.getString("surname"),
-                user.getString("type"),
+                UserType.valueOf(user.getString("type")),
                 user.getString("login"),
                 "",
                 user.getString("created")
@@ -114,7 +114,7 @@ public class User implements java.io.Serializable {
                 .add("id", id + "")
                 .add("name", name)
                 .add("surname", surname)
-                .add("type", type)
+                .add("type", type.toString())
                 .add("login", login)
                 .add("password", password)
                 .add("created", created);
