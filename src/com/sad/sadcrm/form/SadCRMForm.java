@@ -35,13 +35,13 @@ import static javax.swing.GroupLayout.Alignment.LEADING;
 import static javax.swing.GroupLayout.Alignment.TRAILING;
 import static javax.swing.GroupLayout.PREFERRED_SIZE;
 import static javax.swing.JOptionPane.*;
+import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 import static javax.swing.LayoutStyle.ComponentPlacement.UNRELATED;
+import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import static javax.swing.SwingConstants.HORIZONTAL;
 
 public class SadCRMForm extends ApplicationWindow {
-    private Object[] options = {"Tak", "Nie"};
-
     private User loggedUser = null;
 
     private Client selectedClient = null;
@@ -68,7 +68,6 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void createPopupMenuForExport() {
-        // MENU DLA BUTTONA EXPORTU
         exportAdminDataMenu.add(exportAdminDataSubmenu1);
         exportAdminDataMenu.add(exportAdminDataSubmenu2);
 
@@ -84,11 +83,11 @@ public class SadCRMForm extends ApplicationWindow {
         exportUserDataButton.addActionListener(this::showPopupUser);
     }
 
-    private void showPopupAdmin(ActionEvent ae) {
-        Component b = (Component) ae.getSource();
-        Point p = b.getLocationOnScreen();
+    private void showPopupAdmin(ActionEvent actionEvent) {
+        Component source = (Component) actionEvent.getSource();
+        Point point = source.getLocationOnScreen();
         exportAdminDataMenu.show(this, 0, 0);
-        exportAdminDataMenu.setLocation(p.x, p.y + b.getHeight());
+        exportAdminDataMenu.setLocation(point.x, point.y + source.getHeight());
     }
 
     private void showPopupUser(ActionEvent ae) {
@@ -169,9 +168,9 @@ public class SadCRMForm extends ApplicationWindow {
         ));
         usersForManagerTable.setMinimumSize(new Dimension(376, 72));
         usersForManagerTable.setPreferredSize(new Dimension(376, 72));
-        usersForManagerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        usersForManagerTable.setSelectionMode(SINGLE_SELECTION);
         usersForManagerTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(MouseEvent evt) {
                 usersForManagerTableMouseClicked(evt);
             }
         });
@@ -285,7 +284,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitButton.setText("Wyjście");
-        exitButton.addActionListener(this::exitUserAction);
+        exitButton.addActionListener(evt1 -> exitCommonAction());
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
@@ -347,7 +346,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         jButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         jButton1.setText("Zmień hasło");
-        jButton1.addActionListener(this::zmienHasloUzytkAction);
+        jButton1.addActionListener(evt1 -> commonChangePassword());
 
         javax.swing.GroupLayout mainUserPanelLayout = new javax.swing.GroupLayout(mainUserPanel);
         mainUserPanel.setLayout(mainUserPanelLayout);
@@ -758,17 +757,13 @@ public class SadCRMForm extends ApplicationWindow {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        tableClients.setToolTipText("Klikniej dwukrotnie aby edytować");
-        tableClients.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableClients.setToolTipText("Kliknij dwukrotnie aby edytować");
+        tableClients.setAutoResizeMode(AUTO_RESIZE_OFF);
         tableClients.setPreferredSize(new Dimension(780, 100));
-        tableClients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableClients.setSelectionMode(SINGLE_SELECTION);
         tableClients.getTableHeader().setResizingAllowed(false);
         tableClients.getTableHeader().setReorderingAllowed(false);
-        tableClients.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableClientsMouseClicked(evt);
-            }
-        });
+        tableClients.addMouseListener((MouseClickHandler) this::tableClientsMouseClicked);
         jScrollPane7.setViewportView(tableClients);
 
         txtDetailsClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/About.gif")));
@@ -968,13 +963,13 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel23.setFont(timesNewRoman20);
         jLabel23.setText("Hasło");
 
-        txtLogin.addActionListener(this::txtLoginActionPerformed);
+        txtLogin.addActionListener(evt -> processLoginAction());
 
         loginButton.setIcon(new ImageIcon(getClass().getResource("/icons/Blue key.gif")));
         loginButton.setText("Zaloguj");
         loginButton.addActionListener(this::logowanieAction);
 
-        txtPassword.addActionListener(this::txtPasswordActionPerformed);
+        txtPassword.addActionListener(evt -> processLoginAction());
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -1058,7 +1053,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         searchUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
         searchUserButton.setText("Wyszukiwanie");
-        searchUserButton.addActionListener(this::searchUserButtonActionPerformed);
+        searchUserButton.addActionListener(evt -> processAdminSearch());
 
         myAdminPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
         myAdminPanelButton.setText("Mój panel");
@@ -1070,7 +1065,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         exitAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitAdminButton.setText("Wyjście");
-        exitAdminButton.addActionListener(this::exitAdminButtonActionPerformed);
+        exitAdminButton.addActionListener(evt -> exitCommonAction());
 
         javax.swing.GroupLayout leftPanel1Layout = new javax.swing.GroupLayout(leftPanel1);
         leftPanel1.setLayout(leftPanel1Layout);
@@ -1320,15 +1315,11 @@ public class SadCRMForm extends ApplicationWindow {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableUsers.setAutoResizeMode(AUTO_RESIZE_OFF);
         tableUsers.setPreferredSize(new Dimension(780, 100));
         tableUsers.getTableHeader().setResizingAllowed(false);
         tableUsers.getTableHeader().setReorderingAllowed(false);
-        tableUsers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableUsersMouseClicked(evt);
-            }
-        });
+        tableUsers.addMouseListener((MouseClickHandler) this::tableUsersMouseClicked);
         jScrollPane8.setViewportView(tableUsers);
 
         adminDetailsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
@@ -1460,7 +1451,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         searchClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
         searchClientByManagerButton.setText("Wyszukiwanie");
-        searchClientByManagerButton.addActionListener(this::searchClientByManagerButtonActionPerformed);
+        searchClientByManagerButton.addActionListener(evt -> processSearchClientsForManager());
 
         myManagerPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
         myManagerPanelButton.setText("Mój panel");
@@ -1472,7 +1463,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         exitManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
         exitManagerButton.setText("Wyjście");
-        exitManagerButton.addActionListener(this::exitManagerButtonActionPerformed);
+        exitManagerButton.addActionListener(evt -> exitCommonAction());
 
         javax.swing.GroupLayout leftManagerPanelLayout = new javax.swing.GroupLayout(leftManagerPanel);
         leftManagerPanel.setLayout(leftManagerPanelLayout);
@@ -1524,7 +1515,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         changeManagerPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
         changeManagerPassButton.setText("Zmiana hasła");
-        changeManagerPassButton.addActionListener(this::changeManagerPassButtonActionPerformed);
+        changeManagerPassButton.addActionListener(evt -> commonChangePassword());
 
         javax.swing.GroupLayout mainManagerPanelLayout = new javax.swing.GroupLayout(mainManagerPanel);
         mainManagerPanel.setLayout(mainManagerPanelLayout);
@@ -1605,15 +1596,11 @@ public class SadCRMForm extends ApplicationWindow {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        tableClientsForManager.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableClientsForManager.setAutoResizeMode(AUTO_RESIZE_OFF);
         tableClientsForManager.setPreferredSize(new Dimension(780, 100));
         tableClientsForManager.getTableHeader().setResizingAllowed(false);
         tableClientsForManager.getTableHeader().setReorderingAllowed(false);
-        tableClientsForManager.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableClientsForManagerMouseClicked(evt);
-            }
-        });
+        tableClientsForManager.addMouseListener((MouseClickHandler) this::tableClientsForManagerMouseClicked);
         jScrollPane9.setViewportView(tableClientsForManager);
 
         managerEditButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
@@ -1734,7 +1721,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         cancelClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
         cancelClientByManagerButton.setText("Anuluj");
-        cancelClientByManagerButton.addActionListener(this::cancelClientByManagerButtonanulujZapisKlientaAction);
+        cancelClientByManagerButton.addActionListener(evt -> processSearchClientsForManager());
 
         cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
         cbEditPersonalAcc.setText("Konto osobiste");
@@ -2729,26 +2716,23 @@ public class SadCRMForm extends ApplicationWindow {
             txtSendMultipleMail.setVisible(false);
             txtDetailsClientButton.setVisible(true);
             tableClients.setRowSelectionAllowed(true);
-            tableClients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tableClients.setSelectionMode(SINGLE_SELECTION);
 
-            List<Client> clients = ClientDAO.searchByUser(loggedUser);
-            TableUtil.displayClients(clients, tableClients);
+            TableUtil.displayClients(ClientDAO.searchByUser(loggedUser), tableClients);
         } else if (mail) {
             txtSendMultipleMail.setVisible(true);
             txtDetailsClientButton.setVisible(false);
             tableClients.setRowSelectionAllowed(true);
             tableClients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-            List<Client> clients = ClientDAO.searchHasMail();
-            TableUtil.displayClients(clients, tableClients);
+            TableUtil.displayClients(ClientDAO.searchHasMail(), tableClients);
         } else {
             txtSendMultipleMail.setVisible(false);
             txtDetailsClientButton.setVisible(true);
             tableClients.setRowSelectionAllowed(true);
-            tableClients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tableClients.setSelectionMode(SINGLE_SELECTION);
 
-            List<Client> clients = ClientDAO.searchClients();
-            TableUtil.displayClients(clients, tableClients);
+            TableUtil.displayClients(ClientDAO.searchClients(), tableClients);
         }
     }
 
@@ -2907,34 +2891,28 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientModification.setText(now());
     }
 
-    private void tableClientsMouseClicked(java.awt.event.MouseEvent evt) {
-        tableClients.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    if (mail) {
-                        // wysyłanie maila                        
-                        int[] rows = tableClients.getSelectedRows();
-                        List<String> receipents = new ArrayList<>();
-                        String receipts = "";
-                        for (int i = 0; i < rows.length; i++) {
-                            receipts = receipts + tableClients.getValueAt(i, 4) + "\n";
-                        }
-                        System.out.println(receipts);
-                        processMailPanel(receipts);
-                    } else {
-                        JTable target = (JTable) e.getSource();
-                        int row = target.getSelectedRow();
-
-                        editClientAction(row);
+    private void tableClientsMouseClicked(MouseEvent evt) {
+        tableClients.addMouseListener((MouseClickHandler) e -> {
+            if (e.getClickCount() == 2) {
+                if (mail) {
+                    // wysyłanie maila
+                    int[] rows = tableClients.getSelectedRows();
+                    List<String> receipents = new ArrayList<>();
+                    String receipts = "";
+                    for (int i = 0; i < rows.length; i++) {
+                        receipts = receipts + tableClients.getValueAt(i, 4) + "\n";
                     }
+                    System.out.println(receipts);
+                    processMailPanel(receipts);
+                } else {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
 
+                    editClientAction(row);
                 }
+
             }
         });
-    }
-
-    private void wyjscieAction(ActionEvent evt) {
-        exitCommonAction();
     }
 
     private void wyslijMailDoWszystkichAction(ActionEvent evt) {
@@ -2953,26 +2931,14 @@ public class SadCRMForm extends ApplicationWindow {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
-                0, INFORMATION_MESSAGE, null, options, null);
+                YES_NO_OPTION, INFORMATION_MESSAGE, null, new Object[]{"Tak", "Nie"}, null);
 
-        if (n == 0) {
+        if (n == YES_OPTION) {
             loggedUser = null;
             txtLogin.setText("");
             txtPassword.setText("");
             PanelsUtil.enablePanel(loginPanel, new JPanel[]{userPanel, adminPanel, managerPanel, addClientPanel, searchPanel, sendMailPanel, leftPanel, topPanel});
         }
-    }
-
-    private void exitUserAction(ActionEvent evt) {
-        exitCommonAction();
-    }
-
-    private void txtLoginActionPerformed(ActionEvent evt) {
-        processLoginAction();
-    }
-
-    private void txtPasswordActionPerformed(ActionEvent evt) {
-        processLoginAction();
     }
 
     private void adminSearchButtonActionPerformed(ActionEvent evt) {
@@ -2996,8 +2962,7 @@ public class SadCRMForm extends ApplicationWindow {
         txtAdminSearchName.setText("");
         txtAdminSearchSurname.setText("");
 
-        List<User> users = UserDAO.searchUsers();
-        TableUtil.displayUsers(users, tableUsers);
+        TableUtil.displayUsers(UserDAO.searchUsers(), tableUsers);
     }
 
     private void addUserButtonActionPerformed(ActionEvent evt) {
@@ -3081,9 +3046,9 @@ public class SadCRMForm extends ApplicationWindow {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
-                0, INFORMATION_MESSAGE, null, options, null);
+                0, INFORMATION_MESSAGE, null, new Object[]{"Tak", "Nie"}, null);
 
-        if (n == 0) {
+        if (n == JOptionPane.YES_OPTION) {
             loggedUser = null;
             txtLogin.setText("");
             txtPassword.setText("");
@@ -3099,16 +3064,12 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void searchUserButtonActionPerformed(ActionEvent evt) {
-        processAdminSearch();
-    }
-
     private void processAdminSearch() {
         //WYSZUKIWANIE NA PANELU ADMINA        
         PanelsUtil.enablePanel(searchUserPanel, new JPanel[]{addUserPanel, mainAdminPanel});
         selectedUser = null;
         tableUsers.setRowSelectionAllowed(true);
-        tableUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableUsers.setSelectionMode(SINGLE_SELECTION);
 
         List<User> users = UserDAO.searchUsers();
         TableUtil.displayUsers(users, tableUsers);
@@ -3148,11 +3109,7 @@ public class SadCRMForm extends ApplicationWindow {
         PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{addUserPanel, searchUserPanel});
     }
 
-    private void exitAdminButtonActionPerformed(ActionEvent evt) {
-        exitCommonAction();
-    }
-
-    private void tableUsersMouseClicked(java.awt.event.MouseEvent evt) {
+    private void tableUsersMouseClicked(MouseEvent evt) {
         tableUsers.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3203,20 +3160,12 @@ public class SadCRMForm extends ApplicationWindow {
         jDialog1.dispose();
     }
 
-    private void zmienHasloUzytkAction(ActionEvent evt) {
-        commonChangePassword();
-    }
-
-    private void searchClientByManagerButtonActionPerformed(ActionEvent evt) {
-        processSearchClientsForManager();
-    }
-
     private void processSearchClientsForManager() {
         //WYSZUKIWANIE NA PANELU MANAGERA        
         PanelsUtil.enablePanel(searchUserByManagerPanel, new JPanel[]{editUserByManagerPanel, mainManagerPanel, reportsByManagerPanel});
         selectedUser = null;
         tableClientsForManager.setRowSelectionAllowed(true);
-        tableClientsForManager.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableClientsForManager.setSelectionMode(SINGLE_SELECTION);
 
         List<Client> clients = ClientDAO.searchClients();
         TableUtil.displayClients(clients, tableClientsForManager);
@@ -3230,9 +3179,9 @@ public class SadCRMForm extends ApplicationWindow {
         int n = showOptionDialog(this,
                 "Czy napewno chcesz się wylogować z programu?",
                 "Wyjście",
-                0, INFORMATION_MESSAGE, null, options, null);
+                YES_NO_OPTION, INFORMATION_MESSAGE, null, new Object[]{"Tak", "Nie"}, null);
 
-        if (n == 0) {
+        if (n == YES_OPTION) {
             loggedUser = null;
             txtLogin.setText("");
             txtPassword.setText("");
@@ -3240,24 +3189,15 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void exitManagerButtonActionPerformed(ActionEvent evt) {
-        exitCommonAction();
-    }
-
     private void exitCommonAction() {
-        // wyjście             
         int n = showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
-                0, INFORMATION_MESSAGE, null, options, null);
+                YES_NO_OPTION, INFORMATION_MESSAGE, null, new Object[]{"Tak", "Nie"}, null);
 
-        if (n == 0) {
+        if (n == YES_OPTION) {
             System.exit(1);
         }
-    }
-
-    private void changeManagerPassButtonActionPerformed(ActionEvent evt) {
-        commonChangePassword();
     }
 
     private void managerSearchButtonActionPerformed(ActionEvent evt) {
@@ -3285,7 +3225,7 @@ public class SadCRMForm extends ApplicationWindow {
         TableUtil.displayClients(clients, tableClientsForManager);
     }
 
-    private void tableClientsForManagerMouseClicked(java.awt.event.MouseEvent evt) {
+    private void tableClientsForManagerMouseClicked(MouseEvent evt) {
         tableClientsForManager.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3394,10 +3334,10 @@ public class SadCRMForm extends ApplicationWindow {
 
         String sellChan = selectedClient.getSellChance();
         if (sellChan == null && cbEditChance.getSelectedIndex() != 0) {
-            selectedClient.setSellChance(cbEditChance.getSelectedItem().toString());
+            selectedClient.setSellChance(cbEditChance.getSelectedItem());
             isEdited = true;
-        } else if (sellChan != null && !sellChan.equalsIgnoreCase(cbEditChance.getSelectedItem().toString())) {
-            selectedClient.setSellChance(cbEditChance.getSelectedItem().toString());
+        } else if (sellChan != null && !sellChan.equalsIgnoreCase(cbEditChance.getSelectedItem())) {
+            selectedClient.setSellChance(cbEditChance.getSelectedItem());
             isEdited = true;
         }
 
@@ -3449,10 +3389,6 @@ public class SadCRMForm extends ApplicationWindow {
             showMessageDialog(this, "Nic nie edytowano.", "Edycja klienta", INFORMATION_MESSAGE);
             processSearchClientsForManager();
         }
-    }
-
-    private void cancelClientByManagerButtonanulujZapisKlientaAction(ActionEvent evt) {
-        processSearchClientsForManager();
     }
 
     private void editClientTelActionPerformed(ActionEvent evt) {
@@ -3530,15 +3466,13 @@ public class SadCRMForm extends ApplicationWindow {
         jDialog2.setAlwaysOnTop(true);
     }
 
-    private void usersForManagerTableMouseClicked(java.awt.event.MouseEvent evt) {
-        usersForManagerTable.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    if (isReport) {
-                        processUserRaports();
-                    } else {
-                        processSelectedCreator();
-                    }
+    private void usersForManagerTableMouseClicked(MouseEvent evt) {
+        usersForManagerTable.addMouseListener((MouseClickHandler) e -> {
+            if (e.getClickCount() == 2) {
+                if (isReport) {
+                    processUserRaports();
+                } else {
+                    processSelectedCreator();
                 }
             }
         });
@@ -3667,31 +3601,18 @@ public class SadCRMForm extends ApplicationWindow {
             if (ValidationUtil.validatePassword(txtAddUserPassword1.getText())) {
                 if (ValidationUtil.validateNotEqual(txtAddUserPassword2.getText(), txtAddUserPassword1.getText())) {
                     return true;
-                } else {
-                    showMessageDialog(this,
-                            "Hasła muszę być takie same",
-                            "Błąd dodawania użytkownika",
-                            ERROR_MESSAGE);
-
-                    return false;
                 }
-            } else {
-                showMessageDialog(this,
-                        "Hasła musi posiadadać od 4 do 10 znaków.",
-                        "Błąd dodawania użytkownika",
-                        ERROR_MESSAGE);
-
+                showMessageDialog(this, "Hasła muszę być takie same",
+                        "Błąd dodawania użytkownika", ERROR_MESSAGE);
                 return false;
+
             }
-
-        } else {
-            showMessageDialog(this,
-                    result,
-                    "Błąd dodawania użytkownika",
-                    ERROR_MESSAGE);
-
+            showMessageDialog(this, "Hasła musi posiadadać od 4 do 10 znaków.",
+                    "Błąd dodawania użytkownika", ERROR_MESSAGE);
             return false;
         }
+        showMessageDialog(this, result, "Błąd dodawania użytkownika", ERROR_MESSAGE);
+        return false;
     }
 
     private void processMailPanel(String r) {
@@ -3826,12 +3747,29 @@ public class SadCRMForm extends ApplicationWindow {
         txtUserType.setText(loggedUser.getType().getTitle());
     }
 
-    private JButton addClientButton = new JButton();
     private JPanel addClientPanel = new JPanel();
-    private JButton addUserButton = new JButton();
     private JPanel addUserPanel = new JPanel();
-    private JButton adminDetailsButton = new JButton();
     private JPanel adminPanel = new JPanel();
+    private JPanel editUserByManagerPanel = new JPanel();
+    private JPanel leftManagerPanel = new JPanel();
+    private JPanel leftPanel = new JPanel();
+    private JPanel leftPanel1 = new JPanel();
+    private JPanel loginPanel = new JPanel();
+    private JPanel mainAdminPanel = new JPanel();
+    private JPanel mainManagerPanel = new JPanel();
+    private JPanel mainUserPanel = new JPanel();
+    private JPanel managerPanel = new JPanel();
+    private JPanel searchPanel = new JPanel();
+    private JPanel searchUserByManagerPanel = new JPanel();
+    private JPanel searchUserPanel = new JPanel();
+    private JPanel sendMailPanel = new JPanel();
+    private JPanel topManagerPanel = new JPanel();
+    private JPanel topPanel = new JPanel();
+    private JPanel topPanel1 = new JPanel();
+    private JPanel userPanel = new JPanel();
+    private JButton addClientButton = new JButton();
+    private JButton addUserButton = new JButton();
+    private JButton adminDetailsButton = new JButton();
     private JButton adminResetButton = new JButton();
     private JButton adminSearchButton = new JButton();
     private JButton cancelChangePasswordButton = new JButton();
@@ -3879,7 +3817,6 @@ public class SadCRMForm extends ApplicationWindow {
     private JCheckBox editClientTel = new JCheckBox();
     private JTextField editClientTelDate = new JTextField();
     private JCheckBox editClientVip = new JCheckBox();
-    private JPanel editUserByManagerPanel = new JPanel();
     private JButton exitAdminButton = new JButton();
     private JButton exitButton = new JButton();
     private JButton exitManagerButton = new JButton();
@@ -3987,21 +3924,13 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel lab1 = new JLabel();
     private JLabel labelClientModDate = new JLabel();
     private JLabel labelClientModDate1 = new JLabel();
-    private JPanel leftManagerPanel = new JPanel();
-    private JPanel leftPanel = new JPanel();
-    private JPanel leftPanel1 = new JPanel();
     private JButton loginButton = new JButton();
-    private JPanel loginPanel = new JPanel();
     private JButton logoutAdminButton = new JButton();
     private JButton logoutButton = new JButton();
     private JButton logoutManagerButton = new JButton();
     private JButton mailButton = new JButton();
     private JButton mailMergeButton = new JButton();
-    private JPanel mainAdminPanel = new JPanel();
-    private JPanel mainManagerPanel = new JPanel();
-    private JPanel mainUserPanel = new JPanel();
     private JButton managerEditButton = new JButton();
-    private JPanel managerPanel = new JPanel();
     private JButton managerResetButton = new JButton();
     private JButton managerSearchButton = new JButton();
     private JButton myAdminPanelButton = new JButton();
@@ -4016,21 +3945,14 @@ public class SadCRMForm extends ApplicationWindow {
     private JButton saveUserButton = new JButton();
     private JButton searchButton = new JButton();
     private JButton searchClientByManagerButton = new JButton();
-    private JPanel searchPanel = new JPanel();
     private JButton searchSearchButton = new JButton();
     private JButton searchUserButton = new JButton();
-    private JPanel searchUserByManagerPanel = new JPanel();
-    private JPanel searchUserPanel = new JPanel();
     private JButton selectUserButton = new JButton();
     private JButton sendMailButton = new JButton();
-    private JPanel sendMailPanel = new JPanel();
     private JButton sendOneMailButton = new JButton();
     private JTable tableClients = new JTable();
     private JTable tableClientsForManager = new JTable();
     private JTable tableUsers = new JTable();
-    private JPanel topManagerPanel = new JPanel();
-    private JPanel topPanel = new JPanel();
-    private JPanel topPanel1 = new JPanel();
     private JTextField txtAddUserLogin = new JTextField();
     private JTextField txtAddUserName = new JTextField();
     private JPasswordField txtAddUserPassword1 = new JPasswordField();
@@ -4083,6 +4005,5 @@ public class SadCRMForm extends ApplicationWindow {
     private JTextField txtUserReport = new JTextField();
     private JTextField txtUserSurname = new JTextField();
     private JTextField txtUserType = new JTextField();
-    private JPanel userPanel = new JPanel();
     private JTable usersForManagerTable = new JTable();
 }
