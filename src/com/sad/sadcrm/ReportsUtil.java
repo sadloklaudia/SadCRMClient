@@ -44,10 +44,15 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-
-            HSSFWorkbook workbook = createWorkbookForAllClients(ClientDAO.searchClients());
-            exportWorkbookToFile(workbook, getSelectedXlsFile());
+            exportClientsToFile(ClientDAO.searchClients());
         }
+    }
+
+    private static void exportClientsToFile(List<Client> clients) {
+        exportWorkbookToFile(
+                createWorkbookForAllClients(clients),
+                getSelectedXlsFile()
+        );
     }
 
     private static File getSelectedXlsFile() {
@@ -77,11 +82,7 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-
-            List<Client> allClients = ClientDAO.searchByUser(user);
-            HSSFWorkbook hwb = createWorkbookForAllClients(allClients);
-
-            exportWorkbookToFile(hwb, getSelectedXlsFile());
+            exportClientsToFile(ClientDAO.searchByUser(user));
         }
     }
 
@@ -89,11 +90,8 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-
             String n = now.substring(0, 11);
-            HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.searchByCreateDate(n));
-
-            exportWorkbookToFile(hwb, getSelectedXlsFile());
+            exportClientsToFile(ClientDAO.searchByCreateDate(n));
         }
     }
 
