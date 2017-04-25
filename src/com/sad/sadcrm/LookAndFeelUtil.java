@@ -9,7 +9,7 @@ import static java.util.logging.Logger.getLogger;
 import static javax.swing.UIManager.getInstalledLookAndFeels;
 import static javax.swing.UIManager.setLookAndFeel;
 
-class LookAndFellUtil {
+class LookAndFeelUtil {
     static void setLookAndFeelIfExists(String lookAndFeelName) {
         try {
             for (UIManager.LookAndFeelInfo info : getInstalledLookAndFeels()) {

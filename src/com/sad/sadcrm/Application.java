@@ -2,7 +2,7 @@ package com.sad.sadcrm;
 
 import com.sad.sadcrm.form.SadCRMForm;
 
-import static com.sad.sadcrm.LookAndFellUtil.setLookAndFeelIfExists;
+import static com.sad.sadcrm.LookAndFeelUtil.setLookAndFeelIfExists;
 import static java.awt.EventQueue.invokeLater;
 import static java.lang.Thread.setDefaultUncaughtExceptionHandler;
 
