@@ -8,7 +8,6 @@ import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.Columns;
 import net.sf.dynamicreports.report.builder.component.Components;
-import net.sf.dynamicreports.report.builder.datatype.DataTypes;
 import net.sf.dynamicreports.report.builder.group.CustomGroupBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.GroupHeaderLayout;
@@ -28,6 +27,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.grp;
@@ -40,82 +41,64 @@ public class ReportsUtil {
     private static FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xls");
 
     public static void exportAll() {
-        try {
-            System.out.println("EXPORT ALL");
-
-            fileChooser.setFileFilter(filter);
-            int userSelection = fileChooser.showSaveDialog(null);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                    fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-                }
-
-                HSSFWorkbook workbook = createWorkbookForAllClients(ClientDAO.searchClients());
-
-                FileOutputStream fileOutput = new FileOutputStream(fileToSave);
-                workbook.write(fileOutput);
-                fileOutput.close();
-                JOptionPane.showMessageDialog(null,
-                        "Raport został wygenerowany.",
-                        "Raport",
-                        JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Report generated!");
+        fileChooser.setFileFilter(filter);
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
+                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+
+            HSSFWorkbook workbook = createWorkbookForAllClients(ClientDAO.searchClients());
+
+            exportWorkbookToFile(workbook, fileToSave);
+        }
+    }
+
+    private static void exportWorkbookToFile(HSSFWorkbook workbook, File fileToSave) {
+        try {
+            OutputStream fileStream = new FileOutputStream(fileToSave);
+            workbook.write(fileStream);
+            fileStream.close();
+
+            JOptionPane.showMessageDialog(null,
+                    "Raport został wygenerowany.",
+                    "Raport",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
     public static void exportMy(User user) {
-        try {
-            System.out.println("EXPORT ALL");
-
-            fileChooser.setFileFilter(filter);
-            int userSelection = fileChooser.showSaveDialog(null);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                    fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-                }
-
-                List<Client> allClients = ClientDAO.searchByUser(user);
-                HSSFWorkbook hwb = createWorkbookForAllClients(allClients);
-
-                FileOutputStream fileOutput = new FileOutputStream(fileToSave);
-                hwb.write(fileOutput);
-                fileOutput.close();
-                JOptionPane.showMessageDialog(null,
-                        "Raport został wygenerowany.",
-                        "Raport",
-                        JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Report generated!");
+        fileChooser.setFileFilter(filter);
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
+                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+
+            List<Client> allClients = ClientDAO.searchByUser(user);
+            HSSFWorkbook hwb = createWorkbookForAllClients(allClients);
+
+            exportWorkbookToFile(hwb, fileToSave);
         }
     }
 
     public static void exportTodays(String now) {
-        try {
-            fileChooser.setFileFilter(filter);
-            int userSelection = fileChooser.showSaveDialog(null);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                    fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-                }
-
-                String n = now.substring(0, 11);
-                HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.searchByCreateDate(n));
-
-                FileOutputStream fileOutput = new FileOutputStream(fileToSave);
-                hwb.write(fileOutput);
-                fileOutput.close();
-                JOptionPane.showMessageDialog(null, "Raport został wygenerowany.", "Raport", JOptionPane.INFORMATION_MESSAGE);
+        fileChooser.setFileFilter(filter);
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
+                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+
+            String n = now.substring(0, 11);
+            HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.searchByCreateDate(n));
+
+            exportWorkbookToFile(hwb, fileToSave);
         }
     }
 
@@ -330,17 +313,17 @@ public class ReportsUtil {
 
     private static JRDataSource createUserReport(List<Client> clients) {
         DRDataSource dataSource = new DRDataSource("owner", "client", "vip", "chance", "products", "pesel", "mail", "tel");
-        for (Client c : clients) {
-            User user = c.getUser();
+        for (Client client : clients) {
+            User user = client.getUser();
             dataSource.add(
                     user.getName() + " " + user.getSurname(),
-                    c.getName() + " " + c.getSurname(),
-                    c.getVip(),
-                    c.getSellChance(),
-                    c.getProducts(),
-                    c.getPesel(),
-                    c.getMail(),
-                    c.getTelDate()
+                    client.getName() + " " + client.getSurname(),
+                    client.getVip(),
+                    client.getSellChance(),
+                    client.getProducts(),
+                    client.getPesel(),
+                    client.getMail(),
+                    client.getTelDate()
             );
         }
         return dataSource;
