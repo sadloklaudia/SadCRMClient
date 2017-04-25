@@ -44,15 +44,18 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-            }
 
             HSSFWorkbook workbook = createWorkbookForAllClients(ClientDAO.searchClients());
-
-            exportWorkbookToFile(workbook, fileToSave);
+            exportWorkbookToFile(workbook, getSelectedXlsFile());
         }
+    }
+
+    private static File getSelectedXlsFile() {
+        File selectedFile = fileChooser.getSelectedFile();
+        if (selectedFile.getAbsolutePath().endsWith(".xls")) {
+            return selectedFile;
+        }
+        return new File(fileChooser.getSelectedFile() + ".xls");
     }
 
     private static void exportWorkbookToFile(HSSFWorkbook workbook, File fileToSave) {
@@ -74,15 +77,11 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-            }
 
             List<Client> allClients = ClientDAO.searchByUser(user);
             HSSFWorkbook hwb = createWorkbookForAllClients(allClients);
 
-            exportWorkbookToFile(hwb, fileToSave);
+            exportWorkbookToFile(hwb, getSelectedXlsFile());
         }
     }
 
@@ -90,15 +89,11 @@ public class ReportsUtil {
         fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            if (!fileToSave.getAbsolutePath().endsWith(".xls")) {
-                fileToSave = new File(fileChooser.getSelectedFile() + ".xls");
-            }
 
             String n = now.substring(0, 11);
             HSSFWorkbook hwb = createWorkbookForAllClients(ClientDAO.searchByCreateDate(n));
 
-            exportWorkbookToFile(hwb, fileToSave);
+            exportWorkbookToFile(hwb, getSelectedXlsFile());
         }
     }
 
