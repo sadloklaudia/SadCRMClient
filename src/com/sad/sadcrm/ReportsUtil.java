@@ -95,24 +95,11 @@ public class ReportsUtil {
         }
     }
 
-    private static void setSheetHeader(HSSFRow rowHead) {
-        rowHead.createCell(0).setCellValue("Id");
-        rowHead.createCell(1).setCellValue("Imię");
-        rowHead.createCell(2).setCellValue("Nazwisko");
-        rowHead.createCell(3).setCellValue("Pesel");
-        rowHead.createCell(4).setCellValue("Nr telefonu 1");
-        rowHead.createCell(5).setCellValue("Nr telefonu 2");
-        rowHead.createCell(6).setCellValue("Ulica");
-        rowHead.createCell(7).setCellValue("Nr");
-        rowHead.createCell(8).setCellValue("Miasto");
-        rowHead.createCell(9).setCellValue("Kod pocztowy");
-        rowHead.createCell(10).setCellValue("Mail");
-        rowHead.createCell(11).setCellValue("Produkty");
-        rowHead.createCell(12).setCellValue("Szansa sprzedaży");
-        rowHead.createCell(13).setCellValue("Uwagi");
-        rowHead.createCell(14).setCellValue("VIP");
-        rowHead.createCell(15).setCellValue("Data utworzenia");
-        rowHead.createCell(16).setCellValue("Utworzony przez");
+    private static HSSFWorkbook createWorkbookForAllClients(List<Client> allClients) {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        createSheet(workbook.createSheet("new sheet"), allClients);
+        createSheetHeader(workbook.createSheet("new sheet").createRow(0));
+        return workbook;
     }
 
     private static void createSheet(HSSFSheet sheet, List<Client> clients) {
@@ -141,34 +128,28 @@ public class ReportsUtil {
         }
     }
 
-    private static HSSFWorkbook createWorkbookForAllClients(List<Client> allClients) {
-        HSSFWorkbook hwb = new HSSFWorkbook();
-        HSSFSheet sheet = hwb.createSheet("new sheet");
-        createSheet(sheet, allClients);
-        HSSFRow rowHead = sheet.createRow(0);
-        setSheetHeader(rowHead);
-        return hwb;
+    private static void createSheetHeader(HSSFRow rowHead) {
+        rowHead.createCell(0).setCellValue("Id");
+        rowHead.createCell(1).setCellValue("Imię");
+        rowHead.createCell(2).setCellValue("Nazwisko");
+        rowHead.createCell(3).setCellValue("Pesel");
+        rowHead.createCell(4).setCellValue("Nr telefonu 1");
+        rowHead.createCell(5).setCellValue("Nr telefonu 2");
+        rowHead.createCell(6).setCellValue("Ulica");
+        rowHead.createCell(7).setCellValue("Nr");
+        rowHead.createCell(8).setCellValue("Miasto");
+        rowHead.createCell(9).setCellValue("Kod pocztowy");
+        rowHead.createCell(10).setCellValue("Mail");
+        rowHead.createCell(11).setCellValue("Produkty");
+        rowHead.createCell(12).setCellValue("Szansa sprzedaży");
+        rowHead.createCell(13).setCellValue("Uwagi");
+        rowHead.createCell(14).setCellValue("VIP");
+        rowHead.createCell(15).setCellValue("Data utworzenia");
+        rowHead.createCell(16).setCellValue("Utworzony przez");
     }
 
-    public void createTelephonesReport(int choose) {
-        int day = 100;
-        switch (choose) {
-            case 0:
-                day = 1;
-                break;
-            case 1:
-                day = 3;
-                break;
-            case 2:
-                day = 7;
-                break;
-            case 3:
-                day = 30;
-                break;
-            case 4:
-                day = 90;
-                break;
-        }
+    public static void createTelephonesReport(int choose) {
+        int day = getDayInterval(choose);
 
         StyleBuilder boldStyle = stl.style().bold();
         StyleBuilder boldCenteredStyle = stl.style(boldStyle)
@@ -197,12 +178,29 @@ public class ReportsUtil {
 
         try {
             showTheReport(report);
-        } catch (DRException e) {
-            e.printStackTrace();
+        } catch (DRException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
-    private void showTheReport(JasperReportBuilder report) throws DRException {
+    private static int getDayInterval(int choose) {
+        switch (choose) {
+            case 0:
+                return 1;
+            case 1:
+                return 3;
+            case 2:
+                return 7;
+            case 3:
+                return 30;
+            case 4:
+                return 90;
+            default:
+                return 100;
+        }
+    }
+
+    private static void showTheReport(JasperReportBuilder report) throws DRException {
         JasperPrint reportPrint = report.toJasperPrint();
         if (reportPrint.getPages().isEmpty()) {
             new JasperViewer(reportPrint, false);
@@ -213,7 +211,7 @@ public class ReportsUtil {
         }
     }
 
-    public void createSellChanceReport() {
+    public static void createSellChanceReport() {
         StyleBuilder boldStyle = stl.style().bold();
         StyleBuilder boldCenteredStyle = stl.style(boldStyle)
                 .setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -242,8 +240,8 @@ public class ReportsUtil {
 
         try {
             showTheReport(report);
-        } catch (DRException e) {
-            e.printStackTrace();
+        } catch (DRException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
@@ -281,15 +279,21 @@ public class ReportsUtil {
 
         try {
             showTheReport(report);
-        } catch (DRException e) {
-            e.printStackTrace();
+        } catch (DRException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
     private static JRDataSource createDataSourceForTelephones(List<Client> clients) {
         DRDataSource dataSource = new DRDataSource("client", "vip", "chance", "contactDate", "owner");
-        for (Client c : clients) {
-            dataSource.add(c.getName() + " " + c.getSurname(), c.getVip(), c.getSellChance(), c.getTelDate(), c.getUser().getName() + " " + c.getUser().getSurname());
+        for (Client client : clients) {
+            dataSource.add(
+                    client.getName() + " " + client.getSurname(),
+                    client.getVip(),
+                    client.getSellChance(),
+                    client.getTelDate(),
+                    client.getUser().getName() + " " + client.getUser().getSurname()
+            );
         }
 
         return dataSource;
@@ -297,8 +301,16 @@ public class ReportsUtil {
 
     private static JRDataSource createDataSourceForSellChance(List<Client> clients) {
         DRDataSource dataSource = new DRDataSource("client", "vip", "chance", "tel1", "tel2", "owner");
-        for (Client c : clients) {
-            dataSource.add(c.getName() + " " + c.getSurname(), c.getVip(), c.getSellChance(), c.getPhone1(), c.getPhone2(), c.getUser().getName() + " " + c.getUser().getSurname());
+        for (Client client : clients) {
+            User owner = client.getUser();
+            dataSource.add(
+                    client.getName() + " " + client.getSurname(),
+                    client.getVip(),
+                    client.getSellChance(),
+                    client.getPhone1(),
+                    client.getPhone2(),
+                    owner.getName() + " " + owner.getSurname()
+            );
         }
 
         return dataSource;
@@ -307,9 +319,9 @@ public class ReportsUtil {
     private static JRDataSource createUserReport(List<Client> clients) {
         DRDataSource dataSource = new DRDataSource("owner", "client", "vip", "chance", "products", "pesel", "mail", "tel");
         for (Client client : clients) {
-            User user = client.getUser();
+            User owner = client.getUser();
             dataSource.add(
-                    user.getName() + " " + user.getSurname(),
+                    owner.getName() + " " + owner.getSurname(),
                     client.getName() + " " + client.getSurname(),
                     client.getVip(),
                     client.getSellChance(),
@@ -322,7 +334,7 @@ public class ReportsUtil {
         return dataSource;
     }
 
-    private class OwnerExpression extends AbstractSimpleExpression<String> {
+    private static class OwnerExpression extends AbstractSimpleExpression<String> {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -331,7 +343,7 @@ public class ReportsUtil {
         }
     }
 
-    private class SellChanceExpression extends AbstractSimpleExpression<String> {
+    private static class SellChanceExpression extends AbstractSimpleExpression<String> {
         private static final long serialVersionUID = 1L;
 
         @Override

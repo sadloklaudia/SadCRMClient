@@ -16,6 +16,11 @@ public class Parameters {
         return this;
     }
 
+    public Parameters add(String key, int value) {
+        paramString += '&' + key + '=' + value;
+        return this;
+    }
+
     String getParamString() {
         return paramString;
     }

@@ -16,7 +16,7 @@ public class Address implements java.io.Serializable {
     public Address() {
     }
 
-    public Address(int id, String street, String number, String city, String postCode) {
+    private Address(int id, String street, String number, String city, String postCode) {
         this.id = id;
         this.street = street;
         this.number = number;
@@ -24,7 +24,7 @@ public class Address implements java.io.Serializable {
         this.postCode = postCode;
     }
 
-    public int getId() {
+    int getId() {
         return this.id;
     }
 
@@ -66,7 +66,7 @@ public class Address implements java.io.Serializable {
 
     public Parameters asParameters() {
         return getCredentials()
-                .add("id", id + "")
+                .add("id", id)
                 .add("street", street)
                 .add("number", number)
                 .add("city", city)

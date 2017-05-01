@@ -102,7 +102,7 @@ public class User implements java.io.Serializable {
                 user.getInt("id"),
                 user.getString("name"),
                 user.getString("surname"),
-                UserType.valueOf(user.getString("type")),
+                UserType.fromTitle(user.getString("type")),
                 user.getString("login"),
                 "",
                 user.getString("created")
@@ -111,7 +111,7 @@ public class User implements java.io.Serializable {
 
     public Parameters asParameters() {
         return getCredentials()
-                .add("id", id + "")
+                .add("id", id)
                 .add("name", name)
                 .add("surname", surname)
                 .add("type", type.toString())

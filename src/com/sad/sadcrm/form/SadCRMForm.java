@@ -12,6 +12,8 @@ import com.sad.sadcrm.model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -90,26 +92,26 @@ public class SadCRMForm extends ApplicationWindow {
         exportAdminDataMenu.setLocation(point.x, point.y + source.getHeight());
     }
 
-    private void showPopupUser(ActionEvent ae) {
-        Component b = (Component) ae.getSource();
-        Point p = b.getLocationOnScreen();
+    private void showPopupUser(ActionEvent actionEvent) {
+        Component component = (Component) actionEvent.getSource();
+        Point point = component.getLocationOnScreen();
         exportUserDataMenu.show(this, 0, 0);
-        exportUserDataMenu.setLocation(p.x, p.y + b.getHeight());
+        exportUserDataMenu.setLocation(point.x, point.y + component.getHeight());
     }
 
     private void initComponents() {
-        changePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif")));
+        changePasswordButton.setIcon(icon("/icons/Apply.gif"));
         changePasswordButton.setText("OK");
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
 
-        cancelChangePasswordButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        cancelChangePasswordButton.setIcon(icon("/icons/Cancel.gif"));
         cancelChangePasswordButton.setText("Anuluj");
         cancelChangePasswordButton.addActionListener(this::cancelChangePasswordButtonActionPerformed);
 
         jLabel46.setText("Hasło:");
         jLabel47.setText("Powtórz hasło");
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        GroupLayout jDialog1Layout = new GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
         jDialog1Layout.setHorizontalGroup(
                 jDialog1Layout.createParallelGroup(LEADING)
@@ -128,7 +130,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                 .addPreferredGap(RELATED)
                                                 .addGroup(jDialog1Layout.createParallelGroup(LEADING, false)
                                                         .addComponent(txtChangePass1)
-                                                        .addComponent(txtChangePass2, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))))
+                                                        .addComponent(txtChangePass2, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))))
                                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jDialog1Layout.setVerticalGroup(
@@ -137,13 +139,13 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGap(47, 47, 47)
                                 .addGroup(jDialog1Layout.createParallelGroup(TRAILING)
                                         .addComponent(jLabel46)
-                                        .addComponent(txtChangePass1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtChangePass1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jDialog1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel47)
-                                        .addComponent(txtChangePass2, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtChangePass2, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jDialog1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(changePasswordButton)
                                         .addComponent(cancelChangePasswordButton))
                                 .addContainerGap(43, Short.MAX_VALUE))
@@ -169,22 +171,18 @@ public class SadCRMForm extends ApplicationWindow {
         usersForManagerTable.setMinimumSize(new Dimension(376, 72));
         usersForManagerTable.setPreferredSize(new Dimension(376, 72));
         usersForManagerTable.setSelectionMode(SINGLE_SELECTION);
-        usersForManagerTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                usersForManagerTableMouseClicked(evt);
-            }
-        });
+        usersForManagerTable.addMouseListener((MouseClickHandler) this::usersForManagerTableMouseClicked);
         jScrollPane3.setViewportView(usersForManagerTable);
 
-        jButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Apply.gif")));
+        jButton2.setIcon(icon("/icons/Apply.gif"));
         jButton2.setText("Wybierz");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        jButton3.setIcon(icon("/icons/Cancel.gif"));
         jButton3.setText("Zamknij");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        GroupLayout jDialog2Layout = new GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
         jDialog2Layout.setHorizontalGroup(
                 jDialog2Layout.createParallelGroup(LEADING)
@@ -207,7 +205,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addPreferredGap(RELATED)
                                 .addComponent(jScrollPane3, PREFERRED_SIZE, 289, PREFERRED_SIZE)
                                 .addPreferredGap(RELATED, 53, Short.MAX_VALUE)
-                                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jDialog2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButton2)
                                         .addComponent(jButton3))
                                 .addContainerGap())
@@ -217,22 +215,22 @@ public class SadCRMForm extends ApplicationWindow {
         setResizable(true);
 
         userPanel.setBackground(lightGray);
-        userPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        userPanel.setBorder(createLineBorder(new Color(0, 0, 0)));
         userPanel.setPreferredSize(new Dimension(1000, 800));
 
         topPanel.setBackground(lightGray);
         topPanel.setBorder(createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        topPanel.setForeground(new java.awt.Color(238, 9, 9));
+        topPanel.setForeground(new Color(238, 9, 9));
         topPanel.setPreferredSize(new Dimension(1000, 50));
 
-        mailButton.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif")));
+        mailButton.setIcon(icon("/icons/E-mail.gif"));
         mailButton.setText("Wyślij wiadomość");
         mailButton.addActionListener(this::wyslijMailAction);
 
-        exportUserDataButton.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
+        exportUserDataButton.setIcon(icon("/icons/Upload.gif"));
         exportUserDataButton.setText("Eksport danych");
 
-        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        GroupLayout topPanelLayout = new GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
                 topPanelLayout.createParallelGroup(LEADING)
@@ -247,7 +245,7 @@ public class SadCRMForm extends ApplicationWindow {
                 topPanelLayout.createParallelGroup(LEADING)
                         .addGroup(topPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(topPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(mailButton)
                                         .addComponent(exportUserDataButton))
                                 .addContainerGap(16, Short.MAX_VALUE))
@@ -258,45 +256,46 @@ public class SadCRMForm extends ApplicationWindow {
         leftPanel.setOpaque(false);
         leftPanel.setPreferredSize(new Dimension(200, 750));
 
-        addClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif")));
+        addClientButton.setIcon(icon("/icons/Create.gif"));
         addClientButton.setText("Dodaj klienta");
         addClientButton.addActionListener(this::dodajKlientaAction);
 
-        searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
+        searchButton.setIcon(icon("/icons/Find.gif"));
         searchButton.setText("Wyszukiwanie");
         searchButton.addActionListener(this::wyszukiwanieAction);
 
-        mailMergeButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif")));
+        mailMergeButton.setIcon(icon("/icons/Mail.gif"));
         mailMergeButton.setText("Korespondencja seryjna");
         mailMergeButton.addActionListener(this::korespondencjaSeryjnaAction);
 
-        myContactsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Address book.gif")));
+        myContactsButton.setIcon(icon("/icons/Address book.gif"));
         myContactsButton.setText("Tylko moje kontakty");
         myContactsButton.addActionListener(this::mojeKontaktyAction);
 
-        myPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
+        String iconName = "/icons/Info.gif";
+        myPanelButton.setIcon(icon(iconName));
         myPanelButton.setText("Mój panel");
         myPanelButton.addActionListener(this::mojPanelAction);
 
-        logoutButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
+        logoutButton.setIcon(icon("/icons/Exit.gif"));
         logoutButton.setText("Wyloguj");
-        logoutButton.addActionListener(evt3 -> logoutMessageBox());
+        logoutButton.addActionListener(event -> logoutMessageBox());
 
-        exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
+        exitButton.setIcon(icon("/icons/Turn off.gif"));
         exitButton.setText("Wyjście");
-        exitButton.addActionListener(evt1 -> exitCommonAction());
+        exitButton.addActionListener(event -> exitCommonAction());
 
-        javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
+        GroupLayout leftPanelLayout = new GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
                 leftPanelLayout.createParallelGroup(LEADING)
-                        .addComponent(addClientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mailMergeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(myContactsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(myPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addClientButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mailMergeButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myContactsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myPanelButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoutButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
                 leftPanelLayout.createParallelGroup(LEADING)
@@ -317,7 +316,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGap(0, 500, Short.MAX_VALUE))
         );
 
-        mainUserPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        mainUserPanel.setBorder(createLineBorder(new Color(0, 0, 0)));
         mainUserPanel.setPreferredSize(new Dimension(800, 750));
 
         Font timesNewRomanBold24 = new Font("Times New Roman,", BOLD, 24);
@@ -344,11 +343,11 @@ public class SadCRMForm extends ApplicationWindow {
         txtUserLogin.setEditable(false);
         txtUserType.setEditable(false);
 
-        jButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        jButton1.setIcon(icon("/icons/Repair.gif"));
         jButton1.setText("Zmień hasło");
-        jButton1.addActionListener(evt1 -> commonChangePassword());
+        jButton1.addActionListener(event -> commonChangePassword());
 
-        javax.swing.GroupLayout mainUserPanelLayout = new javax.swing.GroupLayout(mainUserPanel);
+        GroupLayout mainUserPanelLayout = new GroupLayout(mainUserPanel);
         mainUserPanel.setLayout(mainUserPanelLayout);
         mainUserPanelLayout.setHorizontalGroup(
                 mainUserPanelLayout.createParallelGroup(LEADING)
@@ -377,21 +376,21 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addGap(30, 30, 30)
-                                .addGroup(mainUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel25)
-                                        .addComponent(txtUserName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtUserName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel26)
-                                        .addComponent(txtUserSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtUserSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel27)
-                                        .addComponent(txtUserType, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtUserType, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel28)
-                                        .addComponent(txtUserLogin, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtUserLogin, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1)
                                 .addContainerGap(499, Short.MAX_VALUE))
@@ -456,33 +455,33 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtClientCreateDate.setEnabled(false);
 
-        saveClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
+        saveClientButton.setIcon(icon("/icons/Save.gif"));
         saveClientButton.setText("Zapisz");
         saveClientButton.addActionListener(this::zapiszKlientaAction);
 
-        cancelClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        cancelClientButton.setIcon(icon("/icons/Cancel.gif"));
         cancelClientButton.setText("Anuluj");
         cancelClientButton.addActionListener(this::anulujZapisKlientaAction);
 
-        cbPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbPersonalAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbPersonalAcc.setText("Konto osobiste");
 
-        cbCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbCurrencyAcc.setText("Konto walutowe");
 
-        cbLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbLocate.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbLocate.setText("Lokata");
 
-        cbCurrentCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbCurrentCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbCurrentCredit.setText("Kredyt gotówkowy");
 
-        cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbHomeCredit.setText("Kredyt hipoteczny");
 
-        cbRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbRepeatedCredit.setText("Kredyt odnawialny");
 
-        cbCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbCreditCard.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbCreditCard.setText("Karta kredytowa");
 
         cbChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
@@ -490,14 +489,14 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel14.setFont(timesNewRoman20);
         jLabel14.setText("Szansa sprzedaży");
 
-        editClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        editClientButton.setIcon(icon("/icons/Repair.gif"));
         editClientButton.setText("Edytuj");
         editClientButton.addActionListener(this::edytujKlientaAction);
 
         try {
-            txtClientPostalCode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
+            txtClientPostalCode.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##-###")));
+        } catch (ParseException exception) {
+            throw new RuntimeException(exception);
         }
 
         labelClientModDate.setFont(timesNewRoman20);
@@ -517,7 +516,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtClientTelDate.setEnabled(false);
 
-        javax.swing.GroupLayout addClientPanelLayout = new javax.swing.GroupLayout(addClientPanel);
+        GroupLayout addClientPanelLayout = new GroupLayout(addClientPanel);
         addClientPanel.setLayout(addClientPanelLayout);
         addClientPanelLayout.setHorizontalGroup(
                 addClientPanelLayout.createParallelGroup(LEADING)
@@ -542,7 +541,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addComponent(editClientButton, PREFERRED_SIZE, 112, PREFERRED_SIZE))
                                                         .addGroup(addClientPanelLayout.createParallelGroup(TRAILING, false)
                                                                 .addComponent(txtClientModification, LEADING)
-                                                                .addComponent(txtClientCreator, LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
+                                                                .addComponent(txtClientCreator, LEADING, GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                         .addComponent(jLabel6)
@@ -552,7 +551,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addComponent(jLabel7)
                                                                 .addGap(35, 35, 35)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(txtClientPhone1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                                                                        .addComponent(txtClientPhone1, GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                                                                         .addComponent(txtClientName)
                                                                         .addComponent(txtClientSurname)
                                                                         .addComponent(txtClientPesel)
@@ -579,7 +578,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(cbCreditCard)
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel44)
-                                                                                .addPreferredGap(RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                                 .addComponent(txtClientTelDate, PREFERRED_SIZE, 145, PREFERRED_SIZE))
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                                 .addComponent(jLabel14)
@@ -599,7 +598,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addGroup(addClientPanelLayout.createParallelGroup(TRAILING, false)
                                                                                 .addGroup(LEADING, addClientPanelLayout.createSequentialGroup()
                                                                                         .addComponent(jLabel15)
-                                                                                        .addPreferredGap(RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                        .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                                         .addComponent(txtClientStreet, PREFERRED_SIZE, 165, PREFERRED_SIZE))
                                                                                 .addGroup(LEADING, addClientPanelLayout.createSequentialGroup()
                                                                                         .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
@@ -608,7 +607,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                                                 .addComponent(jLabel19))
                                                                                         .addGap(41, 41, 41)
                                                                                         .addGroup(addClientPanelLayout.createParallelGroup(LEADING, false)
-                                                                                                .addComponent(txtClientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                                                                                .addComponent(txtClientCity, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                                                                                 .addComponent(txtClientNumber, TRAILING))))))))
                                         .addComponent(jLabel2))
                                 .addContainerGap(38, Short.MAX_VALUE))
@@ -625,42 +624,42 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addComponent(jLabel2)
                                 .addGroup(addClientPanelLayout.createParallelGroup(TRAILING)
                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                .addPreferredGap(RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(txtClientVip)
                                                 .addGap(7, 7, 7)
-                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel13)
-                                                        .addComponent(txtClientCreateDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                                        .addComponent(txtClientTelDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(txtClientCreateDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(txtClientTelDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(jLabel44))
                                                 .addPreferredGap(RELATED)
-                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel12)
-                                                        .addComponent(txtClientCreator, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                        .addComponent(txtClientCreator, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addPreferredGap(RELATED)
-                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(labelClientModDate)
-                                                        .addComponent(txtClientModification, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                        .addComponent(txtClientModification, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addGap(19, 19, 19))
                                         .addGroup(LEADING, addClientPanelLayout.createSequentialGroup()
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addGap(2, 2, 2)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel15)
-                                                                        .addComponent(txtClientStreet, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientStreet, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel16)
-                                                                        .addComponent(txtClientNumber, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientNumber, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel17)
-                                                                        .addComponent(txtClientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientCity, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel18)
-                                                                        .addComponent(txtClientPostalCode, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientPostalCode, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(jLabel19)
                                                                 .addPreferredGap(RELATED)
@@ -678,33 +677,33 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbCreditCard)
                                                                 .addGap(18, 18, 18)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel14)
-                                                                        .addComponent(cbChance, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                                        .addComponent(cbChance, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel4)
-                                                                        .addComponent(txtClientName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel5)
-                                                                        .addComponent(txtClientSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                                         .addComponent(jLabel6)
-                                                                        .addComponent(txtClientPesel, TRAILING, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientPesel, TRAILING, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(txtClientPhone1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                                        .addComponent(txtClientPhone1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                                         .addComponent(jLabel7))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel8)
-                                                                        .addComponent(txtClientPhone2, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(txtClientPhone2, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(txtClientMail, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(txtClientMail, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                                         .addComponent(jLabel10))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
@@ -720,7 +719,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(txtClientTel)
                                                                         .addComponent(lab))))
                                                 .addPreferredGap(RELATED, 125, Short.MAX_VALUE)))
-                                .addGroup(addClientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveClientButton)
                                         .addComponent(cancelClientButton)
                                         .addComponent(editClientButton))
@@ -738,11 +737,11 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel30.setFont(timesNewRoman20);
         jLabel30.setText("Pesel:");
 
-        searchSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
+        searchSearchButton.setIcon(icon("/icons/Search.gif"));
         searchSearchButton.setText("Szukaj");
         searchSearchButton.addActionListener(this::szukajKlientaAction);
 
-        resetSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
+        resetSearchButton.setIcon(icon("/icons/Refresh.gif"));
         resetSearchButton.setText("Reset");
         resetSearchButton.addActionListener(this::resetPolSzukaniaKlientaAction);
 
@@ -766,22 +765,22 @@ public class SadCRMForm extends ApplicationWindow {
         tableClients.addMouseListener((MouseClickHandler) this::tableClientsMouseClicked);
         jScrollPane7.setViewportView(tableClients);
 
-        txtDetailsClientButton.setIcon(new ImageIcon(getClass().getResource("/icons/About.gif")));
+        txtDetailsClientButton.setIcon(icon("/icons/About.gif"));
         txtDetailsClientButton.setText("Szczegóły");
         txtDetailsClientButton.addActionListener(this::szczegolyKlientaAction);
 
-        txtSendMultipleMail.setIcon(new ImageIcon(getClass().getResource("/icons/E-mail.gif")));
+        txtSendMultipleMail.setIcon(icon("/icons/E-mail.gif"));
         txtSendMultipleMail.setText("Wyślij wiadomość do zanaczonych kontaktów");
         txtSendMultipleMail.addActionListener(this::wyslijMailDoWszystkichAction);
 
-        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        GroupLayout searchPanelLayout = new GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
         searchPanelLayout.setHorizontalGroup(
                 searchPanelLayout.createParallelGroup(LEADING)
                         .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(searchPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane7, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                                         .addGroup(searchPanelLayout.createSequentialGroup()
                                                 .addGroup(searchPanelLayout.createParallelGroup(LEADING)
                                                         .addComponent(jLabel1)
@@ -791,12 +790,12 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(jLabel30))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(searchPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(txtSearchSurname, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                                                                        .addComponent(txtSearchSurname, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                                                                         .addComponent(txtSearchPesel))
                                                                 .addGap(41, 41, 41)
                                                                 .addGroup(searchPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(searchSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                                                        .addComponent(resetSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                                        .addComponent(searchSearchButton, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                                                        .addComponent(resetSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                         .addGroup(searchPanelLayout.createSequentialGroup()
                                                                 .addComponent(txtDetailsClientButton)
                                                                 .addPreferredGap(RELATED)
@@ -810,19 +809,19 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel1)
                                 .addGap(30, 30, 30)
-                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel29)
-                                        .addComponent(txtSearchSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtSearchSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(searchSearchButton))
                                 .addGap(4, 4, 4)
-                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel30)
-                                        .addComponent(txtSearchPesel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtSearchPesel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(resetSearchButton))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane7, PREFERRED_SIZE, 535, PREFERRED_SIZE)
                                 .addPreferredGap(RELATED)
-                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtDetailsClientButton)
                                         .addComponent(txtSendMultipleMail))
                                 .addContainerGap(26, Short.MAX_VALUE))
@@ -847,29 +846,29 @@ public class SadCRMForm extends ApplicationWindow {
         txtMailContent.setRows(5);
         jScrollPane6.setViewportView(txtMailContent);
 
-        sendOneMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Mail.gif")));
+        sendOneMailButton.setIcon(icon("/icons/Mail.gif"));
         sendOneMailButton.setText("Wyślij");
         sendOneMailButton.addActionListener(this::wyslijjednegoMailaAction);
 
-        clearMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
+        clearMailButton.setIcon(icon("/icons/Refresh.gif"));
         clearMailButton.setText("Wyczyść");
         clearMailButton.addActionListener(this::wyczyscPolaMailaAction);
 
-        sendMailButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        sendMailButton.setIcon(icon("/icons/Cancel.gif"));
         sendMailButton.setText("Anuluj");
-        sendMailButton.addActionListener(this::wyslijMail2Action);
+        sendMailButton.addActionListener(event -> processSearchPanel());
 
         jLabel36.setFont(timesNewRoman20);
         jLabel36.setText("Temat:");
 
-        javax.swing.GroupLayout sendMailPanelLayout = new javax.swing.GroupLayout(sendMailPanel);
+        GroupLayout sendMailPanelLayout = new GroupLayout(sendMailPanel);
         sendMailPanel.setLayout(sendMailPanelLayout);
         sendMailPanelLayout.setHorizontalGroup(
                 sendMailPanelLayout.createParallelGroup(LEADING)
                         .addGroup(sendMailPanelLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(sendMailPanelLayout.createParallelGroup(LEADING, false)
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane6, GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                                         .addComponent(jLabel32)
                                         .addComponent(jLabel34)
                                         .addComponent(jLabel35)
@@ -896,42 +895,42 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addPreferredGap(RELATED)
                                 .addComponent(jScrollPane5, PREFERRED_SIZE, 92, PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(sendMailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(sendMailPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel36)
-                                        .addComponent(txtMailSubject, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtMailSubject, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(15, 15, 15)
                                 .addComponent(jLabel35)
                                 .addPreferredGap(RELATED)
                                 .addComponent(jScrollPane6, PREFERRED_SIZE, 233, PREFERRED_SIZE)
                                 .addPreferredGap(RELATED)
-                                .addGroup(sendMailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(sendMailPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(sendOneMailButton)
                                         .addComponent(clearMailButton)
                                         .addComponent(sendMailButton))
                                 .addContainerGap(188, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
+        GroupLayout userPanelLayout = new GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
                 userPanelLayout.createParallelGroup(LEADING)
                         .addGroup(userPanelLayout.createSequentialGroup()
                                 .addGap(0, 0, 0)
                                 .addGroup(userPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(topPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(topPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGroup(userPanelLayout.createSequentialGroup()
-                                                .addComponent(leftPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(leftPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(mainUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(mainUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(searchPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(searchPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(addClientPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                .addComponent(addClientPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                 .addGap(0, 0, 0))
                         .addGroup(userPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(userPanelLayout.createSequentialGroup()
                                         .addGap(200, 200, 200)
-                                        .addComponent(sendMailPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(sendMailPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
         userPanelLayout.setVerticalGroup(
@@ -940,15 +939,15 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addComponent(topPanel, PREFERRED_SIZE, 62, PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addGroup(userPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(leftPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(addClientPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(mainUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(searchPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(leftPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(addClientPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(mainUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(searchPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(0, 0, 0))
                         .addGroup(userPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(userPanelLayout.createSequentialGroup()
                                         .addGap(50, 50, 50)
-                                        .addComponent(sendMailPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(sendMailPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
 
@@ -963,15 +962,15 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel23.setFont(timesNewRoman20);
         jLabel23.setText("Hasło");
 
-        txtLogin.addActionListener(evt -> processLoginAction());
+        txtLogin.addActionListener(event -> processLoginAction());
 
-        loginButton.setIcon(new ImageIcon(getClass().getResource("/icons/Blue key.gif")));
+        loginButton.setIcon(icon("/icons/Blue key.gif"));
         loginButton.setText("Zaloguj");
-        loginButton.addActionListener(this::logowanieAction);
+        loginButton.addActionListener(event -> processLoginAction());
 
-        txtPassword.addActionListener(evt -> processLoginAction());
+        txtPassword.addActionListener(event -> processLoginAction());
 
-        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
+        GroupLayout loginPanelLayout = new GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
         loginPanelLayout.setHorizontalGroup(
                 loginPanelLayout.createParallelGroup(LEADING)
@@ -999,33 +998,33 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap(261, Short.MAX_VALUE)
                                 .addComponent(jLabel21)
                                 .addGap(48, 48, 48)
-                                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(loginPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel22)
-                                        .addComponent(txtLogin, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtLogin, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(loginPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel23)
-                                        .addComponent(txtPassword, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtPassword, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(UNRELATED)
-                                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(loginPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(loginButton))
                                 .addGap(158, 158, 158))
         );
 
         adminPanel.setBackground(lightGray);
-        adminPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        adminPanel.setBorder(createLineBorder(new Color(0, 0, 0)));
         adminPanel.setPreferredSize(new Dimension(1000, 800));
 
         topPanel1.setBackground(lightGray);
         topPanel1.setBorder(createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        topPanel1.setForeground(new java.awt.Color(238, 9, 9));
+        topPanel1.setForeground(new Color(238, 9, 9));
         topPanel1.setPreferredSize(new Dimension(1000, 50));
 
-        dataExpButton1.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
+        dataExpButton1.setIcon(icon("/icons/Upload.gif"));
         dataExpButton1.setText("Eksport danych");
         dataExpButton1.addActionListener(this::dataExpButton1ActionPerformed);
 
-        javax.swing.GroupLayout topPanel1Layout = new javax.swing.GroupLayout(topPanel1);
+        GroupLayout topPanel1Layout = new GroupLayout(topPanel1);
         topPanel1.setLayout(topPanel1Layout);
         topPanel1Layout.setHorizontalGroup(
                 topPanel1Layout.createParallelGroup(LEADING)
@@ -1047,35 +1046,35 @@ public class SadCRMForm extends ApplicationWindow {
         leftPanel1.setOpaque(false);
         leftPanel1.setPreferredSize(new Dimension(200, 750));
 
-        addUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Create.gif")));
+        addUserButton.setIcon(icon("/icons/Create.gif"));
         addUserButton.setText("Dodaj użytkownika");
         addUserButton.addActionListener(this::addUserButtonActionPerformed);
 
-        searchUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
+        searchUserButton.setIcon(icon("/icons/Find.gif"));
         searchUserButton.setText("Wyszukiwanie");
-        searchUserButton.addActionListener(evt -> processAdminSearch());
+        searchUserButton.addActionListener(event -> processAdminSearch());
 
-        myAdminPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
+        myAdminPanelButton.setIcon(icon("/icons/Info.gif"));
         myAdminPanelButton.setText("Mój panel");
         myAdminPanelButton.addActionListener(this::myAdminPanelButtonActionPerformed);
 
-        logoutAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
+        logoutAdminButton.setIcon(icon("/icons/Exit.gif"));
         logoutAdminButton.setText("Wylogowanie");
-        logoutAdminButton.addActionListener(evt2 -> logoutMessageBox());
+        logoutAdminButton.addActionListener(event -> logoutMessageBox());
 
-        exitAdminButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
+        exitAdminButton.setIcon(icon("/icons/Turn off.gif"));
         exitAdminButton.setText("Wyjście");
-        exitAdminButton.addActionListener(evt -> exitCommonAction());
+        exitAdminButton.addActionListener(event -> exitCommonAction());
 
-        javax.swing.GroupLayout leftPanel1Layout = new javax.swing.GroupLayout(leftPanel1);
+        GroupLayout leftPanel1Layout = new GroupLayout(leftPanel1);
         leftPanel1.setLayout(leftPanel1Layout);
         leftPanel1Layout.setHorizontalGroup(
                 leftPanel1Layout.createParallelGroup(LEADING)
-                        .addComponent(addUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                        .addComponent(searchUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(myAdminPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logoutAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exitAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addUserButton, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                        .addComponent(searchUserButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myAdminPanelButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoutAdminButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitAdminButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         leftPanel1Layout.setVerticalGroup(
                 leftPanel1Layout.createParallelGroup(LEADING)
@@ -1092,7 +1091,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGap(0, 572, Short.MAX_VALUE))
         );
 
-        mainAdminPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        mainAdminPanel.setBorder(createLineBorder(new Color(0, 0, 0)));
         mainAdminPanel.setPreferredSize(new Dimension(800, 750));
 
         jLabel20.setFont(timesNewRomanBold24);
@@ -1118,11 +1117,11 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtAdminType.setEditable(false);
 
-        changeAdminPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        changeAdminPassButton.setIcon(icon("/icons/Repair.gif"));
         changeAdminPassButton.setText("Zmiana hasła");
-        changeAdminPassButton.addActionListener(evt1 -> commonChangePassword());
+        changeAdminPassButton.addActionListener(event -> commonChangePassword());
 
-        javax.swing.GroupLayout mainAdminPanelLayout = new javax.swing.GroupLayout(mainAdminPanel);
+        GroupLayout mainAdminPanelLayout = new GroupLayout(mainAdminPanel);
         mainAdminPanel.setLayout(mainAdminPanelLayout);
         mainAdminPanelLayout.setHorizontalGroup(
                 mainAdminPanelLayout.createParallelGroup(LEADING)
@@ -1151,21 +1150,21 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel20)
                                 .addGap(30, 30, 30)
-                                .addGroup(mainAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainAdminPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel31)
-                                        .addComponent(txtAdminName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAdminName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainAdminPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel33)
-                                        .addComponent(txtAdminSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAdminSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainAdminPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel37)
-                                        .addComponent(txtAdminType, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAdminType, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainAdminPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel38)
-                                        .addComponent(txtAdminLogin, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAdminLogin, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(changeAdminPassButton)
                                 .addContainerGap(499, Short.MAX_VALUE))
@@ -1192,11 +1191,11 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel48.setFont(timesNewRoman20);
         jLabel48.setText("Data utworzenia");
 
-        saveUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
+        saveUserButton.setIcon(icon("/icons/Save.gif"));
         saveUserButton.setText("Zapisz");
         saveUserButton.addActionListener(this::saveUserButtonActionPerformed);
 
-        cancelUserButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        cancelUserButton.setIcon(icon("/icons/Cancel.gif"));
         cancelUserButton.setText("Anuluj");
         cancelUserButton.addActionListener(this::cancelUserButtonActionPerformed);
 
@@ -1211,7 +1210,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtAddUserType.setModel(new DefaultComboBoxModel<>(UserType.values()));
 
-        javax.swing.GroupLayout addUserPanelLayout = new javax.swing.GroupLayout(addUserPanel);
+        GroupLayout addUserPanelLayout = new GroupLayout(addUserPanel);
         addUserPanel.setLayout(addUserPanelLayout);
         addUserPanelLayout.setHorizontalGroup(
                 addUserPanelLayout.createParallelGroup(LEADING)
@@ -1251,35 +1250,35 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel24)
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel39)
-                                        .addComponent(txtAddUserName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel40)
-                                        .addComponent(txtAddUserSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtAddUserLogin, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtAddUserLogin, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(jLabel43))
                                 .addPreferredGap(RELATED)
                                 .addGroup(addUserPanelLayout.createParallelGroup(TRAILING)
                                         .addComponent(jLabel41)
-                                        .addComponent(txtAddUserType, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserType, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel42)
-                                        .addComponent(txtAddUserPassword1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserPassword1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel58)
-                                        .addComponent(txtAddUserPassword2, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserPassword2, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel48)
-                                        .addComponent(txtAddUserDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtAddUserDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(26, 26, 26)
-                                .addGroup(addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(addUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveUserButton)
                                         .addComponent(cancelUserButton))
                                 .addContainerGap(415, Short.MAX_VALUE))
@@ -1296,11 +1295,11 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel57.setFont(timesNewRoman20);
         jLabel57.setText("Imię:");
 
-        adminSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
+        adminSearchButton.setIcon(icon("/icons/Search.gif"));
         adminSearchButton.setText("Szukaj");
         adminSearchButton.addActionListener(this::adminSearchButtonActionPerformed);
 
-        adminResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
+        adminResetButton.setIcon(icon("/icons/Refresh.gif"));
         adminResetButton.setText("Reset");
         adminResetButton.addActionListener(this::adminResetButtonActionPerformed);
 
@@ -1322,18 +1321,18 @@ public class SadCRMForm extends ApplicationWindow {
         tableUsers.addMouseListener((MouseClickHandler) this::tableUsersMouseClicked);
         jScrollPane8.setViewportView(tableUsers);
 
-        adminDetailsButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        adminDetailsButton.setIcon(icon("/icons/Repair.gif"));
         adminDetailsButton.setText("Edycja");
         adminDetailsButton.addActionListener(this::adminDetailsButtonActionPerformed);
 
-        javax.swing.GroupLayout searchUserPanelLayout = new javax.swing.GroupLayout(searchUserPanel);
+        GroupLayout searchUserPanelLayout = new GroupLayout(searchUserPanel);
         searchUserPanel.setLayout(searchUserPanelLayout);
         searchUserPanelLayout.setHorizontalGroup(
                 searchUserPanelLayout.createParallelGroup(LEADING)
                         .addGroup(searchUserPanelLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(searchUserPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane8, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                                         .addGroup(searchUserPanelLayout.createSequentialGroup()
                                                 .addGroup(searchUserPanelLayout.createParallelGroup(LEADING)
                                                         .addComponent(jLabel55)
@@ -1343,12 +1342,12 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(jLabel57))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(searchUserPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(txtAdminSearchSurname, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                                                                        .addComponent(txtAdminSearchSurname, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                                                                         .addComponent(txtAdminSearchName))
                                                                 .addGap(41, 41, 41)
                                                                 .addGroup(searchUserPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(adminSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                                                        .addComponent(adminResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                                        .addComponent(adminSearchButton, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                                                        .addComponent(adminResetButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                         .addComponent(adminDetailsButton))
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
@@ -1359,14 +1358,14 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel55)
                                 .addGap(30, 30, 30)
-                                .addGroup(searchUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel56)
-                                        .addComponent(txtAdminSearchSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtAdminSearchSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(adminSearchButton))
                                 .addGap(4, 4, 4)
-                                .addGroup(searchUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel57)
-                                        .addComponent(txtAdminSearchName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtAdminSearchName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(adminResetButton))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane8, PREFERRED_SIZE, 523, PREFERRED_SIZE)
@@ -1375,22 +1374,22 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
+        GroupLayout adminPanelLayout = new GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanelLayout);
         adminPanelLayout.setHorizontalGroup(
                 adminPanelLayout.createParallelGroup(LEADING)
                         .addGroup(adminPanelLayout.createSequentialGroup()
                                 .addGap(0, 0, 0)
                                 .addGroup(adminPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(topPanel1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(topPanel1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGroup(adminPanelLayout.createSequentialGroup()
-                                                .addComponent(leftPanel1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(leftPanel1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(mainAdminPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(mainAdminPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(searchUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(searchUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(addUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                .addComponent(addUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                 .addGap(0, 0, 0))
         );
         adminPanelLayout.setVerticalGroup(
@@ -1399,31 +1398,31 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addComponent(topPanel1, PREFERRED_SIZE, 62, PREFERRED_SIZE)
                                 .addPreferredGap(RELATED)
                                 .addGroup(adminPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(leftPanel1, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(addUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(mainAdminPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(searchUserPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(leftPanel1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(addUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(mainAdminPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(searchUserPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(0, 0, 0))
         );
 
         managerPanel.setBackground(lightGray);
-        managerPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        managerPanel.setBorder(createLineBorder(new Color(0, 0, 0)));
         managerPanel.setPreferredSize(new Dimension(1000, 800));
 
         topManagerPanel.setBackground(lightGray);
         topManagerPanel.setBorder(createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        topManagerPanel.setForeground(new java.awt.Color(238, 9, 9));
+        topManagerPanel.setForeground(new Color(238, 9, 9));
         topManagerPanel.setPreferredSize(new Dimension(1000, 50));
 
-        reportsButton.setIcon(new ImageIcon(getClass().getResource("/icons/3d bar chart.gif")));
+        reportsButton.setIcon(icon("/icons/3d bar chart.gif"));
         reportsButton.setText("Raporty");
         reportsButton.addActionListener(this::reportsButtonActionPerformed);
 
-        dataExpButton2.setIcon(new ImageIcon(getClass().getResource("/icons/Upload.gif")));
+        dataExpButton2.setIcon(icon("/icons/Upload.gif"));
         dataExpButton2.setText("Eksport danych");
         dataExpButton2.addActionListener(this::dataExpButton2ActionPerformed);
 
-        javax.swing.GroupLayout topManagerPanelLayout = new javax.swing.GroupLayout(topManagerPanel);
+        GroupLayout topManagerPanelLayout = new GroupLayout(topManagerPanel);
         topManagerPanel.setLayout(topManagerPanelLayout);
         topManagerPanelLayout.setHorizontalGroup(
                 topManagerPanelLayout.createParallelGroup(LEADING)
@@ -1438,7 +1437,7 @@ public class SadCRMForm extends ApplicationWindow {
                 topManagerPanelLayout.createParallelGroup(LEADING)
                         .addGroup(topManagerPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(topManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(topManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(reportsButton)
                                         .addComponent(dataExpButton2))
                                 .addContainerGap(16, Short.MAX_VALUE))
@@ -1449,30 +1448,30 @@ public class SadCRMForm extends ApplicationWindow {
         leftManagerPanel.setOpaque(false);
         leftManagerPanel.setPreferredSize(new Dimension(200, 750));
 
-        searchClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Find.gif")));
+        searchClientByManagerButton.setIcon(icon("/icons/Find.gif"));
         searchClientByManagerButton.setText("Wyszukiwanie");
-        searchClientByManagerButton.addActionListener(evt -> processSearchClientsForManager());
+        searchClientByManagerButton.addActionListener(event -> processSearchClientsForManager());
 
-        myManagerPanelButton.setIcon(new ImageIcon(getClass().getResource("/icons/Info.gif")));
+        myManagerPanelButton.setIcon(icon("/icons/Info.gif"));
         myManagerPanelButton.setText("Mój panel");
         myManagerPanelButton.addActionListener(this::myManagerPanelButtonActionPerformed);
 
-        logoutManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Exit.gif")));
+        logoutManagerButton.setIcon(icon("/icons/Exit.gif"));
         logoutManagerButton.setText("Wylogowanie");
-        logoutManagerButton.addActionListener(evt1 -> logoutMessageBox());
+        logoutManagerButton.addActionListener(event -> logoutMessageBox());
 
-        exitManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Turn off.gif")));
+        exitManagerButton.setIcon(icon("/icons/Turn off.gif"));
         exitManagerButton.setText("Wyjście");
-        exitManagerButton.addActionListener(evt -> exitCommonAction());
+        exitManagerButton.addActionListener(event -> exitCommonAction());
 
-        javax.swing.GroupLayout leftManagerPanelLayout = new javax.swing.GroupLayout(leftManagerPanel);
+        GroupLayout leftManagerPanelLayout = new GroupLayout(leftManagerPanel);
         leftManagerPanel.setLayout(leftManagerPanelLayout);
         leftManagerPanelLayout.setHorizontalGroup(
                 leftManagerPanelLayout.createParallelGroup(LEADING)
-                        .addComponent(searchClientByManagerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                        .addComponent(myManagerPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logoutManagerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exitManagerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchClientByManagerButton, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                        .addComponent(myManagerPanelButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoutManagerButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitManagerButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         leftManagerPanelLayout.setVerticalGroup(
                 leftManagerPanelLayout.createParallelGroup(LEADING)
@@ -1487,7 +1486,7 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGap(0, 608, Short.MAX_VALUE))
         );
 
-        mainManagerPanel.setBorder(createLineBorder(new java.awt.Color(0, 0, 0)));
+        mainManagerPanel.setBorder(createLineBorder(Color.black));
         mainManagerPanel.setPreferredSize(new Dimension(800, 750));
 
         jLabel49.setFont(timesNewRomanBold24);
@@ -1513,11 +1512,11 @@ public class SadCRMForm extends ApplicationWindow {
 
         txtManagerType.setEditable(false);
 
-        changeManagerPassButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        changeManagerPassButton.setIcon(icon("/icons/Repair.gif"));
         changeManagerPassButton.setText("Zmiana hasła");
-        changeManagerPassButton.addActionListener(evt -> commonChangePassword());
+        changeManagerPassButton.addActionListener(event -> commonChangePassword());
 
-        javax.swing.GroupLayout mainManagerPanelLayout = new javax.swing.GroupLayout(mainManagerPanel);
+        GroupLayout mainManagerPanelLayout = new GroupLayout(mainManagerPanel);
         mainManagerPanel.setLayout(mainManagerPanelLayout);
         mainManagerPanelLayout.setHorizontalGroup(
                 mainManagerPanelLayout.createParallelGroup(LEADING)
@@ -1546,21 +1545,21 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel49)
                                 .addGap(30, 30, 30)
-                                .addGroup(mainManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel50)
-                                        .addComponent(txtManagerName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtManagerName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel51)
-                                        .addComponent(txtManagerSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtManagerSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel52)
-                                        .addComponent(txtManagerType, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtManagerType, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addPreferredGap(RELATED)
-                                .addGroup(mainManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(mainManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel53)
-                                        .addComponent(txtManagerLogin, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(txtManagerLogin, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(changeManagerPassButton)
                                 .addContainerGap(499, Short.MAX_VALUE))
@@ -1577,11 +1576,11 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel68.setFont(timesNewRoman20);
         jLabel68.setText("Pesel:");
 
-        managerSearchButton.setIcon(new ImageIcon(getClass().getResource("/icons/Search.gif")));
+        managerSearchButton.setIcon(icon("/icons/Search.gif"));
         managerSearchButton.setText("Szukaj");
         managerSearchButton.addActionListener(this::managerSearchButtonActionPerformed);
 
-        managerResetButton.setIcon(new ImageIcon(getClass().getResource("/icons/Refresh.gif")));
+        managerResetButton.setIcon(icon("/icons/Refresh.gif"));
         managerResetButton.setText("Reset");
         managerResetButton.addActionListener(this::managerResetFieldsAction);
 
@@ -1603,18 +1602,18 @@ public class SadCRMForm extends ApplicationWindow {
         tableClientsForManager.addMouseListener((MouseClickHandler) this::tableClientsForManagerMouseClicked);
         jScrollPane9.setViewportView(tableClientsForManager);
 
-        managerEditButton.setIcon(new ImageIcon(getClass().getResource("/icons/Repair.gif")));
+        managerEditButton.setIcon(icon("/icons/Repair.gif"));
         managerEditButton.setText("Edycja");
         managerEditButton.addActionListener(this::managerEditButtonActionPerformed);
 
-        javax.swing.GroupLayout searchUserByManagerPanelLayout = new javax.swing.GroupLayout(searchUserByManagerPanel);
+        GroupLayout searchUserByManagerPanelLayout = new GroupLayout(searchUserByManagerPanel);
         searchUserByManagerPanel.setLayout(searchUserByManagerPanelLayout);
         searchUserByManagerPanelLayout.setHorizontalGroup(
                 searchUserByManagerPanelLayout.createParallelGroup(LEADING)
                         .addGroup(searchUserByManagerPanelLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(searchUserByManagerPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane9, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                                         .addGroup(searchUserByManagerPanelLayout.createSequentialGroup()
                                                 .addGroup(searchUserByManagerPanelLayout.createParallelGroup(LEADING)
                                                         .addComponent(jLabel66)
@@ -1624,12 +1623,12 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(jLabel68))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(searchUserByManagerPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(txtManagerSearchSurname, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                                                                        .addComponent(txtManagerSearchSurname, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                                                                         .addComponent(txtManagerSearchPesel))
                                                                 .addGap(41, 41, 41)
                                                                 .addGroup(searchUserByManagerPanelLayout.createParallelGroup(LEADING, false)
-                                                                        .addComponent(managerSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                                                        .addComponent(managerResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                                        .addComponent(managerSearchButton, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                                                        .addComponent(managerResetButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                         .addComponent(managerEditButton))
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
@@ -1640,14 +1639,14 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap()
                                 .addComponent(jLabel66)
                                 .addGap(30, 30, 30)
-                                .addGroup(searchUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel67)
-                                        .addComponent(txtManagerSearchSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtManagerSearchSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(managerSearchButton))
                                 .addGap(4, 4, 4)
-                                .addGroup(searchUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(searchUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel68)
-                                        .addComponent(txtManagerSearchPesel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(txtManagerSearchPesel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addComponent(managerResetButton))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane9, PREFERRED_SIZE, 523, PREFERRED_SIZE)
@@ -1715,33 +1714,33 @@ public class SadCRMForm extends ApplicationWindow {
 
         editClientCreateDate.setEnabled(false);
 
-        saveClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Save.gif")));
+        saveClientByManagerButton.setIcon(icon("/icons/Save.gif"));
         saveClientByManagerButton.setText("Zapisz");
         saveClientByManagerButton.addActionListener(this::saveClientByManagerButtonzapiszKlientaAction);
 
-        cancelClientByManagerButton.setIcon(new ImageIcon(getClass().getResource("/icons/Cancel.gif")));
+        cancelClientByManagerButton.setIcon(icon("/icons/Cancel.gif"));
         cancelClientByManagerButton.setText("Anuluj");
-        cancelClientByManagerButton.addActionListener(evt -> processSearchClientsForManager());
+        cancelClientByManagerButton.addActionListener(event -> processSearchClientsForManager());
 
-        cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditPersonalAcc.setText("Konto osobiste");
 
-        cbEditCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditCurrencyAcc.setText("Konto walutowe");
 
-        cbEditLocate.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditLocate.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditLocate.setText("Lokata");
 
-        cbEditCurrentCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditCurrentCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditCurrentCredit.setText("Kredyt gotówkowy");
 
-        cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditHomeCredit.setText("Kredyt hipoteczny");
 
-        cbEditRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditRepeatedCredit.setText("Kredyt odnawialny");
 
-        cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", 0, 18));
+        cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
         cbEditCreditCard.setText("Karta kredytowa");
 
         cbEditChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
@@ -1750,9 +1749,9 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel85.setText("Szansa sprzedaży");
 
         try {
-            editClientPostalCode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
+            editClientPostalCode.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##-###")));
+        } catch (ParseException exception) {
+            throw new RuntimeException(exception);
         }
 
         labelClientModDate1.setFont(timesNewRoman20);
@@ -1772,7 +1771,7 @@ public class SadCRMForm extends ApplicationWindow {
         selectUserButton.setText("...");
         selectUserButton.addActionListener(this::selectUserButtonActionPerformed);
 
-        javax.swing.GroupLayout editUserByManagerPanelLayout = new javax.swing.GroupLayout(editUserByManagerPanel);
+        GroupLayout editUserByManagerPanelLayout = new GroupLayout(editUserByManagerPanel);
         editUserByManagerPanel.setLayout(editUserByManagerPanelLayout);
         editUserByManagerPanelLayout.setHorizontalGroup(
                 editUserByManagerPanelLayout.createParallelGroup(LEADING)
@@ -1798,12 +1797,12 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addGroup(editUserByManagerPanelLayout.createParallelGroup(TRAILING, false)
                                                                                 .addGroup(LEADING, editUserByManagerPanelLayout.createSequentialGroup()
                                                                                         .addComponent(editClientCreator, PREFERRED_SIZE, 199, PREFERRED_SIZE)
-                                                                                        .addPreferredGap(RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                        .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                                         .addComponent(selectUserButton, PREFERRED_SIZE, 32, PREFERRED_SIZE))
                                                                                 .addGroup(LEADING, editUserByManagerPanelLayout.createParallelGroup(TRAILING)
                                                                                         .addComponent(editClientCreateDate, PREFERRED_SIZE, 237, PREFERRED_SIZE)
                                                                                         .addComponent(editClientModification, LEADING, PREFERRED_SIZE, 237, PREFERRED_SIZE))))))
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
                                                         .addComponent(jLabel72)
@@ -1813,7 +1812,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addComponent(jLabel73)
                                                                 .addGap(35, 35, 35)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(editClientPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                                                                        .addComponent(editClientPhone, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                                                                         .addComponent(editClientName)
                                                                         .addComponent(editClientSurname)
                                                                         .addComponent(editClientPesel)
@@ -1869,7 +1868,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                                                 .addComponent(jLabel84))
                                                                                         .addGap(41, 41, 41)
                                                                                         .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING, false)
-                                                                                                .addComponent(editClientCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                                                                                .addComponent(editClientCity, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                                                                                 .addComponent(editClientNumber, TRAILING)))))))
                                                 .addGap(23, 23, 23))))
         );
@@ -1880,43 +1879,43 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addComponent(jLabel69)
                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(TRAILING)
                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
-                                                .addPreferredGap(RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(editClientVip)
                                                 .addPreferredGap(RELATED)
-                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel79)
-                                                        .addComponent(editClientCreateDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                                        .addComponent(editClientTelDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(editClientCreateDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(editClientTelDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(jLabel86))
                                                 .addPreferredGap(RELATED)
-                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel78)
-                                                        .addComponent(editClientCreator, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                        .addComponent(editClientCreator, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(selectUserButton))
                                                 .addPreferredGap(RELATED)
-                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(labelClientModDate1)
-                                                        .addComponent(editClientModification, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                        .addComponent(editClientModification, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addGap(19, 19, 19))
                                         .addGroup(LEADING, editUserByManagerPanelLayout.createSequentialGroup()
                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                 .addGap(2, 2, 2)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel80)
-                                                                        .addComponent(editClientStreet, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientStreet, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel81)
-                                                                        .addComponent(editClientNumber, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientNumber, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel82)
-                                                                        .addComponent(editClientCity, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientCity, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel83)
-                                                                        .addComponent(editClientPostalCode, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientPostalCode, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(jLabel84)
                                                                 .addPreferredGap(RELATED)
@@ -1934,33 +1933,33 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbEditCreditCard)
                                                                 .addGap(18, 18, 18)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel85)
-                                                                        .addComponent(cbEditChance, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                                        .addComponent(cbEditChance, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                                         .addGroup(editUserByManagerPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel70)
-                                                                        .addComponent(editClientName, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel71)
-                                                                        .addComponent(editClientSurname, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
                                                                         .addComponent(jLabel72)
-                                                                        .addComponent(editClientPesel, TRAILING, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientPesel, TRAILING, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(editClientPhone, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                                        .addComponent(editClientPhone, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                                         .addComponent(jLabel73))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel74)
-                                                                        .addComponent(editClientPhone2, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                                        .addComponent(editClientPhone2, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(editClientMail, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(editClientMail, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                                         .addComponent(jLabel76))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(editUserByManagerPanelLayout.createParallelGroup(LEADING)
@@ -1976,7 +1975,7 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(editClientTel)
                                                                         .addComponent(lab1))))
                                                 .addPreferredGap(RELATED, 125, Short.MAX_VALUE)))
-                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(editUserByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveClientByManagerButton)
                                         .addComponent(cancelClientByManagerButton))
                                 .addContainerGap(87, Short.MAX_VALUE))
@@ -1987,7 +1986,7 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel59.setFont(timesNewRomanBold24);
         jLabel59.setText("Generowanie raportów");
 
-        jButton4.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
+        jButton4.setIcon(icon("/icons/Report.gif"));
         jButton4.setText("Generuj");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
@@ -1999,9 +1998,9 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel45.setFont(timesNewRoman20);
         jLabel45.setText("Szansa sprzedaży:");
 
-        jButton5.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
+        jButton5.setIcon(icon("/icons/Report.gif"));
         jButton5.setText("Generuj");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        jButton5.addActionListener(event -> ReportsUtil.createSellChanceReport());
 
         jLabel61.setFont(timesNewRoman20);
         jLabel61.setText("Raport pracownika:");
@@ -2011,11 +2010,11 @@ public class SadCRMForm extends ApplicationWindow {
         jButton6.setText("...");
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
-        jButton7.setIcon(new ImageIcon(getClass().getResource("/icons/Report.gif")));
+        jButton7.setIcon(icon("/icons/Report.gif"));
         jButton7.setText("Generuj");
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        javax.swing.GroupLayout raportsByManagerPanelLayout = new javax.swing.GroupLayout(reportsByManagerPanel);
+        GroupLayout raportsByManagerPanelLayout = new GroupLayout(reportsByManagerPanel);
         reportsByManagerPanel.setLayout(raportsByManagerPanelLayout);
         raportsByManagerPanelLayout.setHorizontalGroup(
                 raportsByManagerPanelLayout.createParallelGroup(LEADING)
@@ -2051,9 +2050,9 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGroup(raportsByManagerPanelLayout.createParallelGroup(LEADING)
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addGroup(raportsByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(raportsByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel60)
-                                                        .addComponent(cbReportDate, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                                        .addComponent(cbReportDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel45))
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
@@ -2064,8 +2063,8 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGroup(raportsByManagerPanelLayout.createParallelGroup(LEADING)
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addGroup(raportsByManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtUserReport, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addGroup(raportsByManagerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(txtUserReport, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(jButton6)
                                                         .addComponent(jButton7)))
                                         .addGroup(raportsByManagerPanelLayout.createSequentialGroup()
@@ -2074,30 +2073,30 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addContainerGap(569, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout managerPanelLayout = new javax.swing.GroupLayout(managerPanel);
+        GroupLayout managerPanelLayout = new GroupLayout(managerPanel);
         managerPanel.setLayout(managerPanelLayout);
         managerPanelLayout.setHorizontalGroup(
                 managerPanelLayout.createParallelGroup(LEADING)
                         .addGroup(managerPanelLayout.createSequentialGroup()
                                 .addGap(0, 0, 0)
                                 .addGroup(managerPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(topManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(topManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGroup(managerPanelLayout.createSequentialGroup()
-                                                .addComponent(leftManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(leftManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(mainManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                                .addComponent(mainManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(searchUserByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
+                                                .addComponent(searchUserByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                 .addGap(800, 800, 800))
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(200, 200, 200)
-                                        .addComponent(editUserByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(editUserByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(200, 200, 200)
-                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
         managerPanelLayout.setVerticalGroup(
@@ -2106,23 +2105,23 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addComponent(topManagerPanel, PREFERRED_SIZE, 62, PREFERRED_SIZE)
                                 .addPreferredGap(RELATED)
                                 .addGroup(managerPanelLayout.createParallelGroup(LEADING)
-                                        .addComponent(leftManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(mainManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                        .addComponent(searchUserByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
+                                        .addComponent(leftManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(mainManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(searchUserByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                 .addGap(0, 0, 0))
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(50, 50, 50)
-                                        .addComponent(editUserByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(editUserByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(managerPanelLayout.createParallelGroup(LEADING)
                                 .addGroup(managerPanelLayout.createSequentialGroup()
                                         .addGap(50, 50, 50)
-                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(reportsByManagerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(LEADING)
@@ -2130,22 +2129,22 @@ public class SadCRMForm extends ApplicationWindow {
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, 0)
-                                        .addComponent(loginPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(loginPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, 0)
-                                        .addComponent(userPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(userPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(TRAILING, layout.createSequentialGroup()
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(adminPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(adminPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addContainerGap()))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(managerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(managerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addContainerGap(22, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -2154,30 +2153,30 @@ public class SadCRMForm extends ApplicationWindow {
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, 0)
-                                        .addComponent(loginPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(loginPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, 0)
-                                        .addComponent(userPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(userPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addGap(0, 0, 0)))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(TRAILING, layout.createSequentialGroup()
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(adminPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(adminPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addContainerGap()))
                         .addGroup(layout.createParallelGroup(LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(managerPanel, PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
+                                        .addComponent(managerPanel, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                         .addContainerGap(22, Short.MAX_VALUE)))
         );
 
         pack();
     }
 
-    private void logowanieAction(ActionEvent evt) {
-        processLoginAction();
+    private static ImageIcon icon(String iconName) {
+        return new ImageIcon(SadCRMForm.class.getResource(iconName));
     }
 
     private void processLoginAction() {
@@ -2193,14 +2192,8 @@ public class SadCRMForm extends ApplicationWindow {
 
             showVersionParityMessageBox(response);
             loggedUser = response.getUser();
-
-            if (loggedUser.getType() == ADMIN) {
-                processAdminPanel();
-            } else if (loggedUser.getType() == MANAGER) {
-                processManagerPanel();
-            } else {
-                processUserPanel();
-            }
+            updateFormTitle(loggedUser);
+            processLoggedUserPanel();
         } catch (UserLoginException exception) {
             showMessageDialog(this, exception.getMessage(), "Błąd logowania", ERROR_MESSAGE);
         }
@@ -2238,7 +2231,7 @@ public class SadCRMForm extends ApplicationWindow {
         messageBox(message).show();
     }
 
-    private void dodajKlientaAction(ActionEvent evt) {
+    private void dodajKlientaAction(ActionEvent event) {
         saveClientButton.setEnabled(true);
         editClientButton.setVisible(false);
         selectedClient = null;
@@ -2323,13 +2316,12 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientCreator.setText(loggedUser.getName() + " " + loggedUser.getSurname());
     }
 
-    public static String now() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(cal.getTime());
+    private static String now() {
+        Calendar calendar = Calendar.getInstance();
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
     }
 
-    private void zapiszKlientaAction(ActionEvent evt) {
+    private void zapiszKlientaAction(ActionEvent event) {
         if (selectedClient == null) {
             if (validateClient()) {
                 Client client = new Client();
@@ -2689,23 +2681,22 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-
-    private void anulujZapisKlientaAction(ActionEvent evt) {
-        if (selectedClient != null) {
-            processSearchPanel();
-        } else {
+    private void anulujZapisKlientaAction(ActionEvent event) {
+        if (selectedClient == null) {
             processUserPanel();
+        } else {
+            processSearchPanel();
         }
     }
 
-    private void mojeKontaktyAction(ActionEvent evt) {
+    private void mojeKontaktyAction(ActionEvent event) {
         //enableMyClientsPanel();
         myContacts = true;
         mail = false;
         processSearchPanel();
     }
 
-    private void wyszukiwanieAction(ActionEvent evt) {
+    private void wyszukiwanieAction(ActionEvent event) {
         myContacts = false;
         mail = false;
         processSearchPanel();
@@ -2738,31 +2729,27 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void korespondencjaSeryjnaAction(ActionEvent evt) {
+    private void korespondencjaSeryjnaAction(ActionEvent event) {
         myContacts = false;
         mail = true;
         processSearchPanel();
     }
 
-    private void mojPanelAction(ActionEvent evt) {
+    private void mojPanelAction(ActionEvent event) {
         PanelsUtil.enablePanel(mainUserPanel, new JPanel[]{addClientPanel, searchPanel, sendMailPanel});
     }
 
-    private void wyczyscPolaMailaAction(ActionEvent evt) {
+    private void wyczyscPolaMailaAction(ActionEvent event) {
         txtMailContent.setText("");
         txtRecipient.setText("");
         txtMailSubject.setText("");
     }
 
-    private void wyslijMailAction(ActionEvent evt) {
+    private void wyslijMailAction(ActionEvent event) {
         PanelsUtil.enablePanel(sendMailPanel, new JPanel[]{mainUserPanel, addClientPanel, searchPanel});
     }
 
-    private void wyslijMail2Action(ActionEvent evt) {
-        processSearchPanel();
-    }
-
-    private void wyslijjednegoMailaAction(ActionEvent evt) {
+    private void wyslijjednegoMailaAction(ActionEvent event) {
         Map<String, String> fieldsMap = new HashMap<>();
         fieldsMap.put(txtRecipient.getText(), "Wprowadź odbiorców");
         fieldsMap.put(txtMailSubject.getText(), "Wprowadź temat maila");
@@ -2789,56 +2776,25 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void szukajKlientaAction(ActionEvent evt) {
-        List<Client> searchResults;
-        if (!txtSearchSurname.getText().isEmpty() && !txtSearchPesel.getText().isEmpty()) {
-            if (myContacts) {
-                searchResults = ClientDAO.searchByUserSurnameAndPesel(loggedUser, txtSearchSurname.getText(), txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else if (mail) {
-                searchResults = ClientDAO.searchBySurnameAndPeselAndHasMail(txtSearchSurname.getText(), txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else {
-                searchResults = ClientDAO.searchBySurnameAndPesel(txtSearchSurname.getText(), txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            }
-        } else if (txtSearchSurname.getText().isEmpty() && !txtSearchPesel.getText().isEmpty()) {
-            if (myContacts) {
-                searchResults = ClientDAO.searchByUserAndPesel(loggedUser, txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else if (mail) {
-                searchResults = ClientDAO.searchByPeselAndHasMail(txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else {
-                searchResults = ClientDAO.searchByPesel(txtSearchPesel.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            }
-        } else if (!txtSearchSurname.getText().isEmpty() && txtSearchPesel.getText().isEmpty()) {
-            if (myContacts) {
-                searchResults = ClientDAO.searchByUserAndSurname(loggedUser, txtClientSurname.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else if (mail) {
-                searchResults = ClientDAO.searchBySurnameAndHasMail(txtClientSurname.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            } else {
-                searchResults = ClientDAO.searchBySurname(txtSearchSurname.getText());
-                TableUtil.displayClients(searchResults, tableClients);
-            }
-        } else {
-            if (myContacts) {
-                searchResults = ClientDAO.searchByUser(loggedUser);
-                TableUtil.displayClients(searchResults, tableClients);
-            } else if (mail) {
-                searchResults = ClientDAO.searchHasMail();
-                TableUtil.displayClients(searchResults, tableClients);
-            } else {
-                searchResults = ClientDAO.searchClients();
-                TableUtil.displayClients(searchResults, tableClients);
-            }
+    private void szukajKlientaAction(ActionEvent event) {
+        Parameters parameters = Parameters.getCredentials();
+
+        if (myContacts) {
+            parameters.add("user_id", loggedUser.getId());
+        } else if (mail) {
+            parameters.add("has_mail", "true");
         }
+        if (!txtSearchSurname.getText().isEmpty()) {
+            parameters.add("surname", txtSearchSurname.getText());
+        }
+        if (!txtSearchPesel.getText().isEmpty()) {
+            parameters.add("pesel", txtSearchPesel.getText());
+        }
+        List<Client> searchResults = ClientDAO.fetchClientsByParameters(parameters);
+        TableUtil.displayClients(searchResults, tableClients);
     }
 
-    private void resetPolSzukaniaKlientaAction(ActionEvent evt) {
+    private void resetPolSzukaniaKlientaAction(ActionEvent event) {
         txtSearchPesel.setText("");
         txtSearchSurname.setText("");
         List<Client> clients;
@@ -2853,7 +2809,7 @@ public class SadCRMForm extends ApplicationWindow {
         TableUtil.displayClients(clients, tableClients);
     }
 
-    private void szczegolyKlientaAction(ActionEvent evt) {
+    private void szczegolyKlientaAction(ActionEvent event) {
         if (tableClients.getSelectedRowCount() == 1) {
             editClientAction(tableClients.getSelectedRow());
         } else {
@@ -2861,7 +2817,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void edytujKlientaAction(ActionEvent evt) {
+    private void edytujKlientaAction(ActionEvent event) {
         saveClientButton.setEnabled(true);
         editClientButton.setEnabled(false);
 
@@ -2893,11 +2849,10 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientModification.setText(now());
     }
 
-    private void tableClientsMouseClicked(MouseEvent evt) {
+    private void tableClientsMouseClicked(MouseEvent event) {
         tableClients.addMouseListener((MouseClickHandler) e -> {
             if (e.getClickCount() == 2) {
                 if (mail) {
-                    // wysyłanie maila
                     int[] rows = tableClients.getSelectedRows();
                     String receipts = "";
                     for (int i = 0; i < rows.length; i++) {
@@ -2910,12 +2865,11 @@ public class SadCRMForm extends ApplicationWindow {
 
                     editClientAction(row);
                 }
-
             }
         });
     }
 
-    private void wyslijMailDoWszystkichAction(ActionEvent evt) {
+    private void wyslijMailDoWszystkichAction(ActionEvent event) {
         int[] rows = tableClients.getSelectedRows();
         String receipts = "";
         for (int row : rows) {
@@ -2940,31 +2894,30 @@ public class SadCRMForm extends ApplicationWindow {
                 .ask();
     }
 
-    private void adminSearchButtonActionPerformed(ActionEvent evt) {
+    private void adminSearchButtonActionPerformed(ActionEvent event) {
         List<User> searchResults;
+
         if (!txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersBySurnameAndName(txtAdminSearchSurname.getText(), txtAdminSearchName.getText());
-            TableUtil.displayUsers(searchResults, tableUsers);
         } else if (txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersBySurname(txtAdminSearchSurname.getText());
-            TableUtil.displayUsers(searchResults, tableUsers);
         } else if (!txtAdminSearchName.getText().isEmpty() && txtAdminSearchSurname.getText().isEmpty()) {
             searchResults = UserDAO.searchUsersByName(txtAdminSearchName.getText());
-            TableUtil.displayUsers(searchResults, tableUsers);
         } else {
             searchResults = UserDAO.searchUsers();
-            TableUtil.displayUsers(searchResults, tableUsers);
         }
+
+        TableUtil.displayUsers(searchResults, tableUsers);
     }
 
-    private void adminResetButtonActionPerformed(ActionEvent evt) {
+    private void adminResetButtonActionPerformed(ActionEvent event) {
         txtAdminSearchName.setText("");
         txtAdminSearchSurname.setText("");
 
         TableUtil.displayUsers(UserDAO.searchUsers(), tableUsers);
     }
 
-    private void addUserButtonActionPerformed(ActionEvent evt) {
+    private void addUserButtonActionPerformed(ActionEvent event) {
         PanelsUtil.enablePanel(addUserPanel, new JPanel[]{searchUserPanel, mainAdminPanel});
         clearUserFields();
 
@@ -2972,7 +2925,7 @@ public class SadCRMForm extends ApplicationWindow {
         selectedUser = null;
     }
 
-    private void cancelUserButtonActionPerformed(ActionEvent evt) {
+    private void cancelUserButtonActionPerformed(ActionEvent event) {
         if (selectedUser == null) {
             PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{searchUserPanel, addUserPanel});
         } else {
@@ -2980,8 +2933,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void saveUserButtonActionPerformed(ActionEvent evt) {
-        // ZAPISZ USERA
+    private void saveUserButtonActionPerformed(ActionEvent event) {
         if (selectedUser == null) {
             // dodanie
             if (validateUser()) {
@@ -3046,7 +2998,7 @@ public class SadCRMForm extends ApplicationWindow {
         return isEdited;
     }
 
-    private void txtClientTelActionPerformed(ActionEvent evt) {
+    private void txtClientTelActionPerformed(ActionEvent event) {
         if (txtClientTel.isSelected()) {
             txtClientTelDate.setText(now());
         } else {
@@ -3055,7 +3007,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void processAdminSearch() {
-        //WYSZUKIWANIE NA PANELU ADMINA        
+        //WYSZUKIWANIE NA PANELU ADMINA
         PanelsUtil.enablePanel(searchUserPanel, new JPanel[]{addUserPanel, mainAdminPanel});
         selectedUser = null;
         tableUsers.setRowSelectionAllowed(true);
@@ -3065,7 +3017,7 @@ public class SadCRMForm extends ApplicationWindow {
         TableUtil.displayUsers(users, tableUsers);
     }
 
-    private void adminDetailsButtonActionPerformed(ActionEvent evt) {
+    private void adminDetailsButtonActionPerformed(ActionEvent event) {
         if (tableUsers.getSelectedRowCount() == 1) {
             editUserAction(tableUsers.getSelectedRow());
         } else {
@@ -3089,11 +3041,11 @@ public class SadCRMForm extends ApplicationWindow {
         txtAddUserType.setSelectedItem(selectedUser.getType());
     }
 
-    private void myAdminPanelButtonActionPerformed(ActionEvent evt) {
+    private void myAdminPanelButtonActionPerformed(ActionEvent event) {
         PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{addUserPanel, searchUserPanel});
     }
 
-    private void tableUsersMouseClicked(MouseEvent evt) {
+    private void tableUsersMouseClicked(MouseEvent event) {
         tableUsers.addMouseListener((MouseClickHandler) e -> {
             if (e.getClickCount() == 2) {
                 JTable target = (JTable) e.getSource();
@@ -3109,7 +3061,7 @@ public class SadCRMForm extends ApplicationWindow {
         txtChangePass2.setText("");
     }
 
-    private void changePasswordButtonActionPerformed(ActionEvent evt) {
+    private void changePasswordButtonActionPerformed(ActionEvent event) {
         if (!ValidationUtil.validatePassword(txtChangePass1.getText())) {
             messageBox("Hasło powinno mieć co najmniej 4 znaki, nie więcej niż 10 znaków. ")
                     .title("Zmiana hasła")
@@ -3134,13 +3086,13 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void cancelChangePasswordButtonActionPerformed(ActionEvent evt) {
+    private void cancelChangePasswordButtonActionPerformed(ActionEvent event) {
         jDialog1.setVisible(false);
         jDialog1.dispose();
     }
 
     private void processSearchClientsForManager() {
-        //WYSZUKIWANIE NA PANELU MANAGERA        
+        //WYSZUKIWANIE NA PANELU MANAGERA
         PanelsUtil.enablePanel(searchUserByManagerPanel, new JPanel[]{editUserByManagerPanel, mainManagerPanel, reportsByManagerPanel});
         selectedUser = null;
         tableClientsForManager.setRowSelectionAllowed(true);
@@ -3150,7 +3102,7 @@ public class SadCRMForm extends ApplicationWindow {
         TableUtil.displayClients(clients, tableClientsForManager);
     }
 
-    private void myManagerPanelButtonActionPerformed(ActionEvent evt) {
+    private void myManagerPanelButtonActionPerformed(ActionEvent event) {
         PanelsUtil.enablePanel(mainManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, reportsByManagerPanel});
     }
 
@@ -3165,7 +3117,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void managerSearchButtonActionPerformed(ActionEvent evt) {
+    private void managerSearchButtonActionPerformed(ActionEvent event) {
         List<Client> searchResults;
         if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
             // search by user and pesel
@@ -3182,7 +3134,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void managerResetFieldsAction(ActionEvent evt) {
+    private void managerResetFieldsAction(ActionEvent event) {
         txtManagerSearchPesel.setText("");
         txtManagerSearchSurname.setText("");
 
@@ -3190,7 +3142,7 @@ public class SadCRMForm extends ApplicationWindow {
         TableUtil.displayClients(clients, tableClientsForManager);
     }
 
-    private void tableClientsForManagerMouseClicked(MouseEvent evt) {
+    private void tableClientsForManagerMouseClicked(MouseEvent event) {
         tableClientsForManager.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -3204,7 +3156,7 @@ public class SadCRMForm extends ApplicationWindow {
         });
     }
 
-    private void managerEditButtonActionPerformed(ActionEvent evt) {
+    private void managerEditButtonActionPerformed(ActionEvent event) {
         if (tableClientsForManager.getSelectedRowCount() == 1) {
             editClientForManager(tableClientsForManager.getSelectedRow());
         } else {
@@ -3215,7 +3167,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void saveClientByManagerButtonzapiszKlientaAction(ActionEvent evt) {
+    private void saveClientByManagerButtonzapiszKlientaAction(ActionEvent event) {
         boolean isEdited = false;
         boolean isAddressEdited = false;
         Address address = null;
@@ -3356,7 +3308,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void editClientTelActionPerformed(ActionEvent evt) {
+    private void editClientTelActionPerformed(ActionEvent event) {
         if (editClientTel.isSelected()) {
             editClientTelDate.setText(now());
         } else {
@@ -3408,7 +3360,7 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void jButton2ActionPerformed(ActionEvent evt) {
+    private void jButton2ActionPerformed(ActionEvent event) {
         if (isReport) {
             processUserRaports();
         } else {
@@ -3416,13 +3368,13 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private void jButton3ActionPerformed(ActionEvent evt) {
+    private void jButton3ActionPerformed(ActionEvent event) {
         jDialog2.dispose();
         jDialog2.setVisible(false);
         jDialog2.setAlwaysOnTop(false);
     }
 
-    private void selectUserButtonActionPerformed(ActionEvent evt) {
+    private void selectUserButtonActionPerformed(ActionEvent event) {
         newUser = null;
         isReport = false;
         List<User> users = UserDAO.searchUsers();
@@ -3431,7 +3383,7 @@ public class SadCRMForm extends ApplicationWindow {
         jDialog2.setAlwaysOnTop(true);
     }
 
-    private void usersForManagerTableMouseClicked(MouseEvent evt) {
+    private void usersForManagerTableMouseClicked(MouseEvent event) {
         usersForManagerTable.addMouseListener((MouseClickHandler) e -> {
             if (e.getClickCount() == 2) {
                 if (isReport) {
@@ -3443,23 +3395,17 @@ public class SadCRMForm extends ApplicationWindow {
         });
     }
 
-    private void reportsButtonActionPerformed(ActionEvent evt) {
+    private void reportsButtonActionPerformed(ActionEvent event) {
         PanelsUtil.enablePanel(reportsByManagerPanel, new JPanel[]{editUserByManagerPanel, searchUserByManagerPanel, mainManagerPanel});
     }
 
-    private void jButton4ActionPerformed(ActionEvent evt) {
+    private void jButton4ActionPerformed(ActionEvent event) {
         int choose = cbReportDate.getSelectedIndex();
 
-        ReportsUtil util = new ReportsUtil();
-        util.createTelephonesReport(choose);
+        ReportsUtil.createTelephonesReport(choose);
     }
 
-    private void jButton5ActionPerformed(ActionEvent evt) {
-        ReportsUtil util = new ReportsUtil();
-        util.createSellChanceReport();
-    }
-
-    private void jButton6ActionPerformed(ActionEvent evt) {
+    private void jButton6ActionPerformed(ActionEvent event) {
         // wybierz pracownika do raportu
         newUser = null;
         isReport = true;
@@ -3469,7 +3415,7 @@ public class SadCRMForm extends ApplicationWindow {
         jDialog2.setAlwaysOnTop(true);
     }
 
-    private void jButton7ActionPerformed(ActionEvent evt) {
+    private void jButton7ActionPerformed(ActionEvent event) {
         if (!txtUserReport.getText().equalsIgnoreCase("")) {
             ReportsUtil util = new ReportsUtil();
             util.createUserReport(newUser);
@@ -3482,11 +3428,11 @@ public class SadCRMForm extends ApplicationWindow {
 
     }
 
-    private void dataExpButton2ActionPerformed(ActionEvent evt) {
+    private void dataExpButton2ActionPerformed(ActionEvent event) {
         // TODO add your handling code here:
     }
 
-    private void dataExpButton1ActionPerformed(ActionEvent evt) {
+    private void dataExpButton1ActionPerformed(ActionEvent event) {
         // TODO add your handling code here:
     }
 
@@ -3678,6 +3624,16 @@ public class SadCRMForm extends ApplicationWindow {
 
         cbChance.setSelectedItem(selectedClient.getSellChance());
         cbChance.setEnabled(false);
+    }
+
+    private void processLoggedUserPanel() {
+        if (loggedUser.getType() == ADMIN) {
+            processAdminPanel();
+        } else if (loggedUser.getType() == MANAGER) {
+            processManagerPanel();
+        } else {
+            processUserPanel();
+        }
     }
 
     private void processManagerPanel() {

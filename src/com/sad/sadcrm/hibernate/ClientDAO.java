@@ -37,12 +37,7 @@ public class ClientDAO {
     }
 
     public static Client getClientById(Integer id) {
-        return fetchClientById(getCredentials().add("id", id + ""));
-    }
-
-    public static List<Client> searchByCreateDate(String date) {
-        return fetchClientsByParameters(getCredentials()
-                .add("created", date));
+        return fetchClientById(getCredentials().add("id", id));
     }
 
     public static List<Client> phonesFromDate(int days) {
@@ -58,6 +53,11 @@ public class ClientDAO {
         calendar.add(DAY_OF_MONTH, -days);
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(calendar.getTime());
+    }
+
+    public static List<Client> searchByCreateDate(String date) {
+        return fetchClientsByParameters(getCredentials()
+                .add("created", date));
     }
 
     public static List<Client> searchClients() {
@@ -76,7 +76,7 @@ public class ClientDAO {
 
     public static List<Client> searchByUser(User user) {
         return fetchClientsByParameters(getCredentials()
-                .add("user_id", user.getId() + ""));
+                .add("user_id", user.getId()));
     }
 
     public static List<Client> searchBySurnameAndPesel(String surname, String pesel) {
@@ -84,45 +84,6 @@ public class ClientDAO {
                 .add("surname", surname)
                 .add("pesel", pesel)
         );
-    }
-
-    public static List<Client> searchByUserAndPesel(User user, String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("user_id", user.getId() + "")
-                .add("pesel", pesel)
-        );
-    }
-
-    public static List<Client> searchByUserSurnameAndPesel(User user, String surname, String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("user_id", user.getId() + "")
-                .add("surname", surname)
-                .add("pesel", pesel));
-    }
-
-    public static List<Client> searchByUserAndSurname(User user, String surname) {
-        return fetchClientsByParameters(getCredentials()
-                .add("user_id", user.getId() + "")
-                .add("surname", surname));
-    }
-
-    public static List<Client> searchBySurnameAndPeselAndHasMail(String surname, String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("surname", surname)
-                .add("pesel", pesel)
-                .add("has_mail", "true"));
-    }
-
-    public static List<Client> searchByPeselAndHasMail(String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("pesel", pesel)
-                .add("has_mail", "true"));
-    }
-
-    public static List<Client> searchBySurnameAndHasMail(String surname) {
-        return fetchClientsByParameters(getCredentials()
-                .add("surname", surname)
-                .add("has_mail", "true"));
     }
 
     public static List<Client> searchHasMail() {
@@ -139,14 +100,14 @@ public class ClientDAO {
         try {
             JSONObject object = HttpJson.get("/client/byId", parameters);
             return Client.createFromJson(object.getJSONObject("client"));
-        } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch client", e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (HttpJsonException exception) {
+            throw new RuntimeException("Could not fetch client", exception);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
-    private static List<Client> fetchClientsByParameters(Parameters parameters) {
+    public static List<Client> fetchClientsByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/client", parameters);
             List<Client> clients = new ArrayList<>();
@@ -156,7 +117,6 @@ public class ClientDAO {
             }
             return clients;
         } catch (HttpJsonException e) {
-            e.printStackTrace();
             throw new RuntimeException("Could not fetch clients", e);
         } catch (JSONException e) {
             throw new RuntimeException(e);

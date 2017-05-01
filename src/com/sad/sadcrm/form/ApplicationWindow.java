@@ -1,5 +1,7 @@
 package com.sad.sadcrm.form;
 
+import com.sad.sadcrm.model.User;
+
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,22 +9,29 @@ import java.util.Map;
 import static java.lang.String.format;
 import static javax.swing.JOptionPane.*;
 
-public class ApplicationWindow extends JFrame {
+class ApplicationWindow extends JFrame {
     private final static String DEFAULT_TITLE = "SadCRM";
+    private final String version;
 
     ApplicationWindow(String version) {
+        this.version = version;
         setSize(1000, 800);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle(format("Klient SadCRM v%s", version));
+        updateFormTitle(null);
+    }
+
+    void updateFormTitle(User user) {
+        if (user == null) {
+            setTitle(format("Klient SadCRM v%s", version));
+        } else {
+            setTitle(format("Klient SadCRM v%s (jako %s)", version, user.getType().getTitle()));
+        }
     }
 
     MessageBoxBuilder messageBox(String message) {
         return new MessageBoxBuilder(message);
-    }
-
-    private ApplicationWindow window() {
-        return this;
     }
 
     class MessageBoxBuilder {
@@ -32,32 +41,32 @@ public class ApplicationWindow extends JFrame {
         private Options options = new Options();
         private String[] textOptions;
 
-        public MessageBoxBuilder(String message) {
+        MessageBoxBuilder(String message) {
             this.message = message;
         }
 
-        public MessageBoxBuilder title(String title) {
+        MessageBoxBuilder title(String title) {
             this.title = title;
             return this;
         }
 
-        public MessageBoxBuilder type(int type) {
+        MessageBoxBuilder type(int type) {
             this.messageType = type;
             return this;
         }
 
-        public void show() {
-            showMessageDialog(window(), message, title, messageType);
+        void show() {
+            showMessageDialog(ApplicationWindow.this, message, title, messageType);
         }
 
         private void performAsk() {
             messageType = JOptionPane.QUESTION_MESSAGE;
-            int result = showOptionDialog(window(), message, title, DEFAULT_OPTION, messageType, null, textOptions, null);
+            int result = showOptionDialog(ApplicationWindow.this, message, title, DEFAULT_OPTION, messageType, null, textOptions, null);
             this.options.runnables.getOrDefault(result, () -> {
             }).run();
         }
 
-        public Options options(String... textOptions) {
+        Options options(String... textOptions) {
             this.textOptions = textOptions;
             return this.options;
         }
@@ -65,7 +74,7 @@ public class ApplicationWindow extends JFrame {
         class Options {
             private Map<Integer, Runnable> runnables = new HashMap<>();
 
-            public Options onYes(Runnable runnable) {
+            Options onYes(Runnable runnable) {
                 runnables.put(YES_OPTION, runnable);
                 return this;
             }
@@ -80,7 +89,7 @@ public class ApplicationWindow extends JFrame {
                 return this;
             }
 
-            public void ask() {
+            void ask() {
                 performAsk();
             }
         }

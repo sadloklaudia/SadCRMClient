@@ -28,7 +28,7 @@ public class AddressDAO {
     }
 
     public static Address fetchById(int id) {
-        return fetchAddressById(Parameters.getCredentials().add("id", id + ""));
+        return fetchAddressById(Parameters.getCredentials().add("id", id));
     }
 
     private static Address fetchAddressById(Parameters parameters) {
