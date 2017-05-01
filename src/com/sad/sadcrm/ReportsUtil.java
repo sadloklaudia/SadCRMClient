@@ -98,7 +98,7 @@ public class ReportsUtil {
     private static HSSFWorkbook createWorkbookForAllClients(List<Client> allClients) {
         HSSFWorkbook workbook = new HSSFWorkbook();
         createSheet(workbook.createSheet("new sheet"), allClients);
-        createSheetHeader(workbook.createSheet("new sheet").createRow(0));
+        createSheetHeader(workbook.createSheet("new sheet header").createRow(0));
         return workbook;
     }
 

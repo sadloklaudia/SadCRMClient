@@ -37,8 +37,8 @@ public class AddressDAO {
             return Address.createFromJson(object.getJSONObject("address"));
         } catch (HttpJsonException e) {
             throw new RuntimeException("Could not fetch address", e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }

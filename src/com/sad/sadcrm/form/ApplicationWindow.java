@@ -3,6 +3,7 @@ package com.sad.sadcrm.form;
 import com.sad.sadcrm.model.User;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ class ApplicationWindow extends JFrame {
 
     ApplicationWindow(String version) {
         this.version = version;
+        setMinimumSize(new Dimension(1000, 800));
+        setMaximumSize(new Dimension(1000, 800));
         setSize(1000, 800);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
