@@ -16,7 +16,6 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -1716,7 +1715,7 @@ public class SadCRMForm extends ApplicationWindow {
 
         saveClientByManagerButton.setIcon(icon("/icons/Save.gif"));
         saveClientByManagerButton.setText("Zapisz");
-        saveClientByManagerButton.addActionListener(this::saveClientByManagerButtonzapiszKlientaAction);
+        saveClientByManagerButton.addActionListener(this::saveClientByManagerButtonZapiszKlientaAction);
 
         cancelClientByManagerButton.setIcon(icon("/icons/Cancel.gif"));
         cancelClientByManagerButton.setText("Anuluj");
@@ -3067,23 +3066,27 @@ public class SadCRMForm extends ApplicationWindow {
                     .title("Zmiana hasła")
                     .type(ERROR_MESSAGE)
                     .show();
-        } else if (!txtChangePass1.getText().equalsIgnoreCase(txtChangePass2.getText())) {
+            return;
+        }
+
+        if (!txtChangePass1.getText().equalsIgnoreCase(txtChangePass2.getText())) {
             messageBox("Hasła muszą być takie same. ")
                     .title("Zmiana hasła")
                     .type(ERROR_MESSAGE)
                     .show();
-        } else {
-            loggedUser.setPassword(txtChangePass1.getText());
-            UserDAO.updateUser(loggedUser);
-
-            messageBox("Hasła zostało zmienione. ")
-                    .title("Zmiana hasła")
-                    .type(INFORMATION_MESSAGE)
-                    .show();
-
-            jDialog1.setVisible(false);
-            jDialog1.dispose();
+            return;
         }
+
+        loggedUser.setPassword(txtChangePass1.getText());
+        UserDAO.updateUser(loggedUser);
+
+        messageBox("Hasła zostało zmienione. ")
+                .title("Zmiana hasła")
+                .type(INFORMATION_MESSAGE)
+                .show();
+
+        jDialog1.setVisible(false);
+        jDialog1.dispose();
     }
 
     private void cancelChangePasswordButtonActionPerformed(ActionEvent event) {
@@ -3118,56 +3121,50 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void managerSearchButtonActionPerformed(ActionEvent event) {
-        List<Client> searchResults;
-        if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
-            // search by user and pesel
-            searchResults = ClientDAO.searchBySurnameAndPesel(txtManagerSearchSurname.getText(), txtManagerSearchPesel.getText());
-            TableUtil.displayClients(searchResults, tableClientsForManager);
-        } else if (txtManagerSearchSurname.getText().equalsIgnoreCase("") && !txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
-            // search by pesel
-            searchResults = ClientDAO.searchByPesel(txtManagerSearchPesel.getText());
-            TableUtil.displayClients(searchResults, tableClientsForManager);
-        } else if (!txtManagerSearchSurname.getText().equalsIgnoreCase("") && txtManagerSearchPesel.getText().equalsIgnoreCase("")) {
-            //search by surname
-            searchResults = ClientDAO.searchBySurname(txtManagerSearchSurname.getText());
-            TableUtil.displayClients(searchResults, tableClientsForManager);
+        Parameters parameters = Parameters.getCredentials();
+
+        if (!txtManagerSearchPesel.getText().isEmpty()) {
+            parameters.add("pesel", txtManagerSearchPesel.getText());
         }
+
+        if (!txtManagerSearchSurname.getText().isEmpty()) {
+            parameters.add("surname", txtManagerSearchSurname.getText());
+        }
+
+        TableUtil.displayClients(ClientDAO.fetchClientsByParameters(parameters), tableClientsForManager);
     }
 
     private void managerResetFieldsAction(ActionEvent event) {
         txtManagerSearchPesel.setText("");
         txtManagerSearchSurname.setText("");
 
-        List<Client> clients = ClientDAO.searchClients();
-        TableUtil.displayClients(clients, tableClientsForManager);
+        TableUtil.displayClients(ClientDAO.searchClients(), tableClientsForManager);
     }
 
-    private void tableClientsForManagerMouseClicked(MouseEvent event) {
-        tableClientsForManager.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+    private void tableClientsForManagerMouseClicked(MouseEvent mouseEvent) {
+        tableClientsForManager.addMouseListener((MouseClickHandler) event -> {
+            if (event.getClickCount() == 2) {
 
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
+                JTable target = (JTable) event.getSource();
+                int selectedRow = target.getSelectedRow();
 
-                    editClientForManager(row);
-                }
+                editClientForManager(selectedRow);
             }
         });
     }
 
     private void managerEditButtonActionPerformed(ActionEvent event) {
-        if (tableClientsForManager.getSelectedRowCount() == 1) {
-            editClientForManager(tableClientsForManager.getSelectedRow());
-        } else {
+        if (tableClientsForManager.getSelectedRowCount() == 0) {
             showMessageDialog(this,
                     "Wybierz klienta",
                     "Zaznacz wiersz",
                     ERROR_MESSAGE);
+            return;
         }
+        editClientForManager(tableClientsForManager.getSelectedRow());
     }
 
-    private void saveClientByManagerButtonzapiszKlientaAction(ActionEvent event) {
+    private void saveClientByManagerButtonZapiszKlientaAction(ActionEvent event) {
         boolean isEdited = false;
         boolean isAddressEdited = false;
         Address address = null;
@@ -3383,9 +3380,9 @@ public class SadCRMForm extends ApplicationWindow {
         jDialog2.setAlwaysOnTop(true);
     }
 
-    private void usersForManagerTableMouseClicked(MouseEvent event) {
-        usersForManagerTable.addMouseListener((MouseClickHandler) e -> {
-            if (e.getClickCount() == 2) {
+    private void usersForManagerTableMouseClicked(MouseEvent mouseEvent) {
+        usersForManagerTable.addMouseListener((MouseClickHandler) event -> {
+            if (event.getClickCount() == 2) {
                 if (isReport) {
                     processUserRaports();
                 } else {
@@ -3416,16 +3413,14 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void jButton7ActionPerformed(ActionEvent event) {
-        if (!txtUserReport.getText().equalsIgnoreCase("")) {
-            ReportsUtil util = new ReportsUtil();
-            util.createUserReport(newUser);
-        } else {
+        if (txtUserReport.getText().isEmpty()) {
             showMessageDialog(this,
                     "Wybierz pracownika",
                     "Błąd",
                     ERROR_MESSAGE);
+            return;
         }
-
+        ReportsUtil.createUserReport(newUser);
     }
 
     private void dataExpButton2ActionPerformed(ActionEvent event) {

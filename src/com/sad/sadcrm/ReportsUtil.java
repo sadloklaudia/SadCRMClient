@@ -245,7 +245,7 @@ public class ReportsUtil {
         }
     }
 
-    public void createUserReport(User user) {
+    public static void createUserReport(User user) {
         StyleBuilder boldStyle = stl.style().bold();
         StyleBuilder boldCenteredStyle = stl.style(boldStyle)
                 .setHorizontalAlignment(HorizontalAlignment.CENTER);
