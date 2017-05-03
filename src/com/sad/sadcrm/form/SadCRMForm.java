@@ -29,6 +29,7 @@ import static com.sad.sadcrm.model.UserType.MANAGER;
 import static java.awt.Color.lightGray;
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
+import static java.lang.Integer.valueOf;
 import static java.lang.String.format;
 import static javax.swing.BorderFactory.createEtchedBorder;
 import static javax.swing.BorderFactory.createLineBorder;
@@ -80,7 +81,7 @@ public class SadCRMForm extends ApplicationWindow {
         dataExpButton1.addActionListener(this::showPopupAdmin);
         dataExpButton2.addActionListener(this::showPopupAdmin);
 
-        exportUserDataSubmenu1.addActionListener(e -> ReportsUtil.exportMy(loggedUser));
+        exportUserDataSubmenu1.addActionListener(event -> ReportsUtil.exportMy(loggedUser));
 
         exportUserDataButton.addActionListener(this::showPopupUser);
     }
@@ -2339,7 +2340,7 @@ public class SadCRMForm extends ApplicationWindow {
                 try {
                     Date parsedDate = dateFormat.parse(txtClientTelDate.getText());
                     client.setTelDate(new Timestamp(parsedDate.getTime()));
-                } catch (ParseException e) {
+                } catch (ParseException exception) {
                     client.setTelDate(null);
                 }
                 client.setTel(txtClientTel.isSelected() ? "T" : "F");
@@ -2355,7 +2356,7 @@ public class SadCRMForm extends ApplicationWindow {
                 client.setProducts(createProductsEntry());
 
                 if (cbChance.getSelectedIndex() != 0) {
-                    client.setSellChance(cbChance.getSelectedItem().toString());
+                    client.setSellChance(cbChance.getSelectedItem());
                 }
 
                 try {
@@ -2849,9 +2850,9 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientModification.setText(now());
     }
 
-    private void tableClientsMouseClicked(MouseEvent event) {
-        tableClients.addMouseListener((MouseClickHandler) e -> {
-            if (e.getClickCount() == 2) {
+    private void tableClientsMouseClicked(MouseEvent mouseEvent) {
+        tableClients.addMouseListener((MouseClickHandler) event -> {
+            if (event.getClickCount() == 2) {
                 if (mail) {
                     int[] rows = tableClients.getSelectedRows();
                     String receipts = "";
@@ -2860,7 +2861,7 @@ public class SadCRMForm extends ApplicationWindow {
                     }
                     processMailPanel(receipts);
                 } else {
-                    JTable target = (JTable) e.getSource();
+                    JTable target = (JTable) event.getSource();
                     int row = target.getSelectedRow();
 
                     editClientAction(row);
@@ -2895,19 +2896,17 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void adminSearchButtonActionPerformed(ActionEvent event) {
-        List<User> searchResults;
+        Parameters parameters = Parameters.getCredentials();
 
-        if (!txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
-            searchResults = UserDAO.searchUsersBySurnameAndName(txtAdminSearchSurname.getText(), txtAdminSearchName.getText());
-        } else if (txtAdminSearchName.getText().isEmpty() && !txtAdminSearchSurname.getText().isEmpty()) {
-            searchResults = UserDAO.searchUsersBySurname(txtAdminSearchSurname.getText());
-        } else if (!txtAdminSearchName.getText().isEmpty() && txtAdminSearchSurname.getText().isEmpty()) {
-            searchResults = UserDAO.searchUsersByName(txtAdminSearchName.getText());
-        } else {
-            searchResults = UserDAO.searchUsers();
+        if (!txtAdminSearchSurname.getText().isEmpty()) {
+            parameters.add("surname", txtAdminSearchSurname.getText());
         }
 
-        TableUtil.displayUsers(searchResults, tableUsers);
+        if (!txtAdminSearchName.getText().isEmpty()) {
+            parameters.add("name", txtAdminSearchName.getText());
+        }
+
+        TableUtil.displayUsers(UserDAO.fetchUsersByParameters(parameters), tableUsers);
     }
 
     private void adminResetButtonActionPerformed(ActionEvent event) {
@@ -3045,10 +3044,10 @@ public class SadCRMForm extends ApplicationWindow {
         PanelsUtil.enablePanel(mainAdminPanel, new JPanel[]{addUserPanel, searchUserPanel});
     }
 
-    private void tableUsersMouseClicked(MouseEvent event) {
-        tableUsers.addMouseListener((MouseClickHandler) e -> {
-            if (e.getClickCount() == 2) {
-                JTable target = (JTable) e.getSource();
+    private void tableUsersMouseClicked(MouseEvent mouseEvent) {
+        tableUsers.addMouseListener((MouseClickHandler) event -> {
+            if (event.getClickCount() == 2) {
+                JTable target = (JTable) event.getSource();
                 editUserAction(target.getSelectedRow());
             }
         });
@@ -3111,12 +3110,12 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void exitCommonAction() {
-        int n = showOptionDialog(this,
+        int option = showOptionDialog(this,
                 "Czy napewno chcesz wyjść z programu?",
                 "Wyjście",
                 YES_NO_OPTION, INFORMATION_MESSAGE, null, new Object[]{"Tak", "Nie"}, null);
 
-        if (n == YES_OPTION) {
+        if (option == YES_OPTION) {
             System.exit(1);
         }
     }
@@ -3318,8 +3317,7 @@ public class SadCRMForm extends ApplicationWindow {
         newUser = null;
         if (usersForManagerTable.getSelectedRowCount() == 1) {
             String id = usersForManagerTable.getValueAt(usersForManagerTable.getSelectedRow(), 0).toString();
-            Integer i = Integer.valueOf(id);
-            newUser = UserDAO.getUserById(i);
+            newUser = UserDAO.getUserById(valueOf(id));
 
             txtUserReport.setText(newUser.getName() + " " + newUser.getSurname());
 
@@ -3338,16 +3336,10 @@ public class SadCRMForm extends ApplicationWindow {
         newUser = null;
         if (usersForManagerTable.getSelectedRowCount() == 1) {
             String id = usersForManagerTable.getValueAt(usersForManagerTable.getSelectedRow(), 0).toString();
-            Integer i = Integer.valueOf(id);
-            newUser = UserDAO.getUserById(i);
+            newUser = UserDAO.getUserById(valueOf(id));
             String newName = newUser.getName() + " " + newUser.getSurname().trim();
             if (!editClientCreator.getText().trim().equalsIgnoreCase(newName)) {
-                // different
                 editClientCreator.setText(newUser.getName() + " " + newUser.getSurname());
-
-            } else {
-                // the same
-
             }
 
             jDialog2.dispose();
@@ -3522,9 +3514,9 @@ public class SadCRMForm extends ApplicationWindow {
         return false;
     }
 
-    private void processMailPanel(String r) {
+    private void processMailPanel(String recipients) {
         PanelsUtil.enablePanel(sendMailPanel, new JPanel[]{mainUserPanel, addClientPanel, searchPanel});
-        txtRecipient.setText(r);
+        txtRecipient.setText(recipients);
 
         txtMailContent.setText("");
         txtMailSubject.setText("");

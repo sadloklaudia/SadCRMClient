@@ -102,7 +102,7 @@ public class User implements java.io.Serializable {
                 user.getInt("id"),
                 user.getString("name"),
                 user.getString("surname"),
-                UserType.fromTitle(user.getString("type")),
+                UserType.valueOf(user.getString("type")),
                 user.getString("login"),
                 "",
                 user.getString("created")

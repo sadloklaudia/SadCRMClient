@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import static com.sad.sadcrm.HttpJson.post;
 import static com.sad.sadcrm.HttpJson.postHTML;
 
-
 public class AddressDAO {
     public static void insert(Address address) {
         try {

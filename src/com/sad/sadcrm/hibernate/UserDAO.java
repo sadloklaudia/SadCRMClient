@@ -57,23 +57,7 @@ public class UserDAO {
         return fetchUsersByParameters(getCredentials());
     }
 
-    public static List<User> searchUsersBySurnameAndName(String surname, String name) {
-        return fetchUsersByParameters(getCredentials()
-                .add("surname", surname)
-                .add("name", name));
-    }
-
-    public static List<User> searchUsersBySurname(String surname) {
-        return fetchUsersByParameters(getCredentials()
-                .add("surname", surname));
-    }
-
-    public static List<User> searchUsersByName(String name) {
-        return fetchUsersByParameters(getCredentials()
-                .add("name", name));
-    }
-
-    private static User fetchUserByParameters(Parameters parameters) {
+    public static User fetchUserByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/user/byId", parameters);
             return User.createFromJson(object.getJSONObject("user"));
@@ -84,7 +68,7 @@ public class UserDAO {
         }
     }
 
-    private static List<User> fetchUsersByParameters(Parameters parameters) {
+    public static List<User> fetchUsersByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/user", parameters);
             List<User> users = new ArrayList<>();
