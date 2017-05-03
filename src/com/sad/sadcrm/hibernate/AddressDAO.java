@@ -26,7 +26,7 @@ public class AddressDAO {
         postHTML("/address/update", address.asParameters());
     }
 
-    public static Address fetchById(int id) {
+    public static Address getAddressById(int id) {
         return fetchAddressByParameters(Parameters.getCredentials().add("id", id));
     }
 

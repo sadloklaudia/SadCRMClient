@@ -57,14 +57,14 @@ public class UserDAO {
         return fetchUsersByParameters(getCredentials());
     }
 
-    public static User fetchUserByParameters(Parameters parameters) {
+    private static User fetchUserByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/user/byId", parameters);
             return User.createFromJson(object.getJSONObject("user"));
-        } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch user", e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (HttpJsonException exception) {
+            throw new RuntimeException("Could not fetch user", exception);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
@@ -77,10 +77,10 @@ public class UserDAO {
                 users.add(User.createFromJson(jsonUsers.getJSONObject(i)));
             }
             return users;
-        } catch (HttpJsonException e) {
-            throw new RuntimeException("Could not fetch users", e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (HttpJsonException exception) {
+            throw new RuntimeException("Could not fetch users", exception);
+        } catch (JSONException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }

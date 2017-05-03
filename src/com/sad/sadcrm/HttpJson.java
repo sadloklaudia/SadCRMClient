@@ -14,10 +14,15 @@ import java.util.Scanner;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpJson {
-    public final static String BASE_GLOBAL_URL = "http://sadcrm.pe.hu";
-    public final static String BASE_LOCAL_URL = "http://localhost/SadCRM";
+    private static String BASE_URL;
 
-    public static String BASE_URL;
+    public static void useGlobalServer() {
+        HttpJson.BASE_URL = "http://sadcrm.pe.hu";
+    }
+
+    public static void useLocalServer() {
+        HttpJson.BASE_URL = "http://localhost/SadCRM";
+    }
 
     public static JSONObject get(String urlToRead, Parameters parameters) throws HttpJsonException {
         String result = getHTML(urlToRead, parameters);

@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 @FunctionalInterface
-public interface MouseClickHandler extends MouseListener {
+public interface MouseClick extends MouseListener {
     @Override
     void mouseClicked(MouseEvent e);
 

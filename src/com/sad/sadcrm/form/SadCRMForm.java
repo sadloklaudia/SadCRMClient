@@ -172,7 +172,7 @@ public class SadCRMForm extends ApplicationWindow {
         usersForManagerTable.setMinimumSize(new Dimension(376, 72));
         usersForManagerTable.setPreferredSize(new Dimension(376, 72));
         usersForManagerTable.setSelectionMode(SINGLE_SELECTION);
-        usersForManagerTable.addMouseListener((MouseClickHandler) this::usersForManagerTableMouseClicked);
+        usersForManagerTable.addMouseListener((MouseClick) this::usersForManagerTableMouseClicked);
         jScrollPane3.setViewportView(usersForManagerTable);
 
         jButton2.setIcon(icon("/icons/Apply.gif"));
@@ -403,50 +403,50 @@ public class SadCRMForm extends ApplicationWindow {
         jLabel2.setFont(timesNewRomanBold24);
         jLabel2.setText("Dodanie nowego klienta");
 
-        jLabel4.setFont(timesNewRoman20);
-        jLabel4.setText("Imię*:");
+        nameLabel.setFont(timesNewRoman20);
+        nameLabel.setText("Imię*:");
 
-        jLabel5.setFont(timesNewRoman20);
-        jLabel5.setText("Nazwisko*:");
+        surnameLabel.setFont(timesNewRoman20);
+        surnameLabel.setText("Nazwisko*:");
 
-        jLabel6.setFont(timesNewRoman20);
-        jLabel6.setText("Pesel*");
+        peselLabel.setFont(timesNewRoman20);
+        peselLabel.setText("Pesel*");
 
-        jLabel7.setFont(timesNewRoman20);
-        jLabel7.setText("Nr telefonu 1");
+        phone1Label.setFont(timesNewRoman20);
+        phone1Label.setText("Nr telefonu 1");
 
-        jLabel8.setFont(timesNewRoman20);
-        jLabel8.setText("Nr telefonu 2");
+        phone2Label.setFont(timesNewRoman20);
+        phone2Label.setText("Nr telefonu 2");
 
-        jLabel9.setFont(timesNewRoman20);
-        jLabel9.setText("Klient VIP");
+        clientVipLabel.setFont(timesNewRoman20);
+        clientVipLabel.setText("Klient VIP");
 
-        jLabel10.setFont(timesNewRoman20);
-        jLabel10.setText("Adres mail");
+        mailLabel.setFont(timesNewRoman20);
+        mailLabel.setText("Adres mail");
 
-        jLabel11.setFont(timesNewRoman20);
-        jLabel11.setText("Uwagi");
+        additionalsLabel.setFont(timesNewRoman20);
+        additionalsLabel.setText("Uwagi");
 
-        jLabel12.setFont(timesNewRoman20);
-        jLabel12.setText("Utworzony przez");
+        ownerLabel.setFont(timesNewRoman20);
+        ownerLabel.setText("Utworzony przez");
 
-        jLabel13.setFont(timesNewRoman20);
-        jLabel13.setText("Data utworzenia");
+        createDateLabel.setFont(timesNewRoman20);
+        createDateLabel.setText("Data utworzenia");
 
-        jLabel15.setFont(timesNewRoman20);
-        jLabel15.setText("Ulica*");
+        streetLabel.setFont(timesNewRoman20);
+        streetLabel.setText("Ulica*");
 
-        jLabel16.setFont(timesNewRoman20);
-        jLabel16.setText("Nr budynku*");
+        buildingNoLabel.setFont(timesNewRoman20);
+        buildingNoLabel.setText("Nr budynku*");
 
-        jLabel17.setFont(timesNewRoman20);
-        jLabel17.setText("Miasto*");
+        cityLabel.setFont(timesNewRoman20);
+        cityLabel.setText("Miasto*");
 
-        jLabel18.setFont(timesNewRoman20);
-        jLabel18.setText("Kod pocztowy*");
+        postalLabel.setFont(timesNewRoman20);
+        postalLabel.setText("Kod pocztowy*");
 
-        jLabel19.setFont(timesNewRoman20);
-        jLabel19.setText("Produkty");
+        productsLabel.setFont(timesNewRoman20);
+        productsLabel.setText("Produkty");
 
         txtClientDesc.setColumns(20);
         txtClientDesc.setRows(5);
@@ -464,31 +464,31 @@ public class SadCRMForm extends ApplicationWindow {
         cancelClientButton.setText("Anuluj");
         cancelClientButton.addActionListener(this::anulujZapisKlientaAction);
 
-        cbPersonalAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbPersonalAcc.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbPersonalAcc.setText("Konto osobiste");
 
-        cbCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbCurrencyAcc.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbCurrencyAcc.setText("Konto walutowe");
 
-        cbLocate.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbLocate.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbLocate.setText("Lokata");
 
-        cbCurrentCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbCurrentCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbCurrentCredit.setText("Kredyt gotówkowy");
 
-        cbHomeCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbHomeCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbHomeCredit.setText("Kredyt hipoteczny");
 
-        cbRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbRepeatedCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbRepeatedCredit.setText("Kredyt odnawialny");
 
-        cbCreditCard.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbCreditCard.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbCreditCard.setText("Karta kredytowa");
 
         cbChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
 
-        jLabel14.setFont(timesNewRoman20);
-        jLabel14.setText("Szansa sprzedaży");
+        sellChanceLabel.setFont(timesNewRoman20);
+        sellChanceLabel.setText("Szansa sprzedaży");
 
         editClientButton.setIcon(icon("/icons/Repair.gif"));
         editClientButton.setText("Edytuj");
@@ -506,11 +506,11 @@ public class SadCRMForm extends ApplicationWindow {
         txtClientModification.setEditable(false);
         txtClientModification.setEnabled(false);
 
-        lab.setFont(timesNewRoman20);
-        lab.setText("Telefon do klienta");
+        clientPhoneLabel.setFont(timesNewRoman20);
+        clientPhoneLabel.setText("Telefon do klienta");
 
-        jLabel44.setFont(timesNewRoman20);
-        jLabel44.setText("Data telefonu");
+        phoneDateLabel.setFont(timesNewRoman20);
+        phoneDateLabel.setText("Data telefonu");
 
         txtClientTel.setEnabled(false);
         txtClientTel.addActionListener(this::txtClientTelActionPerformed);
@@ -526,9 +526,9 @@ public class SadCRMForm extends ApplicationWindow {
                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                        .addComponent(jLabel13)
-                                                        .addComponent(jLabel9)
-                                                        .addComponent(jLabel12)
+                                                        .addComponent(createDateLabel)
+                                                        .addComponent(clientVipLabel)
+                                                        .addComponent(ownerLabel)
                                                         .addComponent(labelClientModDate))
                                                 .addGap(6, 6, 6)
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
@@ -545,11 +545,11 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addComponent(txtClientCreator, LEADING, GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                        .addComponent(jLabel6)
-                                                        .addComponent(jLabel5)
-                                                        .addComponent(jLabel8)
+                                                        .addComponent(peselLabel)
+                                                        .addComponent(surnameLabel)
+                                                        .addComponent(phone2Label)
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                                .addComponent(jLabel7)
+                                                                .addComponent(phone1Label)
                                                                 .addGap(35, 35, 35)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                                         .addComponent(txtClientPhone1, GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
@@ -559,9 +559,9 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(txtClientPhone2, PREFERRED_SIZE, 134, PREFERRED_SIZE)))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(jLabel4)
-                                                                        .addComponent(jLabel10)
-                                                                        .addComponent(jLabel11))
+                                                                        .addComponent(nameLabel)
+                                                                        .addComponent(mailLabel)
+                                                                        .addComponent(additionalsLabel))
                                                                 .addGap(59, 59, 59)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                                         .addComponent(jScrollPane1, PREFERRED_SIZE, 232, PREFERRED_SIZE)
@@ -578,34 +578,34 @@ public class SadCRMForm extends ApplicationWindow {
                                                                         .addComponent(cbRepeatedCredit)
                                                                         .addComponent(cbCreditCard)
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                                                .addComponent(jLabel44)
+                                                                                .addComponent(phoneDateLabel)
                                                                                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                                 .addComponent(txtClientTelDate, PREFERRED_SIZE, 145, PREFERRED_SIZE))
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                                                .addComponent(jLabel14)
+                                                                                .addComponent(sellChanceLabel)
                                                                                 .addPreferredGap(RELATED)
                                                                                 .addComponent(cbChance, PREFERRED_SIZE, 139, PREFERRED_SIZE))
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                                                .addComponent(lab)
+                                                                                .addComponent(clientPhoneLabel)
                                                                                 .addPreferredGap(RELATED)
                                                                                 .addComponent(txtClientTel))))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addGap(14, 14, 14)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
-                                                                                .addComponent(jLabel18)
+                                                                                .addComponent(postalLabel)
                                                                                 .addGap(18, 18, 18)
                                                                                 .addComponent(txtClientPostalCode, PREFERRED_SIZE, 165, PREFERRED_SIZE))
                                                                         .addGroup(addClientPanelLayout.createParallelGroup(TRAILING, false)
                                                                                 .addGroup(LEADING, addClientPanelLayout.createSequentialGroup()
-                                                                                        .addComponent(jLabel15)
+                                                                                        .addComponent(streetLabel)
                                                                                         .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                                         .addComponent(txtClientStreet, PREFERRED_SIZE, 165, PREFERRED_SIZE))
                                                                                 .addGroup(LEADING, addClientPanelLayout.createSequentialGroup()
                                                                                         .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                                                .addComponent(jLabel16)
-                                                                                                .addComponent(jLabel17)
-                                                                                                .addComponent(jLabel19))
+                                                                                                .addComponent(buildingNoLabel)
+                                                                                                .addComponent(cityLabel)
+                                                                                                .addComponent(productsLabel))
                                                                                         .addGap(41, 41, 41)
                                                                                         .addGroup(addClientPanelLayout.createParallelGroup(LEADING, false)
                                                                                                 .addComponent(txtClientCity, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
@@ -629,13 +629,13 @@ public class SadCRMForm extends ApplicationWindow {
                                                 .addComponent(txtClientVip)
                                                 .addGap(7, 7, 7)
                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jLabel13)
+                                                        .addComponent(createDateLabel)
                                                         .addComponent(txtClientCreateDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
                                                         .addComponent(txtClientTelDate, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                                        .addComponent(jLabel44))
+                                                        .addComponent(phoneDateLabel))
                                                 .addPreferredGap(RELATED)
                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jLabel12)
+                                                        .addComponent(ownerLabel)
                                                         .addComponent(txtClientCreator, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                 .addPreferredGap(RELATED)
                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -647,22 +647,22 @@ public class SadCRMForm extends ApplicationWindow {
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addGap(2, 2, 2)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel15)
+                                                                        .addComponent(streetLabel)
                                                                         .addComponent(txtClientStreet, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel16)
+                                                                        .addComponent(buildingNoLabel)
                                                                         .addComponent(txtClientNumber, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel17)
+                                                                        .addComponent(cityLabel)
                                                                         .addComponent(txtClientCity, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel18)
+                                                                        .addComponent(postalLabel)
                                                                         .addComponent(txtClientPostalCode, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
-                                                                .addComponent(jLabel19)
+                                                                .addComponent(productsLabel)
                                                                 .addPreferredGap(RELATED)
                                                                 .addComponent(cbPersonalAcc)
                                                                 .addPreferredGap(RELATED)
@@ -679,46 +679,46 @@ public class SadCRMForm extends ApplicationWindow {
                                                                 .addComponent(cbCreditCard)
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel14)
+                                                                        .addComponent(sellChanceLabel)
                                                                         .addComponent(cbChance, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel4)
+                                                                        .addComponent(nameLabel)
                                                                         .addComponent(txtClientName, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel5)
+                                                                        .addComponent(surnameLabel)
                                                                         .addComponent(txtClientSurname, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(jLabel6)
+                                                                        .addComponent(peselLabel)
                                                                         .addComponent(txtClientPesel, TRAILING, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                                         .addComponent(txtClientPhone1, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                                                        .addComponent(jLabel7))
+                                                                        .addComponent(phone1Label))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel8)
+                                                                        .addComponent(phone2Label)
                                                                         .addComponent(txtClientPhone2, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(txtClientMail, PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, PREFERRED_SIZE)
-                                                                        .addComponent(jLabel10))
+                                                                        .addComponent(mailLabel))
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
-                                                                        .addComponent(jLabel11)
+                                                                        .addComponent(additionalsLabel)
                                                                         .addComponent(jScrollPane1, PREFERRED_SIZE, 197, PREFERRED_SIZE))))
                                                 .addGroup(addClientPanelLayout.createParallelGroup(LEADING)
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addGap(11, 11, 11)
-                                                                .addComponent(jLabel9))
+                                                                .addComponent(clientVipLabel))
                                                         .addGroup(addClientPanelLayout.createSequentialGroup()
                                                                 .addPreferredGap(RELATED)
                                                                 .addGroup(addClientPanelLayout.createParallelGroup(TRAILING)
                                                                         .addComponent(txtClientTel)
-                                                                        .addComponent(lab))))
+                                                                        .addComponent(clientPhoneLabel))))
                                                 .addPreferredGap(RELATED, 125, Short.MAX_VALUE)))
                                 .addGroup(addClientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveClientButton)
@@ -763,7 +763,7 @@ public class SadCRMForm extends ApplicationWindow {
         tableClients.setSelectionMode(SINGLE_SELECTION);
         tableClients.getTableHeader().setResizingAllowed(false);
         tableClients.getTableHeader().setReorderingAllowed(false);
-        tableClients.addMouseListener((MouseClickHandler) this::tableClientsMouseClicked);
+        tableClients.addMouseListener((MouseClick) this::tableClientsMouseClicked);
         jScrollPane7.setViewportView(tableClients);
 
         txtDetailsClientButton.setIcon(icon("/icons/About.gif"));
@@ -1319,7 +1319,7 @@ public class SadCRMForm extends ApplicationWindow {
         tableUsers.setPreferredSize(new Dimension(780, 100));
         tableUsers.getTableHeader().setResizingAllowed(false);
         tableUsers.getTableHeader().setReorderingAllowed(false);
-        tableUsers.addMouseListener((MouseClickHandler) this::tableUsersMouseClicked);
+        tableUsers.addMouseListener((MouseClick) this::tableUsersMouseClicked);
         jScrollPane8.setViewportView(tableUsers);
 
         adminDetailsButton.setIcon(icon("/icons/Repair.gif"));
@@ -1600,7 +1600,7 @@ public class SadCRMForm extends ApplicationWindow {
         tableClientsForManager.setPreferredSize(new Dimension(780, 100));
         tableClientsForManager.getTableHeader().setResizingAllowed(false);
         tableClientsForManager.getTableHeader().setReorderingAllowed(false);
-        tableClientsForManager.addMouseListener((MouseClickHandler) this::tableClientsForManagerMouseClicked);
+        tableClientsForManager.addMouseListener((MouseClick) this::tableClientsForManagerMouseClicked);
         jScrollPane9.setViewportView(tableClientsForManager);
 
         managerEditButton.setIcon(icon("/icons/Repair.gif"));
@@ -1723,25 +1723,25 @@ public class SadCRMForm extends ApplicationWindow {
         cancelClientByManagerButton.setText("Anuluj");
         cancelClientByManagerButton.addActionListener(event -> processSearchClientsForManager());
 
-        cbEditPersonalAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditPersonalAcc.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditPersonalAcc.setText("Konto osobiste");
 
-        cbEditCurrencyAcc.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditCurrencyAcc.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditCurrencyAcc.setText("Konto walutowe");
 
-        cbEditLocate.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditLocate.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditLocate.setText("Lokata");
 
-        cbEditCurrentCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditCurrentCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditCurrentCredit.setText("Kredyt gotówkowy");
 
-        cbEditHomeCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditHomeCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditHomeCredit.setText("Kredyt hipoteczny");
 
-        cbEditRepeatedCredit.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditRepeatedCredit.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditRepeatedCredit.setText("Kredyt odnawialny");
 
-        cbEditCreditCard.setFont(new java.awt.Font("Times New Roman,", PLAIN, 18));
+        cbEditCreditCard.setFont(new Font("Times New Roman,", PLAIN, 18));
         cbEditCreditCard.setText("Karta kredytowa");
 
         cbEditChance.setModel(new DefaultComboBoxModel<>(new String[]{"Wybierz", "Konto osobiste", "Konto walutowe", "Lokata", "Kredyt gotówkowy", "Kredyt hipoteczny", "Kredyt odnawialny", "Karta kredytowa"}));
@@ -2184,9 +2184,7 @@ public class SadCRMForm extends ApplicationWindow {
         leftPanel.setVisible(true);
         topPanel.setVisible(true);
 
-        if (!showServerLocationMessageBox()) {
-            return;
-        }
+        showServerLocationMessageBox();
 
         try {
             LoginResponse response = UserDAO.login(txtLogin.getText(), txtPassword.getText());
@@ -2200,26 +2198,14 @@ public class SadCRMForm extends ApplicationWindow {
         }
     }
 
-    private boolean showServerLocationMessageBox() {
-        String[] buttons = {"Z globalnym", "Z lokalnym", "Anuluj"};
-
-        int chosenOption = showOptionDialog(this,
-                "Wybierz server SadCRM z którym chcesz się połączyć:",
-                "Confirmation",
-                DEFAULT_OPTION, QUESTION_MESSAGE,
-                null,
-                buttons, buttons[0]);
-
-        switch (chosenOption) {
-            case 0:
-                HttpJson.BASE_URL = HttpJson.BASE_GLOBAL_URL;
-                return true;
-            case 1:
-                HttpJson.BASE_URL = HttpJson.BASE_LOCAL_URL;
-                return true;
-            default:
-                return false;
-        }
+    private void showServerLocationMessageBox() {
+        messageBox("Wybierz server SadCRM z którym chcesz się połączyć:")
+                .title("Confirmation")
+                .type(QUESTION_MESSAGE)
+                .options("Z globalnym", "Z lokalnym")
+                .on(0, HttpJson::useGlobalServer)
+                .on(1, HttpJson::useLocalServer)
+                .ask();
     }
 
     private void showVersionParityMessageBox(LoginResponse response) {
@@ -2851,7 +2837,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void tableClientsMouseClicked(MouseEvent mouseEvent) {
-        tableClients.addMouseListener((MouseClickHandler) event -> {
+        tableClients.addMouseListener((MouseClick) event -> {
             if (event.getClickCount() == 2) {
                 if (mail) {
                     int[] rows = tableClients.getSelectedRows();
@@ -3006,14 +2992,12 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void processAdminSearch() {
-        //WYSZUKIWANIE NA PANELU ADMINA
         PanelsUtil.enablePanel(searchUserPanel, new JPanel[]{addUserPanel, mainAdminPanel});
         selectedUser = null;
         tableUsers.setRowSelectionAllowed(true);
         tableUsers.setSelectionMode(SINGLE_SELECTION);
 
-        List<User> users = UserDAO.searchUsers();
-        TableUtil.displayUsers(users, tableUsers);
+        TableUtil.displayUsers(UserDAO.searchUsers(), tableUsers);
     }
 
     private void adminDetailsButtonActionPerformed(ActionEvent event) {
@@ -3045,7 +3029,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void tableUsersMouseClicked(MouseEvent mouseEvent) {
-        tableUsers.addMouseListener((MouseClickHandler) event -> {
+        tableUsers.addMouseListener((MouseClick) event -> {
             if (event.getClickCount() == 2) {
                 JTable target = (JTable) event.getSource();
                 editUserAction(target.getSelectedRow());
@@ -3142,7 +3126,7 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void tableClientsForManagerMouseClicked(MouseEvent mouseEvent) {
-        tableClientsForManager.addMouseListener((MouseClickHandler) event -> {
+        tableClientsForManager.addMouseListener((MouseClick) event -> {
             if (event.getClickCount() == 2) {
 
                 JTable target = (JTable) event.getSource();
@@ -3367,14 +3351,13 @@ public class SadCRMForm extends ApplicationWindow {
     private void selectUserButtonActionPerformed(ActionEvent event) {
         newUser = null;
         isReport = false;
-        List<User> users = UserDAO.searchUsers();
-        TableUtil.displayUsersForManager(users, usersForManagerTable);
+        TableUtil.displayUsersForManager(UserDAO.searchUsers(), usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);
     }
 
     private void usersForManagerTableMouseClicked(MouseEvent mouseEvent) {
-        usersForManagerTable.addMouseListener((MouseClickHandler) event -> {
+        usersForManagerTable.addMouseListener((MouseClick) event -> {
             if (event.getClickCount() == 2) {
                 if (isReport) {
                     processUserRaports();
@@ -3396,11 +3379,9 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void jButton6ActionPerformed(ActionEvent event) {
-        // wybierz pracownika do raportu
         newUser = null;
         isReport = true;
-        List<User> users = UserDAO.searchUsers();
-        TableUtil.displayUsersForManager(users, usersForManagerTable);
+        TableUtil.displayUsersForManager(UserDAO.searchUsers(), usersForManagerTable);
         jDialog2.setVisible(true);
         jDialog2.setAlwaysOnTop(true);
     }
@@ -3740,16 +3721,16 @@ public class SadCRMForm extends ApplicationWindow {
     private JDialog jDialog1 = new JDialog();
     private JDialog jDialog2 = new JDialog();
     private JLabel jLabel1 = new JLabel();
-    private JLabel jLabel10 = new JLabel();
-    private JLabel jLabel11 = new JLabel();
-    private JLabel jLabel12 = new JLabel();
-    private JLabel jLabel13 = new JLabel();
-    private JLabel jLabel14 = new JLabel();
-    private JLabel jLabel15 = new JLabel();
-    private JLabel jLabel16 = new JLabel();
-    private JLabel jLabel17 = new JLabel();
-    private JLabel jLabel18 = new JLabel();
-    private JLabel jLabel19 = new JLabel();
+    private JLabel mailLabel = new JLabel();
+    private JLabel additionalsLabel = new JLabel();
+    private JLabel ownerLabel = new JLabel();
+    private JLabel createDateLabel = new JLabel();
+    private JLabel sellChanceLabel = new JLabel();
+    private JLabel streetLabel = new JLabel();
+    private JLabel buildingNoLabel = new JLabel();
+    private JLabel cityLabel = new JLabel();
+    private JLabel postalLabel = new JLabel();
+    private JLabel productsLabel = new JLabel();
     private JLabel jLabel2 = new JLabel();
     private JLabel jLabel20 = new JLabel();
     private JLabel jLabel21 = new JLabel();
@@ -3772,18 +3753,18 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel jLabel37 = new JLabel();
     private JLabel jLabel38 = new JLabel();
     private JLabel jLabel39 = new JLabel();
-    private JLabel jLabel4 = new JLabel();
+    private JLabel nameLabel = new JLabel();
     private JLabel jLabel40 = new JLabel();
     private JLabel jLabel41 = new JLabel();
     private JLabel jLabel42 = new JLabel();
     private JLabel jLabel43 = new JLabel();
-    private JLabel jLabel44 = new JLabel();
+    private JLabel phoneDateLabel = new JLabel();
     private JLabel jLabel45 = new JLabel();
     private JLabel jLabel46 = new JLabel();
     private JLabel jLabel47 = new JLabel();
     private JLabel jLabel48 = new JLabel();
     private JLabel jLabel49 = new JLabel();
-    private JLabel jLabel5 = new JLabel();
+    private JLabel surnameLabel = new JLabel();
     private JLabel jLabel50 = new JLabel();
     private JLabel jLabel51 = new JLabel();
     private JLabel jLabel52 = new JLabel();
@@ -3794,14 +3775,14 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel jLabel57 = new JLabel();
     private JLabel jLabel58 = new JLabel();
     private JLabel jLabel59 = new JLabel();
-    private JLabel jLabel6 = new JLabel();
+    private JLabel peselLabel = new JLabel();
     private JLabel jLabel60 = new JLabel();
     private JLabel jLabel61 = new JLabel();
     private JLabel jLabel66 = new JLabel();
     private JLabel jLabel67 = new JLabel();
     private JLabel jLabel68 = new JLabel();
     private JLabel jLabel69 = new JLabel();
-    private JLabel jLabel7 = new JLabel();
+    private JLabel phone1Label = new JLabel();
     private JLabel jLabel70 = new JLabel();
     private JLabel jLabel71 = new JLabel();
     private JLabel jLabel72 = new JLabel();
@@ -3812,7 +3793,7 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel jLabel77 = new JLabel();
     private JLabel jLabel78 = new JLabel();
     private JLabel jLabel79 = new JLabel();
-    private JLabel jLabel8 = new JLabel();
+    private JLabel phone2Label = new JLabel();
     private JLabel jLabel80 = new JLabel();
     private JLabel jLabel81 = new JLabel();
     private JLabel jLabel82 = new JLabel();
@@ -3820,7 +3801,7 @@ public class SadCRMForm extends ApplicationWindow {
     private JLabel jLabel84 = new JLabel();
     private JLabel jLabel85 = new JLabel();
     private JLabel jLabel86 = new JLabel();
-    private JLabel jLabel9 = new JLabel();
+    private JLabel clientVipLabel = new JLabel();
     private JScrollPane jScrollPane1 = new JScrollPane();
     private JScrollPane jScrollPane2 = new JScrollPane();
     private JScrollPane jScrollPane3 = new JScrollPane();
@@ -3829,7 +3810,7 @@ public class SadCRMForm extends ApplicationWindow {
     private JScrollPane jScrollPane7 = new JScrollPane();
     private JScrollPane jScrollPane8 = new JScrollPane();
     private JScrollPane jScrollPane9 = new JScrollPane();
-    private JLabel lab = new JLabel();
+    private JLabel clientPhoneLabel = new JLabel();
     private JLabel lab1 = new JLabel();
     private JLabel labelClientModDate = new JLabel();
     private JLabel labelClientModDate1 = new JLabel();

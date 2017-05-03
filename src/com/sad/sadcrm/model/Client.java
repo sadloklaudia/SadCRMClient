@@ -217,22 +217,22 @@ public class Client implements java.io.Serializable {
                 .add("telDate", telDate == null ? "" : telDate.toString());
     }
 
-    public static Client createFromJson(JSONObject jsonObject) throws JSONException {
+    public static Client createFromJson(JSONObject json) throws JSONException {
         return new Client(
-                jsonObject.getInt("id"),
-                AddressDAO.fetchById(jsonObject.getInt("address_id")),
-                UserDAO.getUserById(jsonObject.getInt("user_id")),
-                jsonObject.getString("name"),
-                jsonObject.getString("surname"),
-                jsonObject.getString("pesel"),
-                jsonObject.getString("phone1"),
-                jsonObject.getString("phone2"),
-                jsonObject.getString("mail"),
-                jsonObject.getString("description"),
-                jsonObject.getString("vip").equals("true"),
-                jsonObject.getString("created"),
-                jsonObject.getString("products"),
-                jsonObject.getString("sellChance")
+                json.getInt("id"),
+                AddressDAO.getAddressById(json.getInt("address_id")),
+                UserDAO.getUserById(json.getInt("user_id")),
+                json.getString("name"),
+                json.getString("surname"),
+                json.getString("pesel"),
+                json.getString("phone1"),
+                json.getString("phone2"),
+                json.getString("mail"),
+                json.getString("description"),
+                json.getString("vip").equals("true"),
+                json.getString("created"),
+                json.getString("products"),
+                json.getString("sellChance")
         );
     }
 }

@@ -64,7 +64,8 @@ class ApplicationWindow extends JFrame {
 
         private void performAsk() {
             messageType = JOptionPane.QUESTION_MESSAGE;
-            int result = showOptionDialog(ApplicationWindow.this, message, title, DEFAULT_OPTION, messageType, null, textOptions, null);
+            int result = showOptionDialog(ApplicationWindow.this,
+                    message, title, DEFAULT_OPTION, messageType, null, textOptions, textOptions[0]);
             this.options.runnables.getOrDefault(result, () -> {
             }).run();
         }
