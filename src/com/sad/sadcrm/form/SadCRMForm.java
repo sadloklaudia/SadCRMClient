@@ -39,6 +39,7 @@ import static javax.swing.JOptionPane.*;
 import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 import static javax.swing.LayoutStyle.ComponentPlacement.UNRELATED;
+import static javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import static javax.swing.SwingConstants.HORIZONTAL;
 
@@ -2703,29 +2704,29 @@ public class SadCRMForm extends ApplicationWindow {
 
     private void processSearchPanel() {
         PanelsUtil.enablePanel(searchPanel, new JPanel[]{mainUserPanel, addClientPanel, sendMailPanel});
+        changeSelectionTypeBasedOnMail();
 
+        Parameters parameters = Parameters.getCredentials();
+        if (mail) {
+            parameters.hasMail(true);
+        }
         if (myContacts) {
-            txtSendMultipleMail.setVisible(false);
-            txtDetailsClientButton.setVisible(true);
-            tableClients.setRowSelectionAllowed(true);
-            tableClients.setSelectionMode(SINGLE_SELECTION);
+            parameters.byUser(loggedUser);
+        }
+        TableUtil.displayClients(ClientDAO.fetchClientsByParameters(parameters), tableClients);
+    }
 
-            TableUtil.displayClients(ClientDAO.searchByUser(loggedUser), tableClients);
-        } else if (mail) {
+    private void changeSelectionTypeBasedOnMail() {
+        if (mail) {
             txtSendMultipleMail.setVisible(true);
             txtDetailsClientButton.setVisible(false);
-            tableClients.setRowSelectionAllowed(true);
-            tableClients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-            TableUtil.displayClients(ClientDAO.searchHasMail(), tableClients);
+            tableClients.setSelectionMode(MULTIPLE_INTERVAL_SELECTION);
         } else {
             txtSendMultipleMail.setVisible(false);
             txtDetailsClientButton.setVisible(true);
-            tableClients.setRowSelectionAllowed(true);
             tableClients.setSelectionMode(SINGLE_SELECTION);
-
-            TableUtil.displayClients(ClientDAO.searchClients(), tableClients);
         }
+        tableClients.setRowSelectionAllowed(true);
     }
 
     private void korespondencjaSeryjnaAction(ActionEvent event) {
@@ -2780,7 +2781,8 @@ public class SadCRMForm extends ApplicationWindow {
 
         if (myContacts) {
             parameters.add("user_id", loggedUser.getId());
-        } else if (mail) {
+        }
+        if (mail) {
             parameters.add("has_mail", "true");
         }
         if (!txtSearchSurname.getText().isEmpty()) {
@@ -2796,16 +2798,15 @@ public class SadCRMForm extends ApplicationWindow {
     private void resetPolSzukaniaKlientaAction(ActionEvent event) {
         txtSearchPesel.setText("");
         txtSearchSurname.setText("");
-        List<Client> clients;
+
+        Parameters parameters = Parameters.getCredentials();
         if (myContacts) {
-            clients = ClientDAO.searchClients();
-        } else if (mail) {
-            clients = ClientDAO.searchHasMail();
-        } else {
-            clients = ClientDAO.searchByUser(loggedUser);
+            parameters.byUser(loggedUser);
         }
-        TableUtil.displayClients(clients, tableClients);
-        TableUtil.displayClients(clients, tableClients);
+        if (mail) {
+            parameters.hasMail(true);
+        }
+        TableUtil.displayClients(ClientDAO.fetchClientsByParameters(parameters), tableClients);
     }
 
     private void szczegolyKlientaAction(ActionEvent event) {

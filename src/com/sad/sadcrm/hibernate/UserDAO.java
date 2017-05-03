@@ -49,7 +49,7 @@ public class UserDAO {
     }
 
     public static User getUserById(Integer id) {
-        return fetchUserById(getCredentials()
+        return fetchUserByParameters(getCredentials()
                 .add("id", Integer.toString(id)));
     }
 
@@ -73,7 +73,7 @@ public class UserDAO {
                 .add("name", name));
     }
 
-    private static User fetchUserById(Parameters parameters) {
+    private static User fetchUserByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/user/byId", parameters);
             return User.createFromJson(object.getJSONObject("user"));

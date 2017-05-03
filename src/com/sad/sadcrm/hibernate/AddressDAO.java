@@ -28,10 +28,10 @@ public class AddressDAO {
     }
 
     public static Address fetchById(int id) {
-        return fetchAddressById(Parameters.getCredentials().add("id", id));
+        return fetchAddressByParameters(Parameters.getCredentials().add("id", id));
     }
 
-    private static Address fetchAddressById(Parameters parameters) {
+    private static Address fetchAddressByParameters(Parameters parameters) {
         try {
             JSONObject object = HttpJson.get("/address/byId", parameters);
             return Address.createFromJson(object.getJSONObject("address"));

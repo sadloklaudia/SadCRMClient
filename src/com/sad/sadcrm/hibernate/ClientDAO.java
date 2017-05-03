@@ -64,31 +64,9 @@ public class ClientDAO {
         return fetchClientsByParameters(getCredentials());
     }
 
-    public static List<Client> searchBySurname(String surname) {
-        return fetchClientsByParameters(getCredentials()
-                .add("surname", surname));
-    }
-
-    public static List<Client> searchByPesel(String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("pesel", pesel));
-    }
-
     public static List<Client> searchByUser(User user) {
         return fetchClientsByParameters(getCredentials()
                 .add("user_id", user.getId()));
-    }
-
-    public static List<Client> searchBySurnameAndPesel(String surname, String pesel) {
-        return fetchClientsByParameters(getCredentials()
-                .add("surname", surname)
-                .add("pesel", pesel)
-        );
-    }
-
-    public static List<Client> searchHasMail() {
-        return fetchClientsByParameters(getCredentials()
-                .add("has_mail", "true"));
     }
 
     public static List<Client> searchHasSellChance() {
