@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -91,6 +92,8 @@ public class HttpJson {
             String result = getStringFromInputStream(connection.getInputStream());
             //  result = Encryption.decrypt(result);
             return result;
+        } catch (ConnectException exception) {
+            throw new ServerConnectException(exception);
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

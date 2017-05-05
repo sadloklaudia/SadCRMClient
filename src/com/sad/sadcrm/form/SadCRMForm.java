@@ -24,8 +24,6 @@ import java.util.*;
 import java.util.List;
 
 import static com.sad.sadcrm.Application.VERSION;
-import static com.sad.sadcrm.model.UserType.ADMIN;
-import static com.sad.sadcrm.model.UserType.MANAGER;
 import static java.awt.Color.lightGray;
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
@@ -3053,7 +3051,7 @@ public class SadCRMForm extends ApplicationWindow {
             return;
         }
 
-        if (!txtChangePass1.getText().equalsIgnoreCase(txtChangePass2.getText())) {
+        if (!txtChangePass1.getText().equals(txtChangePass2.getText())) {
             messageBox("Hasła muszą być takie same. ")
                     .title("Zmiana hasła")
                     .type(ERROR_MESSAGE)
@@ -3079,7 +3077,6 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void processSearchClientsForManager() {
-        //WYSZUKIWANIE NA PANELU MANAGERA
         PanelsUtil.enablePanel(searchUserByManagerPanel, new JPanel[]{editUserByManagerPanel, mainManagerPanel, reportsByManagerPanel});
         selectedUser = null;
         tableClientsForManager.setRowSelectionAllowed(true);
@@ -3182,11 +3179,8 @@ public class SadCRMForm extends ApplicationWindow {
             selectedClient.setDescription(editClientDesc.getText());
             isEdited = true;
         }
-        if (!selectedClient.getVip() && editClientVip.isSelected()) {
-            selectedClient.setVip(true);
-            isEdited = true;
-        } else if (selectedClient.getVip() && !editClientVip.isSelected()) {
-            selectedClient.setVip(false);
+        if (selectedClient.getVip() != editClientVip.isSelected()) {
+            selectedClient.setVip(editClientVip.isSelected());
             isEdited = true;
         }
 
@@ -3230,18 +3224,18 @@ public class SadCRMForm extends ApplicationWindow {
             isAddressEdited = true;
         }
 
-        String sellChan = selectedClient.getSellChance();
-        if (sellChan == null && cbEditChance.getSelectedIndex() != 0) {
+        String sellChance = selectedClient.getSellChance();
+        if (sellChance == null && cbEditChance.getSelectedIndex() != 0) {
             selectedClient.setSellChance(cbEditChance.getSelectedItem());
             isEdited = true;
-        } else if (sellChan != null && !sellChan.equalsIgnoreCase(cbEditChance.getSelectedItem())) {
+        } else if (sellChance != null && !sellChance.equalsIgnoreCase(cbEditChance.getSelectedItem())) {
             selectedClient.setSellChance(cbEditChance.getSelectedItem());
             isEdited = true;
         }
 
-        String selectedProd = selectedClient.getProducts();
+        String selectedProducts = selectedClient.getProducts();
         String prodForManager = createProductsEntryForManager();
-        if (!selectedProd.equalsIgnoreCase(prodForManager)) {
+        if (!selectedProducts.equalsIgnoreCase(prodForManager)) {
             selectedClient.setProducts(prodForManager);
             isEdited = true;
         }
@@ -3300,7 +3294,8 @@ public class SadCRMForm extends ApplicationWindow {
     private void processUserRaports() {
         newUser = null;
         if (usersForManagerTable.getSelectedRowCount() == 1) {
-            String id = usersForManagerTable.getValueAt(usersForManagerTable.getSelectedRow(), 0).toString();
+            int selectedRow = usersForManagerTable.getSelectedRow();
+            String id = usersForManagerTable.getValueAt(selectedRow, 0).toString();
             newUser = UserDAO.getUserById(valueOf(id));
 
             txtUserReport.setText(newUser.getName() + " " + newUser.getSurname());
@@ -3596,12 +3591,16 @@ public class SadCRMForm extends ApplicationWindow {
     }
 
     private void processLoggedUserPanel() {
-        if (loggedUser.getType() == ADMIN) {
-            processAdminPanel();
-        } else if (loggedUser.getType() == MANAGER) {
-            processManagerPanel();
-        } else {
-            processUserPanel();
+        switch (loggedUser.getType()) {
+            case ADMIN:
+                processAdminPanel();
+                break;
+            case MANAGER:
+                processManagerPanel();
+                break;
+            case USER:
+                processUserPanel();
+                break;
         }
     }
 
