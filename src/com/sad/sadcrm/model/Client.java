@@ -63,10 +63,6 @@ public class Client implements java.io.Serializable {
         this.tel = tel;
     }
 
-    public Timestamp getTelDate() {
-        return telDate;
-    }
-
     public String getTelDateAsString() {
         if (telDate == null) {
             return "0000-00-00 00:00:00";

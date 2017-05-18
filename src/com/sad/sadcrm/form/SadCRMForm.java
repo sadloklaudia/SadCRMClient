@@ -3422,8 +3422,8 @@ public class SadCRMForm extends ApplicationWindow {
         editClientModification.setText(selectedClient.getModified());
         editClientTel.setSelected(selectedClient.getTel().equalsIgnoreCase("T"));
         editClientTelDate.setEnabled(false);
-        editClientTelDate.setText(selectedClient.getTelDate().toString());
-        editClientModification.setText(selectedClient.getTelDate().toString());
+        editClientTelDate.setText(selectedClient.getTelDateAsString());
+        editClientModification.setText(selectedClient.getTelDateAsString());
 
         if (!selectedClient.getProducts().isEmpty() && selectedClient.getProducts() != null) {
             String[] products = selectedClient.getProducts().split(",");
@@ -3542,7 +3542,7 @@ public class SadCRMForm extends ApplicationWindow {
             txtClientTel.setSelected(false);
         }
 
-        txtClientModification.setText(Objects.toString(selectedClient.getTelDate()));
+        txtClientModification.setText(Objects.toString(selectedClient.getTelDateAsString()));
 
         if (!selectedClient.getProducts().isEmpty() && selectedClient.getProducts() != null) {
             String[] products = selectedClient.getProducts().split(",");

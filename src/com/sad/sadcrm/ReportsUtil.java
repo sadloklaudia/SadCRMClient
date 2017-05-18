@@ -328,7 +328,7 @@ public class ReportsUtil {
                     client.getProducts(),
                     client.getPesel(),
                     client.getMail(),
-                    client.getTelDate()
+                    client.getTelDateAsString()
             );
         }
         return dataSource;
