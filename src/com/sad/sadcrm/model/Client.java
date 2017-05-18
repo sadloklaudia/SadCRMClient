@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import static com.sad.sadcrm.Parameters.getCredentials;
 
@@ -63,6 +64,10 @@ public class Client implements java.io.Serializable {
 
     public Timestamp getTelDate() {
         return telDate;
+    }
+
+    public String getTelDateAsString() {
+        return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.telDate);
     }
 
     public void setTelDate(Timestamp telDate) {

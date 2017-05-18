@@ -291,7 +291,7 @@ public class ReportsUtil {
                     client.getName() + " " + client.getSurname(),
                     client.getVip(),
                     client.getSellChance(),
-                    client.getTelDate(),
+                    client.getTelDateAsString(),
                     client.getUser().getName() + " " + client.getUser().getSurname()
             );
         }
