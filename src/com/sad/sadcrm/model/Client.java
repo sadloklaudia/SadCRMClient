@@ -229,7 +229,7 @@ public class Client implements java.io.Serializable {
                 json.getString("phone2"),
                 json.getString("mail"),
                 json.getString("description"),
-                json.getString("vip").equals("true"),
+                json.getString("vip").equals("1"),
                 json.getString("created"),
                 json.getString("products"),
                 json.getString("sellChance")
