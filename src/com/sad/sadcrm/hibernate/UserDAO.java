@@ -8,6 +8,7 @@ import com.sad.sadcrm.hibernate.exception.UserInsertException;
 import com.sad.sadcrm.hibernate.exception.UserUpdateException;
 import com.sad.sadcrm.model.LoginResponse;
 import com.sad.sadcrm.model.User;
+import com.sad.sadcrm.model.UserType;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +55,8 @@ public class UserDAO {
     }
 
     public static List<User> searchUsers() {
-        return fetchUsersByParameters(getCredentials());
+        return fetchUsersByParameters(getCredentials()
+                .add("type", UserType.USER.toString()));
     }
 
     private static User fetchUserByParameters(Parameters parameters) {
