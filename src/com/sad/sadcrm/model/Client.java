@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import static com.sad.sadcrm.Parameters.getCredentials;
-import static java.lang.String.format;
 
 public class Client implements java.io.Serializable {
     private int id;
@@ -216,8 +215,6 @@ public class Client implements java.io.Serializable {
     }
 
     public static Client createFromJson(JSONObject json) throws JSONException {
-        String telDate = json.getString("telDate");
-        System.out.println(format("tel date to: '%s'", telDate));
         return new Client(
                 json.getInt("id"),
                 AddressDAO.getAddressById(json.getInt("address_id")),
@@ -235,7 +232,7 @@ public class Client implements java.io.Serializable {
                 json.getString("sellChance"),
                 json.getString("modified"),
                 json.getString("tel"),
-                telDate
+                json.getString("telDate")
         );
     }
 }
