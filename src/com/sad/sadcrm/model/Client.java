@@ -32,18 +32,8 @@ public class Client implements java.io.Serializable {
     public Client() {
     }
 
-    public Client(int id, Address address, User user, String name, String surname, String pesel, boolean vip, String created) {
-        this.id = id;
-        this.address = address;
-        this.user = user;
-        this.name = name;
-        this.surname = surname;
-        this.pesel = pesel;
-        this.vip = vip;
-        this.created = created;
-    }
-
-    private Client(int id, Address address, User user, String name, String surname, String pesel, String phone1, String phone2, String mail, String description, boolean vip, String created, String products, String sellChance) {
+    private Client(int id, Address address, User user, String name, String surname, String pesel, String phone1, String phone2,
+                   String mail, String description, boolean vip, String created, String products, String sellChance, String modified, String tel, String telDate) {
         this.id = id;
         this.address = address;
         this.user = user;
@@ -58,6 +48,9 @@ public class Client implements java.io.Serializable {
         this.created = created;
         this.products = products;
         this.sellChance = sellChance;
+        this.modified = modified;
+        this.tel = tel;
+        this.telDate = Timestamp.valueOf(telDate);
     }
 
     public String getTel() {
@@ -232,7 +225,10 @@ public class Client implements java.io.Serializable {
                 json.getString("vip").equals("1"),
                 json.getString("created"),
                 json.getString("products"),
-                json.getString("sellChance")
+                json.getString("sellChance"),
+                json.getString("modified"),
+                json.getString("tel"),
+                json.getString("telDate")
         );
     }
 }
