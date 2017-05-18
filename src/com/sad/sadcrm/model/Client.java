@@ -67,7 +67,7 @@ public class Client implements java.io.Serializable {
     }
 
     public String getTelDateAsString() {
-        return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.telDate);
+        return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(this.telDate);
     }
 
     public void setTelDate(Timestamp telDate) {
